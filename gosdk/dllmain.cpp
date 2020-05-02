@@ -2,12 +2,18 @@
 #include "utilities/global.hpp"
 #include "csgo/valve/global.hpp"
 
+#include "config/global.hpp"
+
 LPVOID InitializeHack(HMODULE Instance)
 {
 	utilities::globals::this_module = Instance;
 	try {
 		utilities::console::initialize_console(
 			STR("gosdk"), STR("welcome, initialized"));
+
+		// run config before everything
+		config::run_config();
+
 		csgo::valve::interfaces::run_interfaces();
 		utilities::hooking::run_hooks();
 	} catch (const std::exception &e) {
@@ -24,6 +30,9 @@ LPVOID InitializeHack(HMODULE Instance)
 		utilities::console::destroy_console();
 		utilities::hooking::release_hooks();
 		csgo::valve::interfaces::release_interfaces();
+
+		// release config after everything
+		config::release_config();
 	} catch (const std::exception &e) {
 		utilities::console::log<std::string>(e.what());
 	}

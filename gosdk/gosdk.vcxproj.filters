@@ -23,11 +23,19 @@
     <ClInclude Include="csgo\valve\utilities\c_utl.hpp" />
     <ClInclude Include="csgo\valve\classes\convar.hpp" />
     <ClInclude Include="csgo\valve\classes\global.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_surface.hpp" />
+    <ClInclude Include="utilities\color\color.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_input_system.hpp" />
+    <ClInclude Include="config\config.hpp" />
+    <ClInclude Include="dependencies\json\json.hpp" />
+    <ClInclude Include="config\utilities.hpp" />
+    <ClInclude Include="config\global.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utilities\hooking\hook.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="utilities\hooking\vmt.cpp" />
     <ClCompile Include="csgo\valve\interfaces.cpp" />
+    <ClCompile Include="config\config.cpp" />
   </ItemGroup>
 </Project>

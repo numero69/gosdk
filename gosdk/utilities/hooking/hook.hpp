@@ -60,17 +60,20 @@ class vmt {
 };
 
 enum funcs_indexes {
-	get_int = 13,
-	create_move = 24,
-	paint_traverse = 41,
-	lock_cursor = 67
+	get_int_idx = 13,
+	create_move_idx = 24,
+	paint_traverse_idx = 41,
+	lock_cursor_idx = 67
 };
 
 inline std::unique_ptr<utilities::hooking::vmt> sv_cheats_hook;
 inline std::unique_ptr<utilities::hooking::vmt> cl_grenadepreview_hook;
+inline std::unique_ptr<utilities::hooking::vmt> surface_hook;
 
-static bool __stdcall sv_cheats();
-static bool __stdcall cl_grenadepreview();
+static bool __stdcall sv_cheats() noexcept;
+static bool __stdcall cl_grenadepreview() noexcept;
+static void __fastcall lock_cursor() noexcept;
+using lock_cursor_fn = void(__thiscall *)(void *);
 
 void run_hooks() noexcept;
 void release_hooks() noexcept;

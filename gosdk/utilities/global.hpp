@@ -12,4 +12,5 @@
 // SHARED
 #include "easing/global.hpp"
 #include "math/global.hpp"
+#include "color/color.hpp"
 #include "memory/global.hpp"

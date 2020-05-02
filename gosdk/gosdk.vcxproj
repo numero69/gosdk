@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="config\config.hpp" />
+    <ClInclude Include="config\global.hpp" />
+    <ClInclude Include="config\utilities.hpp" />
     <ClInclude Include="csgo\global.hpp" />
     <ClInclude Include="csgo\hacks\global.hpp" />
     <ClInclude Include="csgo\valve\classes\convar.hpp" />
@@ -27,9 +30,13 @@
     <ClInclude Include="csgo\valve\interfaces.hpp" />
     <ClInclude Include="csgo\valve\interfaces\global.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_console.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_input_system.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_surface.hpp" />
     <ClInclude Include="csgo\valve\utilities\c_utl.hpp" />
     <ClInclude Include="dependencies\global.hpp" />
+    <ClInclude Include="dependencies\json\json.hpp" />
     <ClInclude Include="dependencies\xorstr\xorstr.hpp" />
+    <ClInclude Include="utilities\color\color.hpp" />
     <ClInclude Include="utilities\console\console.hpp" />
     <ClInclude Include="utilities\easing\bitflag\bitflag.hpp" />
     <ClInclude Include="utilities\easing\global.hpp" />
@@ -43,6 +50,7 @@
     <ClInclude Include="utilities\memory\memory.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="config\config.cpp" />
     <ClCompile Include="csgo\valve\interfaces.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="utilities\hooking\hook.cpp" />
