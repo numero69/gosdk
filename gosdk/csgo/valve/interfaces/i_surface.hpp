@@ -43,7 +43,7 @@ class i_surface {
 			static_cast<int>(x1), static_cast<int>(y1));
 	}
 
-	constexpr void set_text_font(unsigned font) noexcept
+	constexpr void set_text_font(std::uint32_t font) noexcept
 	{
 		utilities::memory::call_virtual_method<void, unsigned>(this, 23,
 								       font);
@@ -96,10 +96,10 @@ class i_surface {
 									71);
 	}
 
-	constexpr bool set_font_glyph_set(unsigned font, const char *fontName,
-					  int tall, int weight, int blur,
-					  int scanlines, int flags,
-					  int rangeMin = 0,
+	constexpr bool set_font_glyph_set(std::uint32_t font,
+					  const char *fontName, int tall,
+					  int weight, int blur, int scanlines,
+					  int flags, int rangeMin = 0,
 					  int rangeMax = 0) noexcept
 	{
 		return utilities::memory::call_virtual_method<
@@ -108,7 +108,7 @@ class i_surface {
 				  scanlines, flags, rangeMin, rangeMax);
 	}
 
-	constexpr auto get_text_size(unsigned font,
+	constexpr auto get_text_size(std::uint32_t font,
 				     const wchar_t *text) noexcept
 	{
 		int width{}, height{};
@@ -130,7 +130,7 @@ class i_surface {
 	constexpr void draw_filled_circle(T x, T y, int r) noexcept
 	{
 		for (int i = 0; i <= r; i++) {
-			drawOutlinedCircle(x, y, i, i);
+			draw_outlined_circle(x, y, i, i);
 		}
 	}
 };
