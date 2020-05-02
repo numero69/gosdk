@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="utilities\hooking\hook.hpp" />
+    <ClInclude Include="dependencies\xorstr\xorstr.hpp" />
+    <ClInclude Include="utilities\global.hpp" />
+    <ClInclude Include="dependencies\global.hpp" />
+    <ClInclude Include="csgo\global.hpp" />
+    <ClInclude Include="utilities\console\console.hpp" />
+    <ClInclude Include="utilities\global\globals.hpp" />
+    <ClInclude Include="csgo\hacks\global.hpp" />
+    <ClInclude Include="csgo\valve\global.hpp" />
+    <ClInclude Include="utilities\easing\bitflag\bitflag.hpp" />
+    <ClInclude Include="utilities\math\vector2d.hpp" />
+    <ClInclude Include="utilities\math\global.hpp" />
+    <ClInclude Include="utilities\math\vector3d.hpp" />
+    <ClInclude Include="utilities\easing\global.hpp" />
+    <ClInclude Include="utilities\memory\memory.hpp" />
+    <ClInclude Include="utilities\memory\global.hpp" />
+    <ClInclude Include="csgo\valve\interfaces.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\global.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_console.hpp" />
+    <ClInclude Include="csgo\valve\utilities\c_utl.hpp" />
+    <ClInclude Include="csgo\valve\classes\convar.hpp" />
+    <ClInclude Include="csgo\valve\classes\global.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="utilities\hooking\hook.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="utilities\hooking\vmt.cpp" />
+    <ClCompile Include="csgo\valve\interfaces.cpp" />
+  </ItemGroup>
+</Project>
