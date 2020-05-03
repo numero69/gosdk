@@ -9,3 +9,9 @@ To contribute to gosdk, you need to always adapt your code to the clang format, 
 
 # features
 gosdk currently comes with the IConsole interface, ISurface interface, IInputSystem interface and IPanel interface, a VMT hooking class, sv_cheats bypass (hooked), grenade trajectory (convar, hooked), lock cursor [currently while Insert is hold] (hooked), paint traverse [hooked], ability to do basic rendering [although there is currently no surface wrapper, you can just use the default surface methods] a console with logging, basic error handling, math utilities, various easing functions and utilities which include a color handler and a config system, memory functions many others. These are not final and are to be updated.
+
+# credits
+Credits for gosdk go to places where I take inspiration from, and that would be:
+- @DucaRii for csgo_modest [his project helped me with the math utilities]
+- @ReigN [unknowncheats.me] for their SDK that I have got the VMT Hooking class from, which was a total time saver, despite some nitpickable issues that are not occouring within this project.
+- Every supposive contributor.
