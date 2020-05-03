@@ -2,7 +2,7 @@
 
 #include <inttypes.h>
 
-namespace utilities::easing::bitflag
+namespace utilities::easing
 {
 struct bitflag {
 	bitflag() = default;

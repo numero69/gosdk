@@ -1,6 +1,7 @@
 #include "hook.hpp"
-#include <intrin.h>
 #include "../../csgo/global.hpp"
+#include <intrin.h>
+#include <algorithm>
 
 namespace utilities::hooking
 {
@@ -35,7 +36,8 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 
 	if (csgo::valve::interfaces::c_panel->get_name(panel) ==
 	    STR("MatSystemTopPanel")) {
-		csgo::valve::interfaces::c_surface->set_draw_color(utilities::color(255, 255, 255, 255));
+		csgo::valve::interfaces::c_surface->set_draw_color(
+			utilities::color(255, 255, 255, 255));
 
 		csgo::valve::interfaces::c_surface->draw_filled_rect(15, 15,
 								     250, 250);
@@ -44,11 +46,33 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 		csgo::valve::interfaces::c_surface->set_text_position(1000,
 								      1000);
 		csgo::valve::interfaces::c_surface->set_text_font(0x1c);
-		csgo::valve::interfaces::c_surface->print_text(L"example of usage with GDI handles");
+		csgo::valve::interfaces::c_surface->print_text(
+			L"example of usage with GDI handles");
 	}
 
 	original(csgo::valve::interfaces::c_panel, panel, force_repaint,
 		 allow_force);
+}
+static bool __fastcall create_move(void *ecx, void *edx,
+				   int input_sample_frametime,
+				   csgo::valve::classes::user_cmd *cmd) noexcept
+{
+	if (!input_sample_frametime || !cmd || !cmd->command_number)
+		return false;
+
+	utilities::globals::cmd = cmd;
+
+	csgo::hacks::misc::no_duck_delay();
+
+	cmd->forward_move = std::clamp(cmd->forward_move, -450.0f, 450.0f);
+	cmd->side_move = std::clamp(cmd->side_move, -450.0f, 450.0f);
+	cmd->up_move = std::clamp(cmd->up_move, -450.0f, 450.0f);
+
+	cmd->viewangles.x = std::clamp(cmd->viewangles.x, -89.0f, 89.0f);
+	cmd->viewangles.y = std::clamp(cmd->viewangles.y, -180.0f, 180.0f);
+	cmd->viewangles.z = 0.0f;
+
+	return false;
 }
 void run_hooks() noexcept
 {
@@ -67,6 +91,12 @@ void run_hooks() noexcept
 		utilities::hooking::get_int_idx,
 		reinterpret_cast<void *>(
 			utilities::hooking::cl_grenadepreview));
+
+	client_mode_hook = std::make_unique<utilities::hooking::vmt>();
+	client_mode_hook->init(csgo::valve::interfaces::c_client_mode);
+	client_mode_hook->hook_func(
+		utilities::hooking::create_move_idx,
+		reinterpret_cast<void *>(utilities::hooking::create_move));
 
 	surface_hook = std::make_unique<utilities::hooking::vmt>();
 	surface_hook->init(csgo::valve::interfaces::c_surface);

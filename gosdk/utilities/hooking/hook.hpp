@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "../../dependencies/global.hpp"
 #include "../../utilities/global.hpp"
+#include "../../csgo/valve/classes/user_cmd.hpp"
 
 namespace utilities::hooking
 {
@@ -68,6 +69,7 @@ enum funcs_indexes {
 
 inline std::unique_ptr<utilities::hooking::vmt> sv_cheats_hook;
 inline std::unique_ptr<utilities::hooking::vmt> cl_grenadepreview_hook;
+inline std::unique_ptr<utilities::hooking::vmt> client_mode_hook;
 inline std::unique_ptr<utilities::hooking::vmt> surface_hook;
 inline std::unique_ptr<utilities::hooking::vmt> panel_hook;
 
@@ -77,8 +79,14 @@ static bool __stdcall cl_grenadepreview() noexcept;
 static void __fastcall lock_cursor() noexcept;
 using lock_cursor_fn = void(__thiscall *)(void *);
 
-static void __stdcall paint_traverse(unsigned int panel, bool force_repaint, bool allow_force) noexcept;
-using paint_traverse_fn = void(__thiscall *)(void*, unsigned int, bool, bool);
+static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
+				     bool allow_force) noexcept;
+using paint_traverse_fn = void(__thiscall *)(void *, unsigned int, bool, bool);
+
+static bool __fastcall create_move(void *ecx, void *edx,
+				   int input_sample_frametime,
+				   csgo::valve::classes::user_cmd *cmd) noexcept;
+using create_move_fn = bool(__stdcall *)(float, void *);
 
 void run_hooks() noexcept;
 void release_hooks() noexcept;

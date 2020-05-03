@@ -24,11 +24,16 @@
     <ClInclude Include="config\utilities.hpp" />
     <ClInclude Include="csgo\global.hpp" />
     <ClInclude Include="csgo\hacks\global.hpp" />
+    <ClInclude Include="csgo\hacks\misc\movement.hpp" />
+    <ClInclude Include="csgo\valve\classes\client_class.hpp" />
     <ClInclude Include="csgo\valve\classes\convar.hpp" />
     <ClInclude Include="csgo\valve\classes\global.hpp" />
+    <ClInclude Include="csgo\valve\classes\recv_prop.hpp" />
+    <ClInclude Include="csgo\valve\classes\user_cmd.hpp" />
     <ClInclude Include="csgo\valve\global.hpp" />
     <ClInclude Include="csgo\valve\interfaces.hpp" />
     <ClInclude Include="csgo\valve\interfaces\global.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_base_client_dll.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_console.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_input_system.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_panel.hpp" />

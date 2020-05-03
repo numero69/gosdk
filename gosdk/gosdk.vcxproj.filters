@@ -31,6 +31,11 @@
     <ClInclude Include="config\utilities.hpp" />
     <ClInclude Include="config\global.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_panel.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_base_client_dll.hpp" />
+    <ClInclude Include="csgo\valve\classes\client_class.hpp" />
+    <ClInclude Include="csgo\valve\classes\recv_prop.hpp" />
+    <ClInclude Include="csgo\valve\classes\user_cmd.hpp" />
+    <ClInclude Include="csgo\hacks\misc\movement.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utilities\hooking\hook.cpp" />
