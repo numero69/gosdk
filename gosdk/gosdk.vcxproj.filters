@@ -36,6 +36,8 @@
     <ClInclude Include="csgo\valve\classes\recv_prop.hpp" />
     <ClInclude Include="csgo\valve\classes\user_cmd.hpp" />
     <ClInclude Include="csgo\hacks\misc\movement.hpp" />
+    <ClInclude Include="csgo\valve\utilities\netvar\global.hpp" />
+    <ClInclude Include="csgo\valve\utilities\netvar\netvar.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utilities\hooking\hook.cpp" />
@@ -43,5 +45,6 @@
     <ClCompile Include="utilities\hooking\vmt.cpp" />
     <ClCompile Include="csgo\valve\interfaces.cpp" />
     <ClCompile Include="config\config.cpp" />
+    <ClCompile Include="csgo\valve\utilities\netvar\netvar.cpp" />
   </ItemGroup>
 </Project>

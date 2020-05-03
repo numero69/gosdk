@@ -39,6 +39,8 @@
     <ClInclude Include="csgo\valve\interfaces\i_panel.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_surface.hpp" />
     <ClInclude Include="csgo\valve\utilities\c_utl.hpp" />
+    <ClInclude Include="csgo\valve\utilities\netvar\global.hpp" />
+    <ClInclude Include="csgo\valve\utilities\netvar\netvar.hpp" />
     <ClInclude Include="dependencies\global.hpp" />
     <ClInclude Include="dependencies\json\json.hpp" />
     <ClInclude Include="dependencies\xorstr\xorstr.hpp" />
@@ -58,6 +60,7 @@
   <ItemGroup>
     <ClCompile Include="config\config.cpp" />
     <ClCompile Include="csgo\valve\interfaces.cpp" />
+    <ClCompile Include="csgo\valve\utilities\netvar\netvar.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="utilities\hooking\hook.cpp" />
     <ClCompile Include="utilities\hooking\vmt.cpp" />
