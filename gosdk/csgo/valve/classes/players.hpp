@@ -55,6 +55,7 @@ enum entity_flags {
 	fl_unblockable_by_player = (1 << 30)
 };
 
+// XOR'd in wrapper
 class c_player {
     public:
 	netvar(int, health, "DT_BasePlayer->m_iHealth");

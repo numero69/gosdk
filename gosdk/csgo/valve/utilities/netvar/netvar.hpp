@@ -17,14 +17,14 @@ void init();
 #define netvar_additive(t, func, name, off)\
 	t &func()\
 	{\
-		static auto offset = csgo::valve::netvar::offsets[(name)];\
+		static auto offset = csgo::valve::netvar::offsets[(STR(name))];\
 		return *reinterpret_cast<t*>(std::uintptr_t(this) + offset + off);\
 	}
 
 #define netvar(t, func, name)\
 	t &func()\
 	{\
-		static auto offset = csgo::valve::netvar::offsets[(name)];\
+		static auto offset = csgo::valve::netvar::offsets[(STR(name))];\
 		return *reinterpret_cast<t*>(std::uintptr_t(this) + offset);\
 	}
 
