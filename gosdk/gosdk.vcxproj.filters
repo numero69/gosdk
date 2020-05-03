@@ -30,6 +30,7 @@
     <ClInclude Include="dependencies\json\json.hpp" />
     <ClInclude Include="config\utilities.hpp" />
     <ClInclude Include="config\global.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_panel.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utilities\hooking\hook.cpp" />

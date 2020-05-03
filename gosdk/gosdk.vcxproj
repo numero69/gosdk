@@ -31,6 +31,7 @@
     <ClInclude Include="csgo\valve\interfaces\global.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_console.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_input_system.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_panel.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_surface.hpp" />
     <ClInclude Include="csgo\valve\utilities\c_utl.hpp" />
     <ClInclude Include="dependencies\global.hpp" />

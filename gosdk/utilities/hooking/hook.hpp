@@ -69,11 +69,16 @@ enum funcs_indexes {
 inline std::unique_ptr<utilities::hooking::vmt> sv_cheats_hook;
 inline std::unique_ptr<utilities::hooking::vmt> cl_grenadepreview_hook;
 inline std::unique_ptr<utilities::hooking::vmt> surface_hook;
+inline std::unique_ptr<utilities::hooking::vmt> panel_hook;
 
 static bool __stdcall sv_cheats() noexcept;
 static bool __stdcall cl_grenadepreview() noexcept;
+
 static void __fastcall lock_cursor() noexcept;
 using lock_cursor_fn = void(__thiscall *)(void *);
+
+static void __stdcall paint_traverse(unsigned int panel, bool force_repaint, bool allow_force) noexcept;
+using paint_traverse_fn = void(__thiscall *)(void*, unsigned int, bool, bool);
 
 void run_hooks() noexcept;
 void release_hooks() noexcept;
