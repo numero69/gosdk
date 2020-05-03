@@ -6,17 +6,17 @@
 namespace csgo::valve::classes
 {
 struct user_cmd {
-	enum { IN_ATTACK = 1 << 0,
-	       IN_JUMP = 1 << 1,
-	       IN_DUCK = 1 << 2,
-	       IN_FORWARD = 1 << 3,
-	       IN_BACK = 1 << 4,
-	       IN_USE = 1 << 5,
-	       IN_MOVELEFT = 1 << 9,
-	       IN_MOVERIGHT = 1 << 10,
-	       IN_ATTACK2 = 1 << 11,
-	       IN_SCORE = 1 << 16,
-	       IN_BULLRUSH = 1 << 22 };
+	enum { in_attack = 1 << 0,
+	       in_jump = 1 << 1,
+	       in_duck = 1 << 2,
+	       in_forward = 1 << 3,
+	       in_back = 1 << 4,
+	       in_use = 1 << 5,
+	       in_moveleft = 1 << 9,
+	       in_moveright = 1 << 10,
+	       in_attack2 = 1 << 11,
+	       in_score = 1 << 16,
+	       in_bullrush = 1 << 22 };
 	int pad;
 	int command_number;
 	int tick_count;
