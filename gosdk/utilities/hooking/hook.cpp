@@ -36,8 +36,15 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 	if (csgo::valve::interfaces::c_panel->get_name(panel) ==
 	    STR("MatSystemTopPanel")) {
 		csgo::valve::interfaces::c_surface->set_draw_color(utilities::color(255, 255, 255, 255));
+
 		csgo::valve::interfaces::c_surface->draw_filled_rect(15, 15,
 								     250, 250);
+		csgo::valve::interfaces::c_surface->set_text_color(
+			utilities::color(255, 255, 255, 255));
+		csgo::valve::interfaces::c_surface->set_text_position(1000,
+								      1000);
+		csgo::valve::interfaces::c_surface->set_text_font(0x1c);
+		csgo::valve::interfaces::c_surface->print_text(L"example of usage with GDI handles");
 	}
 
 	original(csgo::valve::interfaces::c_panel, panel, force_repaint,
@@ -78,5 +85,6 @@ void release_hooks() noexcept
 	sv_cheats_hook->unhook();
 	cl_grenadepreview_hook->unhook();
 	surface_hook->unhook();
+	panel_hook->unhook();
 }
 } // namespace utilities::hooking
