@@ -38,6 +38,9 @@
     <ClInclude Include="csgo\hacks\misc\movement.hpp" />
     <ClInclude Include="csgo\valve\utilities\netvar\global.hpp" />
     <ClInclude Include="csgo\valve\utilities\netvar\netvar.hpp" />
+    <ClInclude Include="csgo\valve\classes\players.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_entity_list.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_engine_client.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utilities\hooking\hook.cpp" />

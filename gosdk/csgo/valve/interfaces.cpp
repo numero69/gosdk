@@ -8,6 +8,8 @@ i_input_system *c_input_system = nullptr;
 i_panel *c_panel = nullptr;
 i_base_client_dll *c_client = nullptr;
 i_client_mode *c_client_mode = nullptr;
+i_entity_list *c_entity_list = nullptr;
+i_engine_client *c_engine_client = nullptr;
 
 void run_interfaces() noexcept
 {
@@ -25,6 +27,22 @@ void run_interfaces() noexcept
 	if (!c_client_mode)
 		utilities::console::log<std::string>(STR(
 			"failed @ c_client_mode | check source for more information...")); // ohh yeahh ohh yeahh ohh yeaaaaahhh
+
+	c_entity_list = reinterpret_cast<i_entity_list *>(
+		utilities::memory::scan_interface(STR("client_panorama.dll"),
+						  STR("VClientEntityList003")));
+
+	if (!c_entity_list)
+		utilities::console::log<std::string>(STR(
+			"failed @ c_entity_list | client_panorama.dll | VClientEntityList003"));
+
+	c_engine_client = reinterpret_cast<i_engine_client *>(
+		utilities::memory::scan_interface(STR("engine.dll"),
+						  STR("VEngineClient014")));
+
+	if (!c_engine_client)
+		utilities::console::log<std::string>(STR(
+			"failed @ c_engine_client | engine.dll | VEngineClient014"));
 
 	c_console =
 		reinterpret_cast<i_console *>(utilities::memory::scan_interface(
@@ -66,5 +84,7 @@ void release_interfaces() noexcept
 	c_panel = nullptr;
 	c_client = nullptr;
 	c_client_mode = nullptr;
+	c_entity_list = nullptr;
+	c_engine_client = nullptr;
 }
 } // namespace csgo::valve::interfaces

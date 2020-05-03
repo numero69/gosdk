@@ -36,18 +36,23 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 
 	if (csgo::valve::interfaces::c_panel->get_name(panel) ==
 	    STR("MatSystemTopPanel")) {
-		csgo::valve::interfaces::c_surface->set_draw_color(
-			utilities::color(255, 255, 255, 255));
+		if (csgo::valve::interfaces::c_engine_client->is_in_game()) {
 
-		csgo::valve::interfaces::c_surface->draw_filled_rect(15, 15,
-								     250, 250);
-		csgo::valve::interfaces::c_surface->set_text_color(
-			utilities::color(255, 255, 255, 255));
-		csgo::valve::interfaces::c_surface->set_text_position(1000,
-								      1000);
-		csgo::valve::interfaces::c_surface->set_text_font(0x1c);
-		csgo::valve::interfaces::c_surface->print_text(
-			L"example of usage with GDI handles");
+				csgo::valve::interfaces::c_surface
+					->set_draw_color(utilities::color(
+						255, 255, 255, 255));
+
+				csgo::valve::interfaces::c_surface
+					->draw_filled_rect(15, 15, 250, 250);
+			
+			csgo::valve::interfaces::c_surface->set_text_color(
+				utilities::color(255, 255, 255, 255));
+			csgo::valve::interfaces::c_surface->set_text_position(
+				1000, 1000);
+			csgo::valve::interfaces::c_surface->set_text_font(0x1c);
+			csgo::valve::interfaces::c_surface->print_text(
+				L"example of usage with GDI handles");
+		}
 	}
 
 	original(csgo::valve::interfaces::c_panel, panel, force_repaint,
@@ -61,6 +66,13 @@ static bool __fastcall create_move(void *ecx, void *edx,
 		return false;
 
 	utilities::globals::cmd = cmd;
+	utilities::globals::local =
+		csgo::valve::interfaces::c_entity_list->get_entity(
+			csgo::valve::interfaces::c_engine_client
+				->get_local_player());
+	if (csgo::valve::interfaces::c_engine_client->is_connected() &&
+	    csgo::valve::interfaces::c_engine_client->is_in_game())
+	std::cout << utilities::globals::local->health() << std::endl;
 
 	csgo::hacks::misc::no_duck_delay();
 

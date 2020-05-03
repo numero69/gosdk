@@ -1,63 +1,46 @@
 #include "netvar.hpp"
+#include "../../interfaces.hpp"
 #include <fstream>
 
 // credits: unknowncheats
-namespace csgo::valve::netvar
+
+std::unordered_map<std::string, std::uintptr_t> csgo::valve::netvar::offsets;
+
+std::ofstream ofs("netvar_dump.dmp");
+
+void dump_recursive(csgo::valve::classes::recv_table *table)
 {
-netvars::netvars()
-{
-}
+	for (auto i = 0; i < table->props_count; ++i) {
+		const auto prop = &table->props[i];
 
-bool netvars::init()
-{
-	if (!csgo::valve::interfaces::c_client)
-		return false;
+		if (!prop || std::isdigit(prop->prop_name[0]) ||
+		    !std::strcmp(prop->prop_name, "baseclass"))
+			continue;
 
-	csgo::valve::classes::c_client_class *client_class =
-		csgo::valve::interfaces::c_client->get_all_classes();
+		if (prop->prop_type == 6 && prop->data_table &&
+		    prop->data_table->table_name[0] == 'D')
+			dump_recursive(prop->data_table);
 
-	if (!client_class)
-		return false;
+		ofs << table->table_name + std::string("->") + prop->prop_name
+		    << "=" << prop->offset << '\n';
 
-	std::ofstream output;
-
-	while (client_class != nullptr) {
-		auto class_info = std::make_shared<node_t>(0);
-
-		auto recv_table = client_class->recvtable_ptr;
-
-		populate_nodes(recv_table, &class_info->nodes, output);
-
-		nodes.emplace(recv_table->table_name, class_info);
-
-		client_class = client_class->next_ptr;
-		output.clear();
-		output.close();
-	}
-
-	return true;
-}
-
-void netvars::populate_nodes(csgo::valve::classes::recv_table *recv_table,
-			     MapType *map, std::ofstream &file)
-{
-	for (auto i = 0; i < recv_table->props_count; i++) {
-		csgo::valve::classes::recv_prop *prop = &recv_table->props[i];
-
-		auto prop_info = std::make_shared<node_t>(prop->offset);
-
-		if (prop->prop_type == 6)
-			populate_nodes(prop->data_table, &prop_info->nodes,
-				       file);
-
-		map->emplace(prop->prop_name, prop_info);
+		csgo::valve::netvar::offsets[table->table_name +
+					     std::string("->") +
+					     prop->prop_name] = prop->offset;
 	}
 }
 
-void initialize()
+void csgo::valve::netvar::init()
 {
-	netvar_tree = std::make_unique<netvars>();
+	ofs << "csgo netvar dump taken on " << __DATE__ << '\n';
 
-	netvar_tree->init();
+	for (auto pclass = csgo::valve::interfaces::c_client->get_all_classes();
+	     pclass; pclass = pclass->next_ptr) {
+		const auto table = pclass->recvtable_ptr;
+
+		if (!table)
+			continue;
+
+		dump_recursive(table);
+	}
 }
-} // namespace csgo::valve::netvar

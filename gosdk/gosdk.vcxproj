@@ -28,6 +28,7 @@
     <ClInclude Include="csgo\valve\classes\client_class.hpp" />
     <ClInclude Include="csgo\valve\classes\convar.hpp" />
     <ClInclude Include="csgo\valve\classes\global.hpp" />
+    <ClInclude Include="csgo\valve\classes\players.hpp" />
     <ClInclude Include="csgo\valve\classes\recv_prop.hpp" />
     <ClInclude Include="csgo\valve\classes\user_cmd.hpp" />
     <ClInclude Include="csgo\valve\global.hpp" />
@@ -35,6 +36,8 @@
     <ClInclude Include="csgo\valve\interfaces\global.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_base_client_dll.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_console.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_engine_client.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_entity_list.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_input_system.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_panel.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_surface.hpp" />

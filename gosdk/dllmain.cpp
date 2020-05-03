@@ -15,7 +15,7 @@ LPVOID InitializeHack(HMODULE Instance)
 
 		csgo::valve::interfaces::run_interfaces();
 		utilities::hooking::run_hooks();
-		csgo::valve::netvar::initialize();
+		csgo::valve::netvar::init();
 	} catch (const std::exception &e) {
 		utilities::console::log<std::string>(e.what());
 	}
@@ -30,7 +30,6 @@ LPVOID InitializeHack(HMODULE Instance)
 		utilities::console::destroy_console();
 		utilities::hooking::release_hooks();
 		csgo::valve::interfaces::release_interfaces();
-		csgo::valve::netvar::netvar_tree = nullptr;
 
 		// release config after everything
 		config::release_config();
