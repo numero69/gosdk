@@ -6,13 +6,13 @@ namespace csgo::valve::interfaces
 {
 class i_surface {
     public:
-	constexpr void set_draw_color(int r, int g, int b, int a = 255) noexcept
+	constexpr auto set_draw_color(int r, int g, int b, int a = 255) noexcept
 	{
 		utilities::memory::call_virtual_method<void, int, int, int, int>(
 			this, 15, r, g, b, a);
 	}
 
-	const void set_draw_color(utilities::color color) noexcept
+	const auto set_draw_color(utilities::color color) noexcept
 	{
 		utilities::memory::call_virtual_method<void, int, int, int, int>(
 			this, 15, color.red, color.green, color.blue,
@@ -20,7 +20,7 @@ class i_surface {
 	}
 
 	template <typename T>
-	constexpr void draw_filled_rect(T x0, T y0, T x1, T y1) noexcept
+	constexpr auto draw_filled_rect(T x0, T y0, T x1, T y1) noexcept
 	{
 		utilities::memory::call_virtual_method<void, int, int, int, int>(
 			this, 16, static_cast<int>(x0), static_cast<int>(y0),
@@ -28,7 +28,7 @@ class i_surface {
 	}
 
 	template <typename T>
-	constexpr void draw_outlined_rect(T x0, T y0, T x1, T y1) noexcept
+	constexpr auto draw_outlined_rect(T x0, T y0, T x1, T y1) noexcept
 	{
 		utilities::memory::call_virtual_method<void, int, int, int, int>(
 			this, 18, static_cast<int>(x0), static_cast<int>(y0),
@@ -36,26 +36,26 @@ class i_surface {
 	}
 
 	template <typename T>
-	constexpr void draw_line(T x0, T y0, T x1, T y1) noexcept
+	constexpr auto draw_line(T x0, T y0, T x1, T y1) noexcept
 	{
 		utilities::memory::call_virtual_method<void, int, int, int, int>(
 			this, 19, static_cast<int>(x0), static_cast<int>(y0),
 			static_cast<int>(x1), static_cast<int>(y1));
 	}
 
-	constexpr void set_text_font(std::uint32_t font) noexcept
+	constexpr auto set_text_font(std::uint32_t font) noexcept
 	{
 		utilities::memory::call_virtual_method<void, unsigned>(this, 23,
 								       font);
 	}
 
-	constexpr void set_text_color(int r, int g, int b, int a = 255) noexcept
+	constexpr auto set_text_color(int r, int g, int b, int a = 255) noexcept
 	{
 		utilities::memory::call_virtual_method<void, int, int, int, int>(
 			this, 25, r, g, b, a);
 	}
 
-	const void set_text_color(utilities::color color) noexcept
+	const auto set_text_color(utilities::color color) noexcept
 	{
 		utilities::memory::call_virtual_method<void, int, int, int, int>(
 			this, 25, color.red, color.green, color.blue,
@@ -63,13 +63,13 @@ class i_surface {
 	}
 
 	template <typename T>
-	constexpr void set_text_position(T x, T y) noexcept
+	constexpr auto set_text_position(T x, T y) noexcept
 	{
 		utilities::memory::call_virtual_method<void, int, int>(
 			this, 26, static_cast<int>(x), static_cast<int>(y));
 	}
 
-	constexpr void print_text(const std::wstring_view text,
+	constexpr auto print_text(const std::wstring_view text,
 				  int drawType = 0) noexcept
 	{
 		utilities::memory::call_virtual_method<void, const wchar_t *,
@@ -85,18 +85,18 @@ class i_surface {
 		return std::make_pair(width, height);
 	}
 
-	constexpr void unlock_cursor() noexcept
+	constexpr auto unlock_cursor() noexcept
 	{
 		utilities::memory::call_virtual_method<void>(this, 66);
 	}
 
-	constexpr unsigned create_font() noexcept
+	constexpr auto create_font() noexcept
 	{
 		return utilities::memory::call_virtual_method<unsigned>(this,
 									71);
 	}
 
-	constexpr bool set_font_glyph_set(std::uint32_t font,
+	constexpr auto set_font_glyph_set(std::uint32_t font,
 					  const char *fontName, int tall,
 					  int weight, int blur, int scanlines,
 					  int flags, int rangeMin = 0,
@@ -119,7 +119,7 @@ class i_surface {
 	}
 
 	template <typename T>
-	constexpr void draw_outlined_circle(T x, T y, int r, int seg) noexcept
+	constexpr auto draw_outlined_circle(T x, T y, int r, int seg) noexcept
 	{
 		utilities::memory::call_virtual_method<void, int, int, int, int>(
 			this, 103, static_cast<int>(x), static_cast<int>(y), r,
@@ -127,7 +127,7 @@ class i_surface {
 	}
 
 	template <typename T>
-	constexpr void draw_filled_circle(T x, T y, int r) noexcept
+	constexpr auto draw_filled_circle(T x, T y, int r) noexcept
 	{
 		for (int i = 0; i <= r; i++) {
 			draw_outlined_circle(x, y, i, i);

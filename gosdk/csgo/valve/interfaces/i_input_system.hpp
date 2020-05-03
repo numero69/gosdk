@@ -137,13 +137,13 @@ enum button_code_t {
 
 class i_input_system {
     public:
-	constexpr void enable_input(bool enable) noexcept
+	constexpr auto enable_input(bool enable) noexcept
 	{
 		utilities::memory::call_virtual_method<void, bool>(this, 11,
 								   enable);
 	}
 
-	constexpr bool is_button_down(int buttonCode) noexcept
+	constexpr auto is_button_down(int buttonCode) noexcept
 	{
 		return utilities::memory::call_virtual_method<bool, int>(
 			this, 15, buttonCode);

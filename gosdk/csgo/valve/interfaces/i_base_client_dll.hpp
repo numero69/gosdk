@@ -73,7 +73,7 @@ class i_base_client_dll {
 			csgo::valve::classes::c_client_class *>(this, 8);
 	}
 
-	constexpr bool dispatch_user_message(int messageType, int arg, int arg1,
+	constexpr auto dispatch_user_message(int messageType, int arg, int arg1,
 					     void *data) noexcept
 	{
 		return utilities::memory::call_virtual_method<bool, int, int,
