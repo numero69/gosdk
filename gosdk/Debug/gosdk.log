@@ -1,0 +1,5 @@
+﻿  netvar.cpp
+  dllmain.cpp
+  hook.cpp
+  Generating Code...
+LINK : fatal error LNK1168: cannot open C:\Users\cgabe\source\repos\gosdk\Debug\gosdk.dll for writing
