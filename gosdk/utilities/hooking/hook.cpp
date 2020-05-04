@@ -9,10 +9,12 @@ static bool __stdcall sv_cheats() noexcept
 {
 	return true;
 }
+
 static bool __stdcall cl_grenadepreview() noexcept
 {
 	return true;
 }
+
 static void __fastcall lock_cursor() noexcept
 {
 	static auto original = surface_hook->get_original_func<lock_cursor_fn>(
@@ -28,6 +30,7 @@ static void __fastcall lock_cursor() noexcept
 	if (original)
 		return original(csgo::valve::interfaces::c_surface);
 }
+
 static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 				     bool allow_force) noexcept
 {
@@ -49,9 +52,9 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 			15, 40, 25, utilities::color(255, 255, 255, 255));
 		utilities::render::render_circle_outline(
 			50, 40, 25, 25, utilities::color(255, 255, 255, 255));
-		utilities::render::render_text(
-			15, 90, 0x1C, utilities::color(255, 255, 255, 255),
-			L"hello there!");
+	utilities::render::render_text(
+			15, 90, utilities::render::verdana,
+			utilities::color(255, 255, 255, 255), L"hello there!");
 		*/
 
 		if (csgo::valve::interfaces::c_engine_client->is_in_game()) {
@@ -62,6 +65,7 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 	original(csgo::valve::interfaces::c_panel, panel, force_repaint,
 		 allow_force);
 }
+
 static bool __fastcall create_move(void *ecx, void *edx,
 				   int input_sample_frametime,
 				   csgo::valve::classes::user_cmd *cmd) noexcept
@@ -87,6 +91,7 @@ static bool __fastcall create_move(void *ecx, void *edx,
 
 	return false;
 }
+
 void run_hooks() noexcept
 {
 	sv_cheats_hook = std::make_unique<utilities::hooking::vmt>();
@@ -123,6 +128,7 @@ void run_hooks() noexcept
 		utilities::hooking::paint_traverse_idx,
 		reinterpret_cast<void *>(utilities::hooking::paint_traverse));
 }
+
 void release_hooks() noexcept
 {
 	sv_cheats_hook->unhook();

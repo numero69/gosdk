@@ -38,7 +38,21 @@ void render_text(const int x, const int y, unsigned font,
 		 utilities::color color, const std::wstring_view text) noexcept
 {
 	csgo::valve::interfaces::c_surface->set_text_position(x, y);
+	csgo::valve::interfaces::c_surface->set_text_font(font);
 	csgo::valve::interfaces::c_surface->set_text_color(color);
 	csgo::valve::interfaces::c_surface->print_text(text);
+}
+
+void run_render() noexcept
+{
+	verdana = csgo::valve::interfaces::c_surface->create_font();
+	
+	csgo::valve::interfaces::c_surface->set_font_glyph_set(
+		verdana, "Verdana", 13, 600, 0, 0, font_flags::fontflag_antialias | font_flags::fontflag_outline);
+}
+
+void release_render() noexcept
+{
+	verdana = NULL;
 }
 } // namespace utilities::render

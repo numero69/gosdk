@@ -22,7 +22,7 @@ enum class movetypes {
 	movetype_max_bits = 4
 };
 
-enum entity_flags {
+enum entity_flags{
 	fl_onground = (1 << 0),
 	fl_ducking = (1 << 1),
 	fl_waterjump = (1 << 2),

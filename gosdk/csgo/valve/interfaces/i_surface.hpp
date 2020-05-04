@@ -97,15 +97,15 @@ class i_surface {
 	}
 
 	constexpr auto set_font_glyph_set(std::uint32_t font,
-					  const char *fontName, int tall,
+					  const char *font_name, int tall,
 					  int weight, int blur, int scanlines,
-					  int flags, int rangeMin = 0,
-					  int rangeMax = 0) noexcept
+					  int flags, int range_min = 0,
+					  int range_max = 0) noexcept
 	{
 		return utilities::memory::call_virtual_method<
 			bool, unsigned, const char *, int, int, int, int, int,
-			int, int>(this, 72, font, fontName, tall, weight, blur,
-				  scanlines, flags, rangeMin, rangeMax);
+			int, int>(this, 72, font, font_name, tall, weight, blur,
+				  scanlines, flags, range_min, range_max);
 	}
 
 	constexpr auto get_text_size(std::uint32_t font,

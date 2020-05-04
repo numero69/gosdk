@@ -3,9 +3,9 @@
 #include "csgo/valve/global.hpp"
 #include "config/global.hpp"
 
-LPVOID InitializeHack(HMODULE Instance)
+LPVOID initialize_hack(HMODULE instance)
 {
-	utilities::globals::this_module = Instance;
+	utilities::globals::this_module = instance;
 	try {
 		utilities::console::initialize_console(
 			STR("gosdk"), STR("welcome, initialized"));
@@ -14,6 +14,7 @@ LPVOID InitializeHack(HMODULE Instance)
 		config::run_config();
 
 		csgo::valve::interfaces::run_interfaces();
+		utilities::render::run_render();
 		utilities::hooking::run_hooks();
 		csgo::valve::netvar::init();
 	} catch (const std::exception &e) {
@@ -27,32 +28,33 @@ LPVOID InitializeHack(HMODULE Instance)
 
 	utilities::console::destroy_console();
 	utilities::hooking::release_hooks();
+	utilities::render::release_render();
 	csgo::valve::interfaces::release_interfaces();
 
 	// release config after everything
 	config::release_config();
 
-	FreeLibraryAndExitThread(Instance, NULL);
+	FreeLibraryAndExitThread(instance, NULL);
 }
 
-std::uint8_t WINAPI DllMain(HINSTANCE Instance, DWORD CallReason,
-			    LPVOID Reserved [[maybe_unused]])
+std::uint8_t WINAPI DllMain(HINSTANCE instance, DWORD call_reason,
+			    LPVOID reserved [[maybe_unused]])
 {
-	if (CallReason != DLL_PROCESS_ATTACH)
+	if (call_reason != DLL_PROCESS_ATTACH)
 		return false;
 
-	const auto ThreadHandle = CreateThread(
+	const auto thread_handle = CreateThread(
 		nullptr, NULL,
-		reinterpret_cast<LPTHREAD_START_ROUTINE>(InitializeHack),
-		reinterpret_cast<LPVOID>(Instance), NULL, nullptr);
+		reinterpret_cast<LPTHREAD_START_ROUTINE>(initialize_hack),
+		reinterpret_cast<LPVOID>(instance), NULL, nullptr);
 
-	if (ThreadHandle == nullptr || ThreadHandle == INVALID_HANDLE_VALUE) {
+	if (thread_handle == nullptr || thread_handle == INVALID_HANDLE_VALUE) {
 		MessageBoxA(nullptr,
 			    STR("failed to create initialization thread."),
 			    STR("error"), MB_OKCANCEL);
 		return false;
 	}
 
-	CloseHandle(ThreadHandle);
+	CloseHandle(thread_handle);
 	return true;
 }

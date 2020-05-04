@@ -3,7 +3,7 @@
 #include "../../../utilities/global.hpp"
 namespace csgo::valve::interfaces
 {
-enum button_code_t {
+enum class button_code_t {
 	BUTTON_CODE_INVALID = -1,
 	BUTTON_CODE_NONE = 0,
 
