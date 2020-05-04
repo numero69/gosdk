@@ -9,6 +9,9 @@
 // GLOBAL
 #include "global/globals.hpp"
 
+// RENDER
+#include "rendering/render.hpp"
+
 // SHARED
 #include "easing/global.hpp"
 #include "math/global.hpp"

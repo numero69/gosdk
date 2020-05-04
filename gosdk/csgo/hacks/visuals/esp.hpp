@@ -9,8 +9,8 @@ namespace csgo::hacks::visuals::esp
 inline bool bounding_box(csgo::valve::classes::c_player *player,
 			 csgo::valve::classes::rect &box) noexcept
 {
-	const utilities::math::vec2_t flb{}, brt{}, blb{}, frt{}, frb{}, brb{}, blt{},
-		flt{}, out{};
+	const utilities::math::vec2_t flb{}, brt{}, blb{}, frt{}, frb{}, brb{},
+		blt{}, flt{}, out{};
 
 	const utilities::math::vec3_t origin = player->origin();
 	const utilities::math::vec3_t mins =
@@ -72,23 +72,24 @@ inline bool bounding_box(csgo::valve::classes::c_player *player,
 }
 
 inline void draw_box(csgo::valve::classes::rect &box,
-		     utilities::color color_main, utilities::color color_outline) noexcept
+		     utilities::color color_main,
+		     utilities::color color_outline) noexcept
 {
-	csgo::valve::interfaces::c_surface->set_draw_color(color_main);
-	csgo::valve::interfaces::c_surface->draw_outlined_rect(
-		box.x, box.y, box.right(), box.bottom());
+	utilities::render::render_box_outline(box.x, box.y, box.right(),
+					      box.bottom(), color_main, false);
 
-	csgo::valve::interfaces::c_surface->set_draw_color(color_outline);
-	csgo::valve::interfaces::c_surface->draw_outlined_rect(
-		box.x - 1, box.y - 1, box.right() + 1, box.bottom() + 1);
-	csgo::valve::interfaces::c_surface->draw_outlined_rect(
-		box.x + 1, box.y + 1, box.right() - 1, box.bottom() - 1);
+	utilities::render::render_box_outline(box.x - 1, box.y - 1,
+					      box.right() + 1, box.bottom() + 1,
+					      color_outline, false);
+	utilities::render::render_box_outline(box.x + 1, box.y + 1,
+					      box.right() - 1, box.bottom() - 1,
+					      color_outline, false);
 }
 
 inline void run_esp() noexcept
 {
-	for (int i = 1; i <= csgo::valve::interfaces::c_global_vars->max_clients;
-	     i++) {
+	for (int i = 1;
+	     i <= csgo::valve::interfaces::c_global_vars->max_clients; i++) {
 		auto player =
 			csgo::valve::interfaces::c_entity_list->get_entity(i);
 
@@ -101,9 +102,10 @@ inline void run_esp() noexcept
 		if (!bounding_box(player, box))
 			continue;
 
-		draw_box(box, utilities::color(255, 255, 255, 255), utilities::color(0, 0, 0, 255));
+		draw_box(box, utilities::color(255, 255, 255, 255),
+			 utilities::color(0, 0, 0, 255));
 	}
 }
 
 auto on_paint_traverse = []() { esp::run_esp(); };
-} // namespace csgo::hacks::misc::visuals
+} // namespace csgo::hacks::visuals::esp

@@ -46,6 +46,7 @@
     <ClInclude Include="csgo\hacks\visuals\esp.hpp" />
     <ClInclude Include="csgo\valve\classes\bounds.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_client_unknown.hpp" />
+    <ClInclude Include="utilities\rendering\render.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utilities\hooking\hook.cpp" />
@@ -54,5 +55,6 @@
     <ClCompile Include="csgo\valve\interfaces.cpp" />
     <ClCompile Include="config\config.cpp" />
     <ClCompile Include="csgo\valve\utilities\netvar\netvar.cpp" />
+    <ClCompile Include="utilities\rendering\render.cpp" />
   </ItemGroup>
 </Project>

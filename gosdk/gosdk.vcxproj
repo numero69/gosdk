@@ -64,6 +64,7 @@
     <ClInclude Include="utilities\math\vector3d.hpp" />
     <ClInclude Include="utilities\memory\global.hpp" />
     <ClInclude Include="utilities\memory\memory.hpp" />
+    <ClInclude Include="utilities\rendering\render.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="config\config.cpp" />
@@ -72,6 +73,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="utilities\hooking\hook.cpp" />
     <ClCompile Include="utilities\hooking\vmt.cpp" />
+    <ClCompile Include="utilities\rendering\render.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -6,12 +6,12 @@ namespace csgo::valve::classes
 {
 class rect {
     public:
-	float x, y, w, h;
+	int x, y, w, h;
 
 	rect() = default;
 	~rect() = default;
 
-	rect(float x, float y, float w, float h) : x(x), y(y), w(w), h(h)
+	rect(int x, int y, int w, int h) : x(x), y(y), w(w), h(h)
 	{
 	}
 	rect(const utilities::math::vec2_t &tl,
@@ -26,12 +26,12 @@ class rect {
 	rect(rect &&) = default;
 	rect &operator=(rect &&) = default;
 
-	float right() const
+	int right() const
 	{
 		return x + w;
 	}
 
-	float bottom() const
+	int bottom() const
 	{
 		return y + h;
 	}

@@ -36,21 +36,26 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 
 	if (csgo::valve::interfaces::c_panel->get_name(panel) ==
 	    STR("MatSystemTopPanel")) {
+
+		/*
+		debugging purposes
+		utilities::render::render_box(
+			15, 15, 20, 20, utilities::color(255, 255, 255, 255), true);
+		utilities::render::render_box(
+			50, 15, 20, 20, utilities::color(255, 255, 255, 255), true);
+		utilities::render::render_box(
+			90, 15, 90 + 10, 20, utilities::color(255, 255, 255, 255), false);
+		utilities::render::render_circle(
+			15, 40, 25, utilities::color(255, 255, 255, 255));
+		utilities::render::render_circle_outline(
+			50, 40, 25, 25, utilities::color(255, 255, 255, 255));
+		utilities::render::render_text(
+			15, 90, 0x1C, utilities::color(255, 255, 255, 255),
+			L"hello there!");
+		*/
+
 		if (csgo::valve::interfaces::c_engine_client->is_in_game()) {
 			csgo::hacks::visuals::esp::run_esp();
-			/* for debugging - if you read this, it's here because I have not yet written a Surface wrapper.
-			csgo::valve::interfaces::c_surface->set_draw_color(
-				utilities::color(255, 255, 255, 255));
-			csgo::valve::interfaces::c_surface->draw_filled_rect(
-				15, 15, 250, 250);
-			csgo::valve::interfaces::c_surface->set_text_color(
-				utilities::color(255, 255, 255, 255));
-			csgo::valve::interfaces::c_surface->set_text_position(
-				1000, 1000);
-			csgo::valve::interfaces::c_surface->set_text_font(0x1c);
-			csgo::valve::interfaces::c_surface->print_text(
-				L"example of usage with GDI handles");
-			*/
 		}
 	}
 
