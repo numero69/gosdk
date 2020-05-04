@@ -47,6 +47,7 @@ bool settings::save(const std::string &config_file_name)
 	output_config.close();
 	return true;
 }
+
 bool settings::load(const std::string &config_file_name)
 {
 	if (!std::filesystem::exists(std::filesystem::current_path() /
@@ -57,20 +58,20 @@ bool settings::load(const std::string &config_file_name)
 	nlohmann::json config = nlohmann::json::parse(input_config);
 	for (const auto &[setting, value] : config.items()) {
 		switch (value[STR("type")].get<int>()) {
-		case 0: /* Int */
+		case 0:
 			m_settings[setting] = value[STR("itself")].get<int>();
 			break;
-		case 1: /* Bool */
+		case 1:
 			m_settings[setting] = value[STR("itself")].get<bool>();
 			break;
-		case 2: /* Float */
+		case 2:
 			m_settings[setting] = value[STR("itself")].get<float>();
 			break;
-		case 3: /* std::string */
+		case 3:
 			m_settings[setting] =
 				value[STR("itself")].get<std::string>();
 			break;
-		case 4: { /* std::string */
+		case 4:
 			this->get<utilities::color>(setting).red =
 				value[STR("itself_r")].get<float>();
 			this->get<utilities::color>(setting).green =
@@ -78,31 +79,31 @@ bool settings::load(const std::string &config_file_name)
 			this->get<utilities::color>(setting).blue =
 				value[STR("itself_b")].get<float>();
 			break;
-		}
 		}
 	}
 	input_config.close();
 	return true;
 }
+
 bool settings::load_clipboard(const std::string &data)
 {
 	nlohmann::json config = nlohmann::json::parse(data);
 	for (const auto &[setting, value] : config.items()) {
 		switch (value[STR("type")].get<int>()) {
-		case 0: /* Int */
+		case 0:
 			m_settings[setting] = value[STR("itself")].get<int>();
 			break;
-		case 1: /* Bool */
+		case 1:
 			m_settings[setting] = value[STR("itself")].get<bool>();
 			break;
-		case 2: /* Float */
+		case 2:
 			m_settings[setting] = value[STR("itself")].get<float>();
 			break;
-		case 3: /* std::string */
+		case 3:
 			m_settings[setting] =
 				value[STR("itself")].get<std::string>();
 			break;
-		case 4: {
+		case 4:
 			this->get<utilities::color>(setting).red =
 				value[STR("itself_r")].get<float>();
 			this->get<utilities::color>(setting).green =
@@ -111,9 +112,7 @@ bool settings::load_clipboard(const std::string &data)
 				value[STR("itself_b")].get<float>();
 			break;
 		}
-		}
 	}
 	return true;
 }
-
 } // namespace config

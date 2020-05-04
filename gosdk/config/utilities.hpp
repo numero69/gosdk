@@ -12,6 +12,7 @@ inline void release_config()
 {
 	configs.reset();
 }
+
 inline void to_clipboard(const std::string &s)
 {
 	OpenClipboard(0);

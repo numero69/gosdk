@@ -16,7 +16,8 @@
 
 namespace config
 {
-#define add_setting(setting, default_value) m_settings[setting] = default_value;
+#define add_setting(setting, default_value)                                    \
+	m_settings[STR(setting)] = default_value;
 struct settings {
 	using setting_t =
 		std::variant<int, bool, float, std::string, utilities::color>;
@@ -25,7 +26,7 @@ struct settings {
     public:
 	settings()
 	{
-		add_setting(STR("test_boolean"), false);
+		add_setting("test_boolean", false);
 	}
 
 	template <typename type> type &get(const std::string &setting)
