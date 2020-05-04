@@ -18,6 +18,7 @@ inline i_client_mode *c_client_mode{};
 inline i_entity_list *c_entity_list{};
 inline i_engine_client *c_engine_client{};
 inline i_global_vars *c_global_vars{};
+inline i_debug_overlay *c_debug_overlay{};
 
 void run_interfaces() noexcept;
 void release_interfaces() noexcept;

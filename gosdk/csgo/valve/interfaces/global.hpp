@@ -8,3 +8,4 @@
 #include "i_entity_list.hpp"
 #include "i_engine_client.hpp"
 #include "i_global_vars.hpp"
+#include "i_debug_overlay.hpp"

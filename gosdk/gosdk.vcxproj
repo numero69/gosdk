@@ -36,6 +36,7 @@
     <ClInclude Include="csgo\valve\interfaces\global.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_base_client_dll.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_console.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_debug_overlay.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_engine_client.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_entity_list.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_global_vars.hpp" />

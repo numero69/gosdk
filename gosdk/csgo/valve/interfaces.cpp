@@ -42,6 +42,14 @@ void run_interfaces() noexcept
 		utilities::console::log<std::string>(STR(
 			"failed @ c_engine_client | engine.dll | VEngineClient014"));
 
+	c_debug_overlay = reinterpret_cast<i_debug_overlay *>(
+		utilities::memory::scan_interface(STR("engine.dll"),
+						  STR("VDebugOverlay004")));
+
+	if (!c_debug_overlay)
+		utilities::console::log<std::string>(STR(
+			"failed @ c_debug_overlay | engine.dll | VDebugOverlay004"));
+
 	c_console =
 		reinterpret_cast<i_console *>(utilities::memory::scan_interface(
 			STR("vstdlib.dll"), STR("VEngineCvar007")));
@@ -85,5 +93,6 @@ void release_interfaces() noexcept
 	c_entity_list = nullptr;
 	c_engine_client = nullptr;
 	c_global_vars = nullptr;
+	c_debug_overlay = nullptr;
 }
 } // namespace csgo::valve::interfaces
