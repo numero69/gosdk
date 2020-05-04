@@ -30,6 +30,8 @@ void render_circle(const int x, const int y, const int radius,
 void render_circle_outline(const int x, const int y, const int radius,
 				  const int segments,
 				  utilities::color color) noexcept;
+void render_line(const int x, const int y, const int x1, const int y1,
+		 utilities::color color) noexcept;
 void render_text(const int x, const int y, unsigned font,
 			utilities::color color,
 			const std::wstring_view text) noexcept;

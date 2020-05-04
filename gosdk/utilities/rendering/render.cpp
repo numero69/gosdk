@@ -34,6 +34,13 @@ void render_circle_outline(const int x, const int y, const int radius,
 								 segments);
 }
 
+void render_line(const int x, const int y, const int x1, const int y1,
+		 utilities::color color) noexcept
+{
+	csgo::valve::interfaces::c_surface->set_draw_color(color);
+	csgo::valve::interfaces::c_surface->draw_line(x, y, x1, y1);
+}
+
 void render_text(const int x, const int y, unsigned font,
 		 utilities::color color, const std::wstring_view text) noexcept
 {

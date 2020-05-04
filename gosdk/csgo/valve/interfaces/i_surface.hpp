@@ -43,7 +43,7 @@ class i_surface {
 			static_cast<int>(x1), static_cast<int>(y1));
 	}
 
-	constexpr auto set_text_font(std::uint32_t font) noexcept
+	constexpr auto set_text_font(unsigned font) noexcept
 	{
 		utilities::memory::call_virtual_method<void, unsigned>(this, 23,
 								       font);
@@ -96,7 +96,7 @@ class i_surface {
 									71);
 	}
 
-	constexpr auto set_font_glyph_set(std::uint32_t font,
+	constexpr auto set_font_glyph_set(unsigned font,
 					  const char *font_name, int tall,
 					  int weight, int blur, int scanlines,
 					  int flags, int range_min = 0,
@@ -108,7 +108,7 @@ class i_surface {
 				  scanlines, flags, range_min, range_max);
 	}
 
-	constexpr auto get_text_size(std::uint32_t font,
+	constexpr auto get_text_size(unsigned font,
 				     const wchar_t *text) noexcept
 	{
 		int width{}, height{};
