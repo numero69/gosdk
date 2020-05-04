@@ -41,6 +41,7 @@
     <ClInclude Include="csgo\valve\classes\players.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_entity_list.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_engine_client.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_global_vars.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utilities\hooking\hook.cpp" />

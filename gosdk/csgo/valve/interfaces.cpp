@@ -2,15 +2,6 @@
 
 namespace csgo::valve::interfaces
 {
-i_console *c_console = nullptr;
-i_surface *c_surface = nullptr;
-i_input_system *c_input_system = nullptr;
-i_panel *c_panel = nullptr;
-i_base_client_dll *c_client = nullptr;
-i_client_mode *c_client_mode = nullptr;
-i_entity_list *c_entity_list = nullptr;
-i_engine_client *c_engine_client = nullptr;
-
 void run_interfaces() noexcept
 {
 	c_client = reinterpret_cast<i_base_client_dll *>(
@@ -27,6 +18,13 @@ void run_interfaces() noexcept
 	if (!c_client_mode)
 		utilities::console::log<std::string>(STR(
 			"failed @ c_client_mode | check source for more information...")); // ohh yeahh ohh yeahh ohh yeaaaaahhh
+
+	c_global_vars = **reinterpret_cast<i_global_vars ***>(
+		(*reinterpret_cast<uintptr_t **>(c_client))[11] + 10);
+
+	if (!c_global_vars)
+		utilities::console::log<std::string>(STR(
+			"failed @ c_global_vars | check source for more information...")); // ohh yeahh ohh yeahh ohh yeaaaaahhh x2
 
 	c_entity_list = reinterpret_cast<i_entity_list *>(
 		utilities::memory::scan_interface(STR("client_panorama.dll"),
@@ -86,5 +84,6 @@ void release_interfaces() noexcept
 	c_client_mode = nullptr;
 	c_entity_list = nullptr;
 	c_engine_client = nullptr;
+	c_global_vars = nullptr;
 }
 } // namespace csgo::valve::interfaces
