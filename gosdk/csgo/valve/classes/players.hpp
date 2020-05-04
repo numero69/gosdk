@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../utilities/netvar/global.hpp"
+#include "../interfaces/i_client_unknown.hpp"
 
 namespace csgo::valve::classes
 {
@@ -56,7 +57,7 @@ enum entity_flags {
 };
 
 // XOR'd in wrapper
-class c_player {
+class c_player : public csgo::valve::interfaces::i_client_unknown {
     public:
 	netvar(int, health, "DT_BasePlayer->m_iHealth");
 	netvar(std::uint8_t, life_state, "DT_BasePlayer->m_lifeState");
@@ -74,6 +75,7 @@ class c_player {
 	netvar(utilities::math::vec3_t, vel,
 	       "DT_LocalPlayerExclusive->m_vecVelocity[0]");
 	netvar_additive(movetypes, movetype, "DT_BaseEntity->m_nRenderMode", 1);
+	netvar(utilities::math::vec3_t, origin, "DT_BaseEntity->m_vecOrigin");
 
 	bool is_alive()
 	{

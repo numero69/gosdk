@@ -43,6 +43,9 @@
     <ClInclude Include="csgo\valve\interfaces\i_engine_client.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_global_vars.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_debug_overlay.hpp" />
+    <ClInclude Include="csgo\hacks\visuals\esp.hpp" />
+    <ClInclude Include="csgo\valve\classes\bounds.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_client_unknown.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utilities\hooking\hook.cpp" />

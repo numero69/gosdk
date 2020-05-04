@@ -4,7 +4,7 @@
 
 namespace csgo::hacks::misc::movement
 {
-inline void bunny_hop()
+inline void bunny_hop() noexcept
 {
 	if (utilities::globals::local->movetype() !=
 		    csgo::valve::classes::movetypes::movetype_ladder &&
@@ -22,7 +22,7 @@ inline void bunny_hop()
 	}
 }
 
-inline void no_duck_delay()
+inline void no_duck_delay() noexcept
 {
 	utilities::globals::cmd->buttons.add_flag(
 		csgo::valve::classes::user_cmd::in_bullrush);

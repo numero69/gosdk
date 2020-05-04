@@ -37,6 +37,8 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 	if (csgo::valve::interfaces::c_panel->get_name(panel) ==
 	    STR("MatSystemTopPanel")) {
 		if (csgo::valve::interfaces::c_engine_client->is_in_game()) {
+			csgo::hacks::visuals::esp::run_esp();
+			/* for debugging - if you read this, it's here because I have not yet written a Surface wrapper.
 			csgo::valve::interfaces::c_surface->set_draw_color(
 				utilities::color(255, 255, 255, 255));
 			csgo::valve::interfaces::c_surface->draw_filled_rect(
@@ -48,6 +50,7 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 			csgo::valve::interfaces::c_surface->set_text_font(0x1c);
 			csgo::valve::interfaces::c_surface->print_text(
 				L"example of usage with GDI handles");
+			*/
 		}
 	}
 
@@ -66,10 +69,6 @@ static bool __fastcall create_move(void *ecx, void *edx,
 		csgo::valve::interfaces::c_entity_list->get_entity(
 			csgo::valve::interfaces::c_engine_client
 				->get_local_player());
-
-	if (csgo::valve::interfaces::c_engine_client->is_connected() &&
-	    csgo::valve::interfaces::c_engine_client->is_in_game())
-		std::cout << utilities::globals::local->health() << std::endl;
 
 	csgo::hacks::misc::movement::on_create_move();
 

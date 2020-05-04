@@ -145,6 +145,6 @@ template <typename T> struct vec2 {
 
 		return *this;
 	}
-	using vec2_t = vec2<float>;
 };
+using vec2_t = vec2<float>;
 } // namespace utilities::math
