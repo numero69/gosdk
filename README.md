@@ -17,4 +17,5 @@ gosdk currently comes with the IConsole interface, ISurface interface, IInputSys
 Credits for gosdk go to places where I take inspiration from, and that would be:
 - @DucaRii for csgo_modest [his project helped me with the math utilities].
 - @ReigN [unknowncheats.me] for their SDK that I have got the VMT Hooking class from, which was a total time saver, despite some nitpickable issues that are not occouring within this project.
+- A few UnknownCheats users for functions that were already posted there to make my life easier.
 - Every supposive contributor.
