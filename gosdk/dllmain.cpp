@@ -25,17 +25,13 @@ LPVOID InitializeHack(HMODULE Instance)
 		std::this_thread::sleep_for(15ms);
 	}
 
-	// just in case
-	try {
-		utilities::console::destroy_console();
-		utilities::hooking::release_hooks();
-		csgo::valve::interfaces::release_interfaces();
+	utilities::console::destroy_console();
+	utilities::hooking::release_hooks();
+	csgo::valve::interfaces::release_interfaces();
 
-		// release config after everything
-		config::release_config();
-	} catch (const std::exception &e) {
-		utilities::console::log<std::string>(e.what());
-	}
+	// release config after everything
+	config::release_config();
+
 	FreeLibraryAndExitThread(Instance, NULL);
 }
 
