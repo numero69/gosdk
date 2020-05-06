@@ -13,6 +13,8 @@ To contribute to gosdk, you need to always adapt your code to the clang format, 
 # features
 gosdk currently comes with the IConsole interface, ISurface interface, IInputSystem interface, IPanel interface, IBaseClientDLL for Client interface, ClientMode interface, IEngineClient interface, IEntityList interface, IGlobalVars interface, IDebugOverlay interface, a basic Surface wrapper, a Netvar scanner, a VMT hooking class, sv_cheats bypass (hooked), grenade trajectory (convar, hooked), lock cursor [currently while Insert is hold] (hooked), paint traverse [hooked], create move [hooked], ability to do basic rendering, a console with logging, basic error handling, math utilities, various easing functions and utilities which include a color handler and a config system, memory functions, bunny hop and no duck delay through bitflag easing, Box ESP. These are not final and are to be updated.
 
+Besides the cheating functions, gosdk comes with compability with IDEs like CLion, VSC, Vim, etc... based on the secondary way of project solution generation, by adding a ready-to-use CMake config to the repository. If you use the CMake solution method, you can delete any VS generated file in favor of those provided, or if you use the VS solution method, you can just delete the CMake related ones.
+
 # credits
 Credits for gosdk go to places where I take inspiration from, and that would be:
 - @DucaRii for csgo_modest [his project helped me with the math utilities].
