@@ -86,6 +86,21 @@ inline void draw_box(csgo::valve::classes::rect &box,
 					      color_outline, false);
 }
 
+inline void draw_line(utilities::math::vec3_t &entity_origin,
+		      utilities::color color) noexcept
+{
+	utilities::math::vec3_t post_w2s_vec{};
+	csgo::valve::interfaces::c_debug_overlay->world_to_screen(entity_origin,
+								  post_w2s_vec);
+
+	auto [width, height] =
+		csgo::valve::interfaces::c_surface->get_screen_size();
+
+	utilities::render::render_line(width / 2, height / 2, post_w2s_vec.x,
+				       post_w2s_vec.y,
+				       utilities::color(255, 255, 255, 255));
+}
+
 inline void run_esp() noexcept
 {
 	for (int i = 1;
@@ -104,6 +119,9 @@ inline void run_esp() noexcept
 
 		draw_box(box, utilities::color(255, 255, 255, 255),
 			 utilities::color(0, 0, 0, 255));
+
+		draw_line(player->origin(),
+			  utilities::color(255, 255, 255, 255));
 	}
 }
 
