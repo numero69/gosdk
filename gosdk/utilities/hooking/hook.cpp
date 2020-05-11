@@ -83,7 +83,7 @@ static bool __fastcall create_move(void *ecx, void *edx,
 
 	cmd->forward_move = std::clamp(cmd->forward_move, -450.0f, 450.0f);
 	cmd->side_move = std::clamp(cmd->side_move, -450.0f, 450.0f);
-	cmd->up_move = std::clamp(cmd->up_move, -450.0f, 450.0f);
+	cmd->up_move = std::clamp(cmd->up_move, -320.0f, 320.0f);
 
 	cmd->viewangles.x = std::clamp(cmd->viewangles.x, -89.0f, 89.0f);
 	cmd->viewangles.y = std::clamp(cmd->viewangles.y, -180.0f, 180.0f);
