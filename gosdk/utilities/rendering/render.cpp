@@ -53,9 +53,14 @@ void render_text(const int x, const int y, unsigned font,
 void run_render() noexcept
 {
 	verdana = csgo::valve::interfaces::p_surface->create_font();
-	
-	csgo::valve::interfaces::p_surface->set_font_glyph_set(
-		verdana, "Verdana", 13, 600, 0, 0, font_flags::fontflag_antialias | font_flags::fontflag_outline);
+	([]() {
+
+		csgo::valve::interfaces::p_surface->set_font_glyph_set(
+			verdana, "Verdana", 13, 600, 0, 0,
+			font_flags::fontflag_antialias |
+				font_flags::fontflag_outline);
+
+	})();
 }
 
 void release_render() noexcept

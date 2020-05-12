@@ -1,5 +1,6 @@
 #include "hook.hpp"
 #include "../../csgo/global.hpp"
+#include "../../config/config.hpp"
 #include <intrin.h>
 #include <algorithm>
 
@@ -40,6 +41,10 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 
 	if (csgo::valve::interfaces::p_panel->get_name(panel) ==
 	    STR("MatSystemTopPanel")) {
+		if (CONFIG_GET(bool, "test_boolean"))
+		utilities::render::render_text(
+			15, 15, utilities::render::verdana,
+			utilities::color(255, 255, 255, 255), L"Test");
 		if (csgo::valve::interfaces::p_engine_client->is_in_game()) {
 			csgo::hacks::visuals::esp::run_esp();
 		}

@@ -19,12 +19,16 @@
 ([]() { \
 return config::configs->get<type>(STR(name)); \
 })()
+#define CONFIG_SET(type, name, value) \
+config::configs->get<type>(STR(name)) = value; 
 // clang-format on
 
 namespace config
 {
-#define add_setting(setting, default_value)                                    \
-	m_settings[STR(setting)] = default_value;
+// clang-format off
+#define add_setting(setting, default_value) \
+m_settings[STR(setting)] = default_value;
+// clang-format on
 struct settings {
 	using setting_t =
 		std::variant<int, bool, float, std::string, utilities::color>;
