@@ -14,6 +14,13 @@
 #include "../dependencies/global.hpp"
 #include "../utilities/global.hpp"
 
+// clang-format off
+#define CONFIG_GET(type, name) \
+([]() { \
+return config::configs->get<type>(STR(name)); \
+})()
+// clang-format on
+
 namespace config
 {
 #define add_setting(setting, default_value)                                    \

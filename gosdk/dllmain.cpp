@@ -12,7 +12,6 @@ LPVOID initialize_hack(HMODULE instance)
 
 		// run config before everything
 		config::run_config();
-
 		csgo::valve::interfaces::run_interfaces();
 		utilities::render::run_render();
 		utilities::hooking::run_hooks();

@@ -34,7 +34,7 @@ void csgo::valve::netvar::init()
 {
 	ofs << STR("csgo netvar dump taken on ") << __DATE__ << std::endl;
 
-	for (auto pclass = csgo::valve::interfaces::c_client->get_all_classes();
+	for (auto pclass = csgo::valve::interfaces::p_client->get_all_classes();
 	     pclass; pclass = pclass->next_ptr) {
 		const auto table = pclass->recvtable_ptr;
 

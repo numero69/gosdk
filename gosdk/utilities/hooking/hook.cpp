@@ -21,14 +21,15 @@ static void __fastcall lock_cursor() noexcept
 		utilities::hooking::lock_cursor_idx);
 
 	if (GetAsyncKeyState(VK_INSERT)) {
-		csgo::valve::interfaces::c_surface->unlock_cursor();
-		csgo::valve::interfaces::c_input_system->enable_input(false);
+		csgo::valve::interfaces::p_surface->unlock_cursor();
+		csgo::valve::interfaces::p_input_system->enable_input(false);
+		return;
 	} else {
-		csgo::valve::interfaces::c_input_system->enable_input(true);
+		csgo::valve::interfaces::p_input_system->enable_input(true);
 	}
 
 	if (original)
-		return original(csgo::valve::interfaces::c_surface);
+		return original(csgo::valve::interfaces::p_surface);
 }
 
 static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
@@ -37,32 +38,14 @@ static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
 	static auto original = panel_hook->get_original_func<paint_traverse_fn>(
 		utilities::hooking::paint_traverse_idx);
 
-	if (csgo::valve::interfaces::c_panel->get_name(panel) ==
+	if (csgo::valve::interfaces::p_panel->get_name(panel) ==
 	    STR("MatSystemTopPanel")) {
-
-		/*
-		debugging purposes
-		utilities::render::render_box(
-			15, 15, 20, 20, utilities::color(255, 255, 255, 255), true);
-		utilities::render::render_box(
-			50, 15, 20, 20, utilities::color(255, 255, 255, 255), true);
-		utilities::render::render_box(
-			90, 15, 90 + 10, 20, utilities::color(255, 255, 255, 255), false);
-		utilities::render::render_circle(
-			15, 40, 25, utilities::color(255, 255, 255, 255));
-		utilities::render::render_circle_outline(
-			50, 40, 25, 25, utilities::color(255, 255, 255, 255));
-	utilities::render::render_text(
-			15, 90, utilities::render::verdana,
-			utilities::color(255, 255, 255, 255), L"hello there!");
-		*/
-
-		if (csgo::valve::interfaces::c_engine_client->is_in_game()) {
+		if (csgo::valve::interfaces::p_engine_client->is_in_game()) {
 			csgo::hacks::visuals::esp::run_esp();
 		}
 	}
 
-	original(csgo::valve::interfaces::c_panel, panel, force_repaint,
+	original(csgo::valve::interfaces::p_panel, panel, force_repaint,
 		 allow_force);
 }
 
@@ -75,11 +58,12 @@ static bool __fastcall create_move(void *ecx, void *edx,
 
 	utilities::globals::cmd = cmd;
 	utilities::globals::local =
-		csgo::valve::interfaces::c_entity_list->get_entity(
-			csgo::valve::interfaces::c_engine_client
+		csgo::valve::interfaces::p_entity_list->get_entity(
+			csgo::valve::interfaces::p_engine_client
 				->get_local_player());
 
-	csgo::hacks::misc::movement::on_create_move();
+	csgo::hacks::misc::movement::bunny_hop();
+	csgo::hacks::misc::movement::no_duck_delay();
 
 	cmd->forward_move = std::clamp(cmd->forward_move, -450.0f, 450.0f);
 	cmd->side_move = std::clamp(cmd->side_move, -450.0f, 450.0f);
@@ -96,14 +80,14 @@ void run_hooks() noexcept
 {
 	sv_cheats_hook = std::make_unique<utilities::hooking::vmt>();
 	sv_cheats_hook->init(
-		csgo::valve::interfaces::c_console->find_var(STR("sv_cheats")));
+		csgo::valve::interfaces::p_console->find_var(STR("sv_cheats")));
 	sv_cheats_hook->hook_func(
 		utilities::hooking::get_int_idx,
 		reinterpret_cast<void *>(utilities::hooking::sv_cheats));
 
 	cl_grenadepreview_hook = std::make_unique<utilities::hooking::vmt>();
 	cl_grenadepreview_hook->init(
-		csgo::valve::interfaces::c_console->find_var(
+		csgo::valve::interfaces::p_console->find_var(
 			STR("cl_grenadepreview")));
 	cl_grenadepreview_hook->hook_func(
 		utilities::hooking::get_int_idx,
@@ -111,19 +95,19 @@ void run_hooks() noexcept
 			utilities::hooking::cl_grenadepreview));
 
 	client_mode_hook = std::make_unique<utilities::hooking::vmt>();
-	client_mode_hook->init(csgo::valve::interfaces::c_client_mode);
+	client_mode_hook->init(csgo::valve::interfaces::p_client_mode);
 	client_mode_hook->hook_func(
 		utilities::hooking::create_move_idx,
 		reinterpret_cast<void *>(utilities::hooking::create_move));
 
 	surface_hook = std::make_unique<utilities::hooking::vmt>();
-	surface_hook->init(csgo::valve::interfaces::c_surface);
+	surface_hook->init(csgo::valve::interfaces::p_surface);
 	surface_hook->hook_func(
 		utilities::hooking::lock_cursor_idx,
 		reinterpret_cast<void *>(utilities::hooking::lock_cursor));
 
 	panel_hook = std::make_unique<utilities::hooking::vmt>();
-	panel_hook->init(csgo::valve::interfaces::c_panel);
+	panel_hook->init(csgo::valve::interfaces::p_panel);
 	panel_hook->hook_func(
 		utilities::hooking::paint_traverse_idx,
 		reinterpret_cast<void *>(utilities::hooking::paint_traverse));
