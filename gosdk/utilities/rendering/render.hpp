@@ -21,20 +21,17 @@ enum font_flags {
 };
 
 void render_box(const int x, const int y, const int w, const int h,
-		       utilities::color color, bool is_additive) noexcept;
-void render_box_outline(const int x, const int y, const int w,
-			       const int h, utilities::color color,
-			       bool is_additive) noexcept;
+		utilities::color color, bool is_additive) noexcept;
+void render_box_outline(const int x, const int y, const int w, const int h,
+			utilities::color color, bool is_additive) noexcept;
 void render_circle(const int x, const int y, const int radius,
-			  utilities::color color) noexcept;
+		   utilities::color color) noexcept;
 void render_circle_outline(const int x, const int y, const int radius,
-				  const int segments,
-				  utilities::color color) noexcept;
+			   const int segments, utilities::color color) noexcept;
 void render_line(const int x, const int y, const int x1, const int y1,
 		 utilities::color color) noexcept;
 void render_text(const int x, const int y, unsigned font,
-			utilities::color color,
-			const std::wstring_view text) noexcept;
+		 utilities::color color, const std::wstring_view text) noexcept;
 
 inline unsigned verdana{};
 

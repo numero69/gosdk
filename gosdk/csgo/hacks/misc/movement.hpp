@@ -27,9 +27,4 @@ inline void no_duck_delay() noexcept
 	utilities::globals::cmd->buttons.add_flag(
 		csgo::valve::classes::user_cmd::in_bullrush);
 }
-
-auto on_create_move = []() {
-	movement::bunny_hop();
-	movement::no_duck_delay();
-};
 } // namespace csgo::hacks::misc::movement

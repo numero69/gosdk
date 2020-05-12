@@ -6,11 +6,11 @@ constexpr float M_RADPI = 57.295779513082f;
 constexpr float M_PI_F = static_cast<float>(M_PI);
 constexpr float RAD2DEG(const float x)
 {
-	return x * (M_PI_F / 180.f);
+	return x * (180.f / M_PI_F);
 }
 constexpr float DEG2RAD(const float x)
 {
-	return x * (180.f / M_PI_F);
+	return x * (M_PI_F / 180.f);
 }
 
 // MATH INCLUDES

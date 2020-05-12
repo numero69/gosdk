@@ -42,7 +42,7 @@ inline bool bounding_box(csgo::valve::classes::c_player *player,
 	};
 
 	for (auto i = 0; i <= 7; ++i)
-		if (csgo::valve::interfaces::c_debug_overlay->world_to_screen(
+		if (csgo::valve::interfaces::p_debug_overlay->world_to_screen(
 			    points[i], scr_array[i]))
 			return false;
 
@@ -86,12 +86,27 @@ inline void draw_box(csgo::valve::classes::rect &box,
 					      color_outline, false);
 }
 
+inline void draw_line(utilities::math::vec3_t &entity_origin,
+		      utilities::color color) noexcept
+{
+	utilities::math::vec3_t post_w2s_vec{};
+	csgo::valve::interfaces::p_debug_overlay->world_to_screen(entity_origin,
+								  post_w2s_vec);
+
+	auto [width, height] =
+		csgo::valve::interfaces::p_surface->get_screen_size();
+
+	utilities::render::render_line(width / 2, height / 2, post_w2s_vec.x,
+				       post_w2s_vec.y,
+				       utilities::color(255, 255, 255, 255));
+}
+
 inline void run_esp() noexcept
 {
 	for (int i = 1;
-	     i <= csgo::valve::interfaces::c_global_vars->max_clients; i++) {
+	     i <= csgo::valve::interfaces::p_global_vars->max_clients; i++) {
 		auto player =
-			csgo::valve::interfaces::c_entity_list->get_entity(i);
+			csgo::valve::interfaces::p_entity_list->get_entity(i);
 
 		if (!player || !player->is_alive() ||
 		    player == utilities::globals::local)
@@ -104,8 +119,9 @@ inline void run_esp() noexcept
 
 		draw_box(box, utilities::color(255, 255, 255, 255),
 			 utilities::color(0, 0, 0, 255));
+
+		draw_line(player->origin(),
+			  utilities::color(255, 255, 255, 255));
 	}
 }
-
-auto on_paint_traverse = []() { esp::run_esp(); };
 } // namespace csgo::hacks::visuals::esp
