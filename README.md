@@ -15,6 +15,9 @@ gosdk currently comes with the IConsole interface, ISurface interface, IInputSys
 
 Besides the cheating functions, gosdk comes with compability for every IDE, based on the secondary way of project solution generation, by adding a ready-to-use CMake config to the repository. If you use the CMake solution method, you can delete any VS generated file in favor of those provided, or if you use the VS solution method, you can just delete the CMake related ones.
 
+# why should I use this?
+gosdk is aimed towards every developer by being very intuitive and trying to reach the best performance in a compact codebase. Besides performance, gosdk has very fast compilation times because it is built to revolve around header usage.
+
 # credits
 Credits for gosdk go to places where I take inspiration from, and that would be:
 - @DucaRii for csgo_modest [his project helped me with the math utilities].
