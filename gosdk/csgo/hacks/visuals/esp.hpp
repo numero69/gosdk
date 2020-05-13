@@ -80,10 +80,14 @@ namespace CS::Features::ESP {
 
       if ( !BoundingBox( Player, Box ) )
         continue;
-
-      DrawBox( Box, Utils::Color( 255, 255, 255, 255 ), Utils::Color( 0, 0, 0, 255 ) );
-
-      DrawLine( Player->Origin( ), Utils::Color( 255, 255, 255, 255 ) );
+      // players that are dormant will have reduced alpha
+      if ( Player->bDormant( ) ) {
+        DrawBox( Box, Utils::Color( 255, 255, 255, 100 ), Utils::Color( 0, 0, 0, 100 ) );
+        DrawLine( Player->Origin( ), Utils::Color( 255, 255, 255, 100 ) );
+    } else {
+        DrawBox( Box, Utils::Color( 255, 255, 255, 255 ), Utils::Color( 0, 0, 0, 255 ) );
+        DrawLine( Player->Origin( ), Utils::Color( 255, 255, 255, 255 ) );
+      }
     }
   }
 } // namespace CS::Features::ESP
