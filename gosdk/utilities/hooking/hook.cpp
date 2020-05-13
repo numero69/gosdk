@@ -48,7 +48,7 @@ namespace Utils::Hooking {
 
     CS::Features::Movement::BunnyHop( );
     CS::Features::Movement::NoDuckDelay( );
-
+    CS::Features::Movement::AutoStrafer( );
     Cmd->ForwardMove = std::clamp( Cmd->ForwardMove, -450.0f, 450.0f );
     Cmd->SideMove = std::clamp( Cmd->SideMove, -450.0f, 450.0f );
     Cmd->UpMove = std::clamp( Cmd->UpMove, -320.0f, 320.0f );
