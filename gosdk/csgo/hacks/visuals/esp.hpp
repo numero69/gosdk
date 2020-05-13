@@ -75,15 +75,22 @@ namespace CS::Features::ESP {
 
       if ( !Player || !Player->bIsAlive( ) || Player == Utils::Context::g_pLocal )
         continue;
-
+      //declare a color so we can just use EspColor later. 
+      Utils::Color EspColor = Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255 );
       CS::Classes::Box Box;
 
       if ( !BoundingBox( Player, Box ) )
         continue;
       // players that are dormant will have reduced alpha
 
-      DrawBox( Box, Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255  ), Utils::Color( 0, 0, 0, Player->bDormant( ) ? 100 : 255  ) );
-      DrawLine( Player->Origin( ), Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255 ) );
+      DrawBox( Box, EspColor, Utils::Color( 0, 0, 0, EspColor.uAlpha ) );
+      DrawLine( Player->Origin( ), EspColor );
+
+      //health ESP
+      Utils::Render::RenderText(
+          Box.x + 1, Box.y + 1, Utils::Render::ESP, EspColor, std::to_wstring( Player->Health( ) ) );
+      
+      
 
     }
   }
