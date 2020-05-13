@@ -1,93 +1,65 @@
 #pragma once
 
-#include <Windows.h>
-#include <memory>
-#include <stdexcept>
-#include <assert.h>
-#include <stdio.h>
+#include "../../csgo/valve/classes/user_cmd.hpp"
 #include "../../dependencies/global.hpp"
 #include "../../utilities/global.hpp"
-#include "../../csgo/valve/classes/user_cmd.hpp"
+#include <Windows.h>
+#include <assert.h>
+#include <memory>
+#include <stdexcept>
+#include <stdio.h>
 
-namespace utilities::hooking
-{
-class protect_guard {
-    public:
-	protect_guard(void *base, size_t len, std::uint32_t flags)
-	{
-		_base = base;
-		_length = len;
-		if (!VirtualProtect(base, len, flags, (PDWORD)&_old))
-			throw std::runtime_error(
-				STR("[gosdk] - failed to protect region."));
-	}
-	~protect_guard()
-	{
-		VirtualProtect(_base, _length, _old, (PDWORD)&_old);
-	}
+namespace Utils::Hooking {
+  /* Utilities */
+  class CVMT {
+  public:
+    CVMT( );
 
-    private:
-	void *_base;
-	size_t _length;
-	std::uint32_t _old;
-};
+    bool bInit( void * base );
 
-class vmt {
-    public:
-	vmt();
+    bool bHookFunction( const std::uint16_t index, void * function );
 
-	bool init(void *base);
+    bool bUnhookFunction( const std::uint16_t index );
 
-	bool hook_func(const std::uint16_t index, void *function);
+    bool bUnhook( );
 
-	bool unhook_func(const std::uint16_t index);
+    template <typename T = void *> T GetOriginalFunction( const std::uint16_t index ) {
+      return reinterpret_cast<T>( OriginalVMT[ index ] );
+    }
 
-	bool unhook();
+  private:
+    std::uint32_t GetVTLength( std::uintptr_t * table );
+    std::uintptr_t ** VMTBase = nullptr;
+    std::uint16_t TableLength = 0;
+    std::uintptr_t * OriginalVMT = nullptr;
+    std::unique_ptr<uintptr_t[]> ReplaceVMT = nullptr;
+    DWORD OldProtection{};
+  };
 
-	template <typename T = void *>
-	T get_original_func(const std::uint16_t index)
-	{
-		return reinterpret_cast<T>(orig_vmt[index]);
-	}
+  /* Indexes */
+  enum EFuncIndexes { GetIntIndex = 13, CreateMoveIndex = 24, PaintTraverseIndex = 41, LockCursorIndex = 67 };
 
-    private:
-	std::uint32_t get_vt_length(std::uintptr_t *table);
+  /* Pointers */
+  inline std::unique_ptr<Utils::Hooking::CVMT> g_pCheatsHook;
+  inline std::unique_ptr<Utils::Hooking::CVMT> g_pGrenadePreviewHook;
+  inline std::unique_ptr<Utils::Hooking::CVMT> g_pClientModeHook;
+  inline std::unique_ptr<Utils::Hooking::CVMT> g_pSurfaceHook;
+  inline std::unique_ptr<Utils::Hooking::CVMT> g_pPanelHook;
 
-	std::uintptr_t **vmt_base = nullptr;
-	std::uint16_t table_length = 0;
-	std::uintptr_t *orig_vmt = nullptr;
-	std::unique_ptr<uintptr_t[]> replace_vmt = nullptr;
-	DWORD old_protection{};
-};
+  /* Declarations */
+  static bool __stdcall bSvCheats( ) noexcept;
+  static bool __stdcall bGrenadePreview( ) noexcept;
 
-enum funcs_indexes {
-	get_int_idx = 13,
-	create_move_idx = 24,
-	paint_traverse_idx = 41,
-	lock_cursor_idx = 67
-};
+  static void __fastcall LockCursor( ) noexcept;
+  using LockCursor_t = void( __thiscall * )( void * );
 
-inline std::unique_ptr<utilities::hooking::vmt> sv_cheats_hook;
-inline std::unique_ptr<utilities::hooking::vmt> cl_grenadepreview_hook;
-inline std::unique_ptr<utilities::hooking::vmt> client_mode_hook;
-inline std::unique_ptr<utilities::hooking::vmt> surface_hook;
-inline std::unique_ptr<utilities::hooking::vmt> panel_hook;
+  static void __stdcall PaintTraverse( unsigned int Panel, bool ForceRepaint, bool AllowForce ) noexcept;
+  using PaintTraverse_t = void( __thiscall * )( void *, unsigned int, bool, bool );
 
-static bool __stdcall sv_cheats() noexcept;
-static bool __stdcall cl_grenadepreview() noexcept;
+  static bool __fastcall bCreateMove( void * ecx, void * edx, int InputSampleFrameTime, CS::Classes::CUserCmd * Cmd ) noexcept;
+  using CreateMove_t = bool( __stdcall * )( float, void * );
 
-static void __fastcall lock_cursor() noexcept;
-using lock_cursor_fn = void(__thiscall *)(void *);
-
-static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
-				     bool allow_force) noexcept;
-using paint_traverse_fn = void(__thiscall *)(void *, unsigned int, bool, bool);
-
-static bool __fastcall create_move(void *ecx, void *edx,
-				   int input_sample_frametime,
-				   csgo::valve::classes::user_cmd *cmd) noexcept;
-using create_move_fn = bool(__stdcall *)(float, void *);
-
-void run_hooks() noexcept;
-void release_hooks() noexcept;
-} // namespace utilities::hooking
+  /* Handlers */
+  void RunHooks( ) noexcept;
+  void ReleaseHooks( ) noexcept;
+} // namespace Utils::Hooking

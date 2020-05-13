@@ -1,129 +1,92 @@
 #include "hook.hpp"
-#include "../../csgo/global.hpp"
 #include "../../config/config.hpp"
-#include <intrin.h>
+#include "../../csgo/global.hpp"
 #include <algorithm>
+#include <intrin.h>
 
-namespace utilities::hooking
-{
-static bool __stdcall sv_cheats() noexcept
-{
-	return true;
-}
+namespace Utils::Hooking {
+  static bool __stdcall bSvCheats( ) noexcept { return true; }
 
-static bool __stdcall cl_grenadepreview() noexcept
-{
-	return true;
-}
+  static bool __stdcall bGrenadePreview( ) noexcept { return true; }
 
-static void __fastcall lock_cursor() noexcept
-{
-	static auto original = surface_hook->get_original_func<lock_cursor_fn>(
-		utilities::hooking::lock_cursor_idx);
+  static void __fastcall LockCursor( ) noexcept {
+    static auto Original = g_pSurfaceHook->GetOriginalFunction<LockCursor_t>( EFuncIndexes::LockCursorIndex );
 
-	if (GetAsyncKeyState(VK_INSERT)) {
-		csgo::valve::interfaces::p_surface->unlock_cursor();
-		csgo::valve::interfaces::p_input_system->enable_input(false);
-		return;
-	} else {
-		csgo::valve::interfaces::p_input_system->enable_input(true);
-	}
+    if ( GetAsyncKeyState( VK_INSERT ) ) {
+      CS::Interfaces::g_pSurface->UnlockCursor( );
+      CS::Interfaces::g_pInputSystem->EnableInput( false );
+      return;
+    } else {
+      CS::Interfaces::g_pInputSystem->EnableInput( true );
+    }
 
-	if (original)
-		return original(csgo::valve::interfaces::p_surface);
-}
+    if ( Original )
+      return Original( CS::Interfaces::g_pSurface );
+  }
 
-static void __stdcall paint_traverse(unsigned int panel, bool force_repaint,
-				     bool allow_force) noexcept
-{
-	static auto original = panel_hook->get_original_func<paint_traverse_fn>(
-		utilities::hooking::paint_traverse_idx);
+  static void __stdcall PaintTraverse( unsigned int Panel, bool ForceRepaint, bool AllowForce ) noexcept {
+    static auto Original = g_pPanelHook->GetOriginalFunction<PaintTraverse_t>( EFuncIndexes::PaintTraverseIndex );
 
-	if (csgo::valve::interfaces::p_panel->get_name(panel) ==
-	    STR("MatSystemTopPanel")) {
-		if (CONFIG_GET(bool, "test_boolean"))
-		utilities::render::render_text(
-			15, 15, utilities::render::verdana,
-			utilities::color(255, 255, 255, 255), L"Test");
-		if (csgo::valve::interfaces::p_engine_client->is_in_game()) {
-			csgo::hacks::visuals::esp::run_esp();
-		}
-	}
+    if ( CS::Interfaces::g_pPanel->GetName( Panel ) == STR( "MatSystemTopPanel" ) ) {
+      //		if (CONFIG_GET(bool, "test_boolean"))
+      Utils::Render::RenderText( 15, 15, Utils::Render::Verdana, Utils::Color( 255, 255, 255, 255 ), L"Test" );
+      if ( CS::Interfaces::g_pEngineClient->IsInGame( ) && CS::Interfaces::g_pEngineClient->IsConnected( ) ) {
+        CS::Features::ESP::RunEsp( );
+      }
+    }
 
-	original(csgo::valve::interfaces::p_panel, panel, force_repaint,
-		 allow_force);
-}
+    if ( Original )
+      Original( CS::Interfaces::g_pPanel, Panel, ForceRepaint, AllowForce );
+  }
 
-static bool __fastcall create_move(void *ecx, void *edx,
-				   int input_sample_frametime,
-				   csgo::valve::classes::user_cmd *cmd) noexcept
-{
-	if (!input_sample_frametime || !cmd || !cmd->command_number)
-		return false;
+  static bool __fastcall bCreateMove( void * ecx, void * edx, int InputSampleFrameTime, CS::Classes::CUserCmd * Cmd ) noexcept {
+    if ( !InputSampleFrameTime || !Cmd || !Cmd->CommandNumber )
+      return false;
 
-	utilities::globals::cmd = cmd;
-	utilities::globals::local =
-		csgo::valve::interfaces::p_entity_list->get_entity(
-			csgo::valve::interfaces::p_engine_client
-				->get_local_player());
+    Utils::Context::g_pCmd = Cmd;
+    Utils::Context::g_pLocal = CS::Interfaces::g_pEntityList->GetEntity( CS::Interfaces::g_pEngineClient->GetLocalPlayer( ) );
 
-	csgo::hacks::misc::movement::bunny_hop();
-	csgo::hacks::misc::movement::no_duck_delay();
+    CS::Features::Movement::BunnyHop( );
+    CS::Features::Movement::NoDuckDelay( );
 
-	cmd->forward_move = std::clamp(cmd->forward_move, -450.0f, 450.0f);
-	cmd->side_move = std::clamp(cmd->side_move, -450.0f, 450.0f);
-	cmd->up_move = std::clamp(cmd->up_move, -320.0f, 320.0f);
+    Cmd->ForwardMove = std::clamp( Cmd->ForwardMove, -450.0f, 450.0f );
+    Cmd->SideMove = std::clamp( Cmd->SideMove, -450.0f, 450.0f );
+    Cmd->UpMove = std::clamp( Cmd->UpMove, -320.0f, 320.0f );
 
-	cmd->viewangles.x = std::clamp(cmd->viewangles.x, -89.0f, 89.0f);
-	cmd->viewangles.y = std::clamp(cmd->viewangles.y, -180.0f, 180.0f);
-	cmd->viewangles.z = 0.0f;
+    Cmd->ViewAngles.x = std::clamp( Cmd->ViewAngles.x, -89.0f, 89.0f );
+    Cmd->ViewAngles.y = std::clamp( Cmd->ViewAngles.y, -180.0f, 180.0f );
+    Cmd->ViewAngles.z = 0.0f;
 
-	return false;
-}
+    return false;
+  }
 
-void run_hooks() noexcept
-{
-	sv_cheats_hook = std::make_unique<utilities::hooking::vmt>();
-	sv_cheats_hook->init(
-		csgo::valve::interfaces::p_console->find_var(STR("sv_cheats")));
-	sv_cheats_hook->hook_func(
-		utilities::hooking::get_int_idx,
-		reinterpret_cast<void *>(utilities::hooking::sv_cheats));
+  void RunHooks( ) noexcept {
+    g_pCheatsHook = std::make_unique<Utils::Hooking::CVMT>( );
+    g_pCheatsHook->bInit( CS::Interfaces::g_pConsole->FindVar( STR( "sv_cheats" ) ) );
+    g_pCheatsHook->bHookFunction( EFuncIndexes::GetIntIndex, Utils::Hooking::bSvCheats );
 
-	cl_grenadepreview_hook = std::make_unique<utilities::hooking::vmt>();
-	cl_grenadepreview_hook->init(
-		csgo::valve::interfaces::p_console->find_var(
-			STR("cl_grenadepreview")));
-	cl_grenadepreview_hook->hook_func(
-		utilities::hooking::get_int_idx,
-		reinterpret_cast<void *>(
-			utilities::hooking::cl_grenadepreview));
+    g_pGrenadePreviewHook = std::make_unique<Utils::Hooking::CVMT>( );
+    g_pGrenadePreviewHook->bInit( CS::Interfaces::g_pConsole->FindVar( STR( "cl_grenade_preview" ) ) );
+    g_pGrenadePreviewHook->bHookFunction( EFuncIndexes::GetIntIndex, Utils::Hooking::bGrenadePreview );
 
-	client_mode_hook = std::make_unique<utilities::hooking::vmt>();
-	client_mode_hook->init(csgo::valve::interfaces::p_client_mode);
-	client_mode_hook->hook_func(
-		utilities::hooking::create_move_idx,
-		reinterpret_cast<void *>(utilities::hooking::create_move));
+    g_pClientModeHook = std::make_unique<Utils::Hooking::CVMT>( );
+    g_pClientModeHook->bInit( CS::Interfaces::g_pClientMode );
+    g_pClientModeHook->bHookFunction( EFuncIndexes::CreateMoveIndex, Utils::Hooking::bCreateMove );
 
-	surface_hook = std::make_unique<utilities::hooking::vmt>();
-	surface_hook->init(csgo::valve::interfaces::p_surface);
-	surface_hook->hook_func(
-		utilities::hooking::lock_cursor_idx,
-		reinterpret_cast<void *>(utilities::hooking::lock_cursor));
+    g_pSurfaceHook = std::make_unique<Utils::Hooking::CVMT>( );
+    g_pSurfaceHook->bInit( CS::Interfaces::g_pSurface );
+    g_pSurfaceHook->bHookFunction( EFuncIndexes::LockCursorIndex, Utils::Hooking::LockCursor );
 
-	panel_hook = std::make_unique<utilities::hooking::vmt>();
-	panel_hook->init(csgo::valve::interfaces::p_panel);
-	panel_hook->hook_func(
-		utilities::hooking::paint_traverse_idx,
-		reinterpret_cast<void *>(utilities::hooking::paint_traverse));
-}
+    g_pPanelHook = std::make_unique<Utils::Hooking::CVMT>( );
+    g_pPanelHook->bInit( CS::Interfaces::g_pPanel );
+    g_pPanelHook->bHookFunction( EFuncIndexes::PaintTraverseIndex, Utils::Hooking::PaintTraverse );
+  }
 
-void release_hooks() noexcept
-{
-	sv_cheats_hook->unhook();
-	cl_grenadepreview_hook->unhook();
-	client_mode_hook->unhook();
-	surface_hook->unhook();
-	panel_hook->unhook();
-}
-} // namespace utilities::hooking
+  void ReleaseHooks( ) noexcept {
+    g_pCheatsHook->bUnhook( );
+    g_pGrenadePreviewHook->bUnhook( );
+    g_pClientModeHook->bUnhook( );
+    g_pSurfaceHook->bUnhook( );
+    g_pPanelHook->bUnhook( );
+  }
+} // namespace Utils::Hooking

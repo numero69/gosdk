@@ -2,29 +2,16 @@
 
 #include "../../../utilities/global.hpp"
 
-namespace csgo::hacks::misc::movement
-{
-inline void bunny_hop() noexcept
-{
-	if (utilities::globals::local->movetype() !=
-		    csgo::valve::classes::movetypes::movetype_ladder &&
-	    utilities::globals::local->movetype() !=
-		    csgo::valve::classes::movetypes::movetype_noclip) {
+namespace CS::Features::Movement {
+  inline void BunnyHop( ) noexcept {
+    if ( Utils::Context::g_pLocal->Movetype( ) != CS::Classes::EMovetypes::MOVETYPE_LADDER &&
+         Utils::Context::g_pLocal->Movetype( ) != CS::Classes::EMovetypes::MOVETYPE_NOCLIP ) {
+      if ( !( Utils::Context::g_pLocal->Flags( ).bCheckFlag( CS::Classes::EEntityFlags::FL_ONGROUND ) &&
+              Utils::Context::g_pCmd->Buttons.bCheckFlag( CS::Classes::CUserCmd::IN_JUMP ) ) ) {
+        Utils::Context::g_pCmd->Buttons.RemoveFlag( CS::Classes::CUserCmd::IN_JUMP );
+      }
+    }
+  }
 
-		if (!(utilities::globals::local->flags() &
-		      csgo::valve::classes::entity_flags::fl_onground) &&
-		    utilities::globals::cmd->buttons.check_flag(
-			    csgo::valve::classes::user_cmd::in_jump)) {
-
-			utilities::globals::cmd->buttons.remove_flag(
-				csgo::valve::classes::user_cmd::in_jump);
-		}
-	}
-}
-
-inline void no_duck_delay() noexcept
-{
-	utilities::globals::cmd->buttons.add_flag(
-		csgo::valve::classes::user_cmd::in_bullrush);
-}
-} // namespace csgo::hacks::misc::movement
+  inline void NoDuckDelay( ) noexcept { Utils::Context::g_pCmd->Buttons.AddFlag( CS::Classes::CUserCmd::IN_BULLRUSH ); }
+} // namespace CS::Features::Movement

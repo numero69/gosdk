@@ -2,117 +2,93 @@
 #include <Windows.h>
 #include <sstream>
 
-namespace config
-{
-bool settings::save(const std::string &config_file_name)
-{
-	nlohmann::json config;
-	for (const auto &[setting, value] : m_settings) {
-		if (std::holds_alternative<int>(value))
-			config[setting] = { { STR("type"), value.index() },
-					    { STR("itself"),
-					      this->get<int>(setting) } };
-		else if (std::holds_alternative<bool>(value))
-			config[setting] = { { STR("type"), value.index() },
-					    { STR("itself"),
-					      this->get<bool>(setting) } };
-		else if (std::holds_alternative<float>(value))
-			config[setting] = { { STR("type"), value.index() },
-					    { STR("itself"),
-					      this->get<float>(setting) } };
-		else if (std::holds_alternative<std::string>(value))
-			config[setting] = { { STR("type"), value.index() },
-					    { STR("itself"),
-					      this->get<std::string>(
-						      setting) } };
-		else if (std::holds_alternative<utilities::color>(value))
-			config[setting] = {
-				{ STR("type"), value.index() },
-				{ STR("itself_r"),
-				  this->get<utilities::color>(setting).red },
-				{ STR("itself_g"),
-				  this->get<utilities::color>(setting).green },
-				{ STR("itself_b"),
-				  this->get<utilities::color>(setting).blue }
+#pragma warning( disable : 4244 )
 
-			};
-	}
-	std::ofstream output_config(config_file_name);
+namespace Config {
+  bool SSettings::bSave( const std::string & config_file_name ) {
+    nlohmann::json config;
+    for ( const auto & [ setting, value ] : mSettings ) {
+      if ( std::holds_alternative<int>( value ) )
+        config[ setting ] = { { STR( "type" ), value.index( ) }, { STR( "itself" ), this->get<int>( setting ) } };
+      else if ( std::holds_alternative<bool>( value ) )
+        config[ setting ] = { { STR( "type" ), value.index( ) }, { STR( "itself" ), this->get<bool>( setting ) } };
+      else if ( std::holds_alternative<float>( value ) )
+        config[ setting ] = { { STR( "type" ), value.index( ) }, { STR( "itself" ), this->get<float>( setting ) } };
+      else if ( std::holds_alternative<std::string>( value ) )
+        config[ setting ] = { { STR( "type" ), value.index( ) }, { STR( "itself" ), this->get<std::string>( setting ) } };
+      else if ( std::holds_alternative<Utils::Color>( value ) )
+        config[ setting ] = { { STR( "type" ), value.index( ) },
+                              { STR( "itself_r" ), this->get<Utils::Color>( setting ).uRed },
+                              { STR( "itself_g" ), this->get<Utils::Color>( setting ).uGreen },
+                              { STR( "itself_b" ), this->get<Utils::Color>( setting ).uBlue }
+
+        };
+    }
+    std::ofstream ofConfig( config_file_name );
 #ifdef _DEBUG
-	output_config << std::setw(2) << config << std::endl;
+    ofConfig << std::setw( 2 ) << config << std::endl;
 #else
-	// Reduce configs file size in release mode.
-	output_config << config << std::endl;
+    // Reduce configs file size in release mode.
+    ofConfig << config << std::endl;
 #endif
-	output_config.close();
-	return true;
-}
+    ofConfig.close( );
+    return true;
+  }
 
-bool settings::load(const std::string &config_file_name)
-{
-	if (!std::filesystem::exists(std::filesystem::current_path() /
-				     config_file_name))
-		return false;
+  bool SSettings::bLoad( const std::string & config_file_name ) {
+    if ( !std::filesystem::exists( std::filesystem::current_path( ) / config_file_name ) )
+      return false;
 
-	std::ifstream input_config(config_file_name);
-	nlohmann::json config = nlohmann::json::parse(input_config);
-	for (const auto &[setting, value] : config.items()) {
-		switch (value[STR("type")].get<int>()) {
-		case 0:
-			m_settings[setting] = value[STR("itself")].get<int>();
-			break;
-		case 1:
-			m_settings[setting] = value[STR("itself")].get<bool>();
-			break;
-		case 2:
-			m_settings[setting] = value[STR("itself")].get<float>();
-			break;
-		case 3:
-			m_settings[setting] =
-				value[STR("itself")].get<std::string>();
-			break;
-		case 4:
-			this->get<utilities::color>(setting).red =
-				value[STR("itself_r")].get<float>();
-			this->get<utilities::color>(setting).green =
-				value[STR("itself_g")].get<float>();
-			this->get<utilities::color>(setting).blue =
-				value[STR("itself_b")].get<float>();
-			break;
-		}
-	}
-	input_config.close();
-	return true;
-}
+    std::ifstream ifConfig( config_file_name );
+    nlohmann::json config = nlohmann::json::parse( ifConfig );
+    for ( const auto & [ setting, value ] : config.items( ) ) {
+      switch ( value[ STR( "type" ) ].get<int>( ) ) {
+        case 0:
+          mSettings[ setting ] = value[ STR( "itself" ) ].get<int>( );
+          break;
+        case 1:
+          mSettings[ setting ] = value[ STR( "itself" ) ].get<bool>( );
+          break;
+        case 2:
+          mSettings[ setting ] = value[ STR( "itself" ) ].get<float>( );
+          break;
+        case 3:
+          mSettings[ setting ] = value[ STR( "itself" ) ].get<std::string>( );
+          break;
+        case 4:
+          this->get<Utils::Color>( setting ).uRed = value[ STR( "itself_r" ) ].get<float>( );
+          this->get<Utils::Color>( setting ).uGreen = value[ STR( "itself_g" ) ].get<float>( );
+          this->get<Utils::Color>( setting ).uBlue = value[ STR( "itself_b" ) ].get<float>( );
+          break;
+      }
+    }
+    ifConfig.close( );
+    return true;
+  }
 
-bool settings::load_clipboard(const std::string &data)
-{
-	nlohmann::json config = nlohmann::json::parse(data);
-	for (const auto &[setting, value] : config.items()) {
-		switch (value[STR("type")].get<int>()) {
-		case 0:
-			m_settings[setting] = value[STR("itself")].get<int>();
-			break;
-		case 1:
-			m_settings[setting] = value[STR("itself")].get<bool>();
-			break;
-		case 2:
-			m_settings[setting] = value[STR("itself")].get<float>();
-			break;
-		case 3:
-			m_settings[setting] =
-				value[STR("itself")].get<std::string>();
-			break;
-		case 4:
-			this->get<utilities::color>(setting).red =
-				value[STR("itself_r")].get<float>();
-			this->get<utilities::color>(setting).green =
-				value[STR("itself_g")].get<float>();
-			this->get<utilities::color>(setting).blue =
-				value[STR("itself_b")].get<float>();
-			break;
-		}
-	}
-	return true;
-}
-} // namespace config
+  bool SSettings::bLoadClip( const std::string & data ) {
+    nlohmann::json config = nlohmann::json::parse( data );
+    for ( const auto & [ setting, value ] : config.items( ) ) {
+      switch ( value[ STR( "type" ) ].get<int>( ) ) {
+        case 0:
+          mSettings[ setting ] = value[ STR( "itself" ) ].get<int>( );
+          break;
+        case 1:
+          mSettings[ setting ] = value[ STR( "itself" ) ].get<bool>( );
+          break;
+        case 2:
+          mSettings[ setting ] = value[ STR( "itself" ) ].get<float>( );
+          break;
+        case 3:
+          mSettings[ setting ] = value[ STR( "itself" ) ].get<std::string>( );
+          break;
+        case 4:
+          this->get<Utils::Color>( setting ).uRed = value[ STR( "itself_r" ) ].get<float>( );
+          this->get<Utils::Color>( setting ).uGreen = value[ STR( "itself_g" ) ].get<float>( );
+          this->get<Utils::Color>( setting ).uBlue = value[ STR( "itself_b" ) ].get<float>( );
+          break;
+      }
+    }
+    return true;
+  }
+} // namespace Config

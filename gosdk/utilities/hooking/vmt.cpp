@@ -1,94 +1,81 @@
 #include "hook.hpp"
 
-namespace utilities::hooking
-{
-vmt::vmt()
-{
-}
+namespace Utils::Hooking {
+  CVMT::CVMT( ) = default;
 
-bool vmt::init(void *base)
-{
-	if (!base)
-		return false;
+  bool CVMT::bInit( void * base ) {
+    if ( !base )
+      return false;
 
-	vmt_base = static_cast<std::uintptr_t **>(base);
+    VMTBase = static_cast<std::uintptr_t **>( base );
 
-	if (!vmt_base)
-		return false;
+    if ( !VMTBase )
+      return false;
 
-	orig_vmt = *vmt_base;
+    OriginalVMT = *VMTBase;
 
-	if (!orig_vmt)
-		return false;
+    if ( !OriginalVMT )
+      return false;
 
-	VirtualProtect(vmt_base, sizeof(std::uintptr_t), PAGE_READWRITE,
-		       &old_protection);
+    VirtualProtect( VMTBase, sizeof( std::uintptr_t ), PAGE_READWRITE, &OldProtection );
 
-	table_length = get_vt_length(orig_vmt);
+    TableLength = GetVTLength( OriginalVMT );
 
-	if (!table_length)
-		return false;
+    if ( !TableLength )
+      return false;
 
-	replace_vmt = std::make_unique<std::uintptr_t[]>(table_length + 1);
+    ReplaceVMT = std::make_unique<std::uintptr_t[]>( TableLength + 1 );
 
-	if (!replace_vmt)
-		return false;
+    if ( !ReplaceVMT )
+      return false;
 
-	std::memset(replace_vmt.get(), 0,
-		    table_length * sizeof(std::uintptr_t) +
-			    sizeof(std::uintptr_t));
-	std::memcpy(&replace_vmt[1], orig_vmt,
-		    table_length * sizeof(std::uintptr_t));
-	std::memcpy(replace_vmt.get(), &orig_vmt[-1], sizeof(std::uintptr_t));
+    std::memset( ReplaceVMT.get( ), 0, TableLength * sizeof( std::uintptr_t ) + sizeof( std::uintptr_t ) );
+    std::memcpy( &ReplaceVMT[ 1 ], OriginalVMT, TableLength * sizeof( std::uintptr_t ) );
+    std::memcpy( ReplaceVMT.get( ), &OriginalVMT[ -1 ], sizeof( std::uintptr_t ) );
 
-	*vmt_base = &replace_vmt[1];
+    *VMTBase = &ReplaceVMT[ 1 ];
 
-	return true;
-}
+    return true;
+  }
 
-bool vmt::hook_func(const std::uint16_t index, void *function)
-{
-	if (!replace_vmt || index < 0 || index > table_length)
-		return false;
+  bool CVMT::bHookFunction( const std::uint16_t index, void * function ) {
+    if ( !ReplaceVMT || index < 0 || index > TableLength )
+      return false;
 
-	replace_vmt[index + 1] = reinterpret_cast<std::uintptr_t>(function);
+    ReplaceVMT[ index + 1 ] = reinterpret_cast<std::uintptr_t>( function );
 
-	return true;
-}
+    return true;
+  }
 
-bool vmt::unhook_func(const std::uint16_t index)
-{
-	if (!orig_vmt || !replace_vmt || index < 0 || index > table_length)
-		return false;
+  bool CVMT::bUnhookFunction( const std::uint16_t index ) {
+    if ( !OriginalVMT || !ReplaceVMT || index < 0 || index > TableLength )
+      return false;
 
-	replace_vmt[index + 1] = orig_vmt[index];
+    ReplaceVMT[ index + 1 ] = OriginalVMT[ index ];
 
-	return true;
-}
+    return true;
+  }
 
-bool vmt::unhook()
-{
-	if (!orig_vmt)
-		return false;
+  bool CVMT::bUnhook( ) {
+    if ( !OriginalVMT )
+      return false;
 
-	VirtualProtect(vmt_base, sizeof(std::uintptr_t), PAGE_READWRITE,
-		       &old_protection);
-	*vmt_base = orig_vmt;
+    VirtualProtect( VMTBase, sizeof( std::uintptr_t ), PAGE_READWRITE, &OldProtection );
+    *VMTBase = OriginalVMT;
 
-	orig_vmt = nullptr;
+    OriginalVMT = nullptr;
 
-	return true;
-}
+    return true;
+  }
 
-std::uint32_t vmt::get_vt_length(std::uintptr_t *table)
-{
-	std::uintptr_t length = std::uintptr_t{};
+  std::uint32_t CVMT::GetVTLength( std::uintptr_t * table ) {
+    std::uintptr_t length = std::uintptr_t{};
 
-	// walk through every function until it is no longer valid
-	for (length = 0; table[length]; length++)
-		if (IS_INTRESOURCE(table[length]))
-			break;
+    // walk through every function until it is no longer valid
+    for ( length = 0; table[ length ]; length++ )
+      if ( IS_INTRESOURCE( table[ length ] ) )
+        break;
 
-	return length;
-}
-}; // namespace utilities::hooking
+    return length;
+  }
+}; // namespace Utils::Hooking

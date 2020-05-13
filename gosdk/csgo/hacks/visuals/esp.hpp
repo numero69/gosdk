@@ -3,125 +3,87 @@
 #include "../../../utilities/global.hpp"
 #include "../../valve/global.hpp"
 
-namespace csgo::hacks::visuals::esp
-{
-// thanks to poliacs for the calculations from UnknownCheats, was a time saver.
-inline bool bounding_box(csgo::valve::classes::c_player *player,
-			 csgo::valve::classes::rect &box) noexcept
-{
-	const utilities::math::vec2_t flb{}, brt{}, blb{}, frt{}, frb{}, brb{},
-		blt{}, flt{}, out{};
+namespace CS::Features::ESP {
+  // thanks to poliacs for the calculations from UnknownCheats, was a time saver.
+  inline bool BoundingBox( CS::Classes::CCSPlayer * Player, CS::Classes::Box & Box ) noexcept {
+    const Utils::Math::Vector2 flb{}, brt{}, blb{}, frt{}, frb{}, brb{}, blt{}, flt{}, out{};
 
-	const utilities::math::vec3_t origin = player->origin();
-	const utilities::math::vec3_t mins =
-		player->get_collideable()->obb_mins() + origin;
-	const utilities::math::vec3_t maxs =
-		player->get_collideable()->obb_maxs() + origin;
+    const Utils::Math::Vector Origin = Player->Origin( );
+    const Utils::Math::Vector Mins = Player->GetCollideable( )->OBBMins( ) + Origin;
+    const Utils::Math::Vector Maxs = Player->GetCollideable( )->OBBMaxs( ) + Origin;
 
-	utilities::math::vec3_t points[] = {
-		utilities::math::vec3_t(mins.x, mins.y, mins.z),
-		utilities::math::vec3_t(mins.x, maxs.y, mins.z),
-		utilities::math::vec3_t(maxs.x, maxs.y, mins.z),
-		utilities::math::vec3_t(maxs.x, mins.y, mins.z),
-		utilities::math::vec3_t(maxs.x, maxs.y, maxs.z),
-		utilities::math::vec3_t(mins.x, maxs.y, maxs.z),
-		utilities::math::vec3_t(mins.x, mins.y, maxs.z),
-		utilities::math::vec3_t(maxs.x, mins.y, maxs.z)
-	};
+    Utils::Math::Vector points[] = {
+      Utils::Math::Vector( Mins.x, Mins.y, Mins.z ), Utils::Math::Vector( Mins.x, Maxs.y, Mins.z ),
+      Utils::Math::Vector( Maxs.x, Maxs.y, Mins.z ), Utils::Math::Vector( Maxs.x, Mins.y, Mins.z ),
+      Utils::Math::Vector( Maxs.x, Maxs.y, Maxs.z ), Utils::Math::Vector( Mins.x, Maxs.y, Maxs.z ),
+      Utils::Math::Vector( Mins.x, Mins.y, Maxs.z ), Utils::Math::Vector( Maxs.x, Mins.y, Maxs.z )
+    };
 
-	// vector constructors wouldn't work so I had to do this, will be fixed later
-	utilities::math::vec3_t scr_array[] = {
-		utilities::math::vec3_t(blb.x, blb.y, 0.f),
-		utilities::math::vec3_t(brb.x, brb.y, 0.f),
-		utilities::math::vec3_t(frb.x, frb.y, 0.f),
-		utilities::math::vec3_t(flb.x, flb.y, 0.f),
-		utilities::math::vec3_t(frt.x, frt.y, 0.f),
-		utilities::math::vec3_t(brt.x, brt.y, 0.f),
-		utilities::math::vec3_t(blt.x, blt.y, 0.f),
-		utilities::math::vec3_t(flt.x, flt.y, 0.f)
-	};
+    // vector constructors wouldn't work so I had to do this, will be fixed later
+    Utils::Math::Vector rgPostWTSVec[] = { Utils::Math::Vector( blb.x, blb.y, 0.f ), Utils::Math::Vector( brb.x, brb.y, 0.f ),
+                                           Utils::Math::Vector( frb.x, frb.y, 0.f ), Utils::Math::Vector( flb.x, flb.y, 0.f ),
+                                           Utils::Math::Vector( frt.x, frt.y, 0.f ), Utils::Math::Vector( brt.x, brt.y, 0.f ),
+                                           Utils::Math::Vector( blt.x, blt.y, 0.f ), Utils::Math::Vector( flt.x, flt.y, 0.f ) };
 
-	for (auto i = 0; i <= 7; ++i)
-		if (csgo::valve::interfaces::p_debug_overlay->world_to_screen(
-			    points[i], scr_array[i]))
-			return false;
+    for ( auto i = 0; i <= 7; ++i )
+      if ( CS::Interfaces::g_pDebugOverlay->WorldToScreen( points[ i ], rgPostWTSVec[ i ] ) )
+        return false;
 
-	auto left = scr_array[3].x, right = scr_array[3].x,
-	     top = scr_array[3].y, bottom = scr_array[3].y;
+    auto left = rgPostWTSVec[ 3 ].x, right = rgPostWTSVec[ 3 ].x, top = rgPostWTSVec[ 3 ].y, bottom = rgPostWTSVec[ 3 ].y;
 
-	for (auto i = 0; i <= 7; i++) {
-		if (top > scr_array[i].y)
-			top = scr_array[i].y;
+    for ( auto i = 0; i <= 7; i++ ) {
+      if ( top > rgPostWTSVec[ i ].y )
+        top = rgPostWTSVec[ i ].y;
 
-		if (bottom < scr_array[i].y)
-			bottom = scr_array[i].y;
+      if ( bottom < rgPostWTSVec[ i ].y )
+        bottom = rgPostWTSVec[ i ].y;
 
-		if (left > scr_array[i].x)
-			left = scr_array[i].x;
+      if ( left > rgPostWTSVec[ i ].x )
+        left = rgPostWTSVec[ i ].x;
 
-		if (right < scr_array[i].x)
-			right = scr_array[i].x;
-	}
+      if ( right < rgPostWTSVec[ i ].x )
+        right = rgPostWTSVec[ i ].x;
+    }
 
-	box.x = left;
-	box.y = top;
-	box.w = right - left;
-	box.h = bottom - top;
+    Box.x = left;
+    Box.y = top;
+    Box.w = right - left;
+    Box.h = bottom - top;
 
-	return true;
-}
+    return true;
+  }
 
-inline void draw_box(csgo::valve::classes::rect &box,
-		     utilities::color color_main,
-		     utilities::color color_outline) noexcept
-{
-	utilities::render::render_box_outline(box.x, box.y, box.right(),
-					      box.bottom(), color_main, false);
+  inline void DrawBox( CS::Classes::Box & Box, Utils::Color ColorMain, Utils::Color ColorOutline ) noexcept {
+    Utils::Render::RenderBoxOutline( Box.x, Box.y, Box.Right( ), Box.Bottom( ), ColorMain, false );
 
-	utilities::render::render_box_outline(box.x - 1, box.y - 1,
-					      box.right() + 1, box.bottom() + 1,
-					      color_outline, false);
-	utilities::render::render_box_outline(box.x + 1, box.y + 1,
-					      box.right() - 1, box.bottom() - 1,
-					      color_outline, false);
-}
+    Utils::Render::RenderBoxOutline( Box.x - 1, Box.y - 1, Box.Right( ) + 1, Box.Bottom( ) + 1, ColorOutline, false );
+    Utils::Render::RenderBoxOutline( Box.x + 1, Box.y + 1, Box.Right( ) - 1, Box.Bottom( ) - 1, ColorOutline, false );
+  }
 
-inline void draw_line(utilities::math::vec3_t &entity_origin,
-		      utilities::color color) noexcept
-{
-	utilities::math::vec3_t post_w2s_vec{};
-	csgo::valve::interfaces::p_debug_overlay->world_to_screen(entity_origin,
-								  post_w2s_vec);
+  inline void DrawLine( Utils::Math::Vector & EntityOrigin, Utils::Color Color ) noexcept {
+    Utils::Math::Vector PostWTSVec{};
+    CS::Interfaces::g_pDebugOverlay->WorldToScreen( EntityOrigin, PostWTSVec );
 
-	auto [width, height] =
-		csgo::valve::interfaces::p_surface->get_screen_size();
+    auto [ width, height ] = CS::Interfaces::g_pSurface->GetScreenSize( );
 
-	utilities::render::render_line(width / 2, height / 2, post_w2s_vec.x,
-				       post_w2s_vec.y,
-				       utilities::color(255, 255, 255, 255));
-}
+    Utils::Render::RenderLine( width / 2, height / 2, PostWTSVec.x, PostWTSVec.y, Color );
+  }
 
-inline void run_esp() noexcept
-{
-	for (int i = 1;
-	     i <= csgo::valve::interfaces::p_global_vars->max_clients; i++) {
-		auto player =
-			csgo::valve::interfaces::p_entity_list->get_entity(i);
+  inline void RunEsp( ) noexcept {
+    for ( int i = 1; i <= CS::Interfaces::g_pGlobalVars->MaxClients; i++ ) {
+      auto Player = CS::Interfaces::g_pEntityList->GetEntity( i );
 
-		if (!player || !player->is_alive() ||
-		    player == utilities::globals::local)
-			continue;
+      if ( !Player || !Player->bIsAlive( ) || Player == Utils::Context::g_pLocal )
+        continue;
 
-		csgo::valve::classes::rect box;
+      CS::Classes::Box Box;
 
-		if (!bounding_box(player, box))
-			continue;
+      if ( !BoundingBox( Player, Box ) )
+        continue;
 
-		draw_box(box, utilities::color(255, 255, 255, 255),
-			 utilities::color(0, 0, 0, 255));
+      DrawBox( Box, Utils::Color( 255, 255, 255, 255 ), Utils::Color( 0, 0, 0, 255 ) );
 
-		draw_line(player->origin(),
-			  utilities::color(255, 255, 255, 255));
-	}
-}
-} // namespace csgo::hacks::visuals::esp
+      DrawLine( Player->Origin( ), Utils::Color( 255, 255, 255, 255 ) );
+    }
+  }
+} // namespace CS::Features::ESP

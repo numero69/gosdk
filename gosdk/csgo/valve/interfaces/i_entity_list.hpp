@@ -3,25 +3,17 @@
 #include "../../../utilities/memory/global.hpp"
 #include "../classes/players.hpp"
 
-namespace csgo::valve::interfaces
-{
-class i_entity_list {
-    public:
-	constexpr auto get_entity(int index) noexcept
-	{
-		return utilities::memory::call_virtual_method<
-			csgo::valve::classes::c_player *, int>(this, 3, index);
-	}
+namespace CS::Interfaces {
+  class IEntityList {
+  public:
+    constexpr auto GetEntity( int index ) noexcept {
+      return Utils::Memory::CallVirtualMethod<CS::Classes::CCSPlayer *, int>( this, 3, index );
+    }
 
-	constexpr auto get_entity_from_handle(int handle) noexcept
-	{
-		return utilities::memory::call_virtual_method<
-			csgo::valve::classes::c_player *, int>(this, 4, handle);
-	}
+    constexpr auto GetEntityFromHandle( int handle ) noexcept {
+      return Utils::Memory::CallVirtualMethod<CS::Classes::CCSPlayer *, int>( this, 4, handle );
+    }
 
-	constexpr auto get_highest_entity_index() noexcept
-	{
-		return utilities::memory::call_virtual_method<int>(this, 6);
-	}
-};
-} // namespace csgo::valve::interfaces
+    constexpr auto GetHighestEntityIndex( ) noexcept { return Utils::Memory::CallVirtualMethod<int>( this, 6 ); }
+  };
+} // namespace CS::Interfaces

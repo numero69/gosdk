@@ -2,37 +2,22 @@
 
 #include <inttypes.h>
 
-namespace utilities::easing
-{
-struct bitflag {
-	bitflag() = default;
+namespace Utils::Easing {
+  struct BitFlag {
+    BitFlag( ) = default;
 
-	bitflag(uintptr_t flags) : m_flags(flags)
-	{
-	}
+    BitFlag( uintptr_t flags ) : upFlags( flags ) {}
 
-	~bitflag() = default;
+    ~BitFlag( ) = default;
 
-	uintptr_t m_flags{};
+    uintptr_t upFlags{};
 
-	inline bool check_flag(uintptr_t flag)
-	{
-		return m_flags & flag;
-	}
+    inline bool bCheckFlag( uintptr_t flag ) { return upFlags & flag; }
 
-	inline void add_flag(uintptr_t flag)
-	{
-		m_flags |= flag;
-	}
+    inline void AddFlag( uintptr_t flag ) { upFlags |= flag; }
 
-	inline void remove_flag(uintptr_t flag)
-	{
-		m_flags &= ~flag;
-	}
+    inline void RemoveFlag( uintptr_t flag ) { upFlags &= ~flag; }
 
-	inline bool is_empty()
-	{
-		return !m_flags;
-	}
-};
-} // namespace utilities::easing::bitflag
+    inline bool bIsEmpty( ) { return !upFlags; }
+  };
+} // namespace Utils::Easing

@@ -3,15 +3,11 @@
 #include "../../../utilities/global.hpp"
 #include "../classes/convar.hpp"
 
-namespace csgo::valve::interfaces
-{
-class i_console {
-    public:
-	constexpr auto find_var(const char *name) noexcept
-	{
-		return utilities::memory::call_virtual_method<
-			csgo::valve::classes::convar *, const char *>(this, 15,
-								      name);
-	}
-};
-} // namespace csgo::valve::interfaces
+namespace CS::Interfaces {
+  class IConsole {
+  public:
+    constexpr auto FindVar( const char * name ) noexcept {
+      return Utils::Memory::CallVirtualMethod<CS::Classes::CConvar *, const char *>( this, 15, name );
+    }
+  };
+} // namespace CS::Interfaces

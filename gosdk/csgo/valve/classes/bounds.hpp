@@ -2,52 +2,42 @@
 
 #include "../../../utilities/math/global.hpp"
 
-namespace csgo::valve::classes
-{
-class rect {
-    public:
-	int x, y, w, h;
+// inb4 UC screams at me
+#pragma warning( disable : 4244 )
 
-	rect() = default;
-	~rect() = default;
+namespace CS::Classes {
+  class Box {
+  public:
+    int x, y, w, h;
 
-	rect(int x, int y, int w, int h) : x(x), y(y), w(w), h(h)
-	{
-	}
-	rect(const utilities::math::vec2_t &tl,
-	     const utilities::math::vec2_t &br)
-		: x(tl.x), y(tl.y), w(br.x - tl.x), h(tl.y - br.y)
-	{
-	}
+    Box( ) = default;
+    ~Box( ) = default;
 
-	rect(const rect &) = default;
-	rect &operator=(const rect &) = default;
+    Box( int x, int y, int w, int h ) : x( x ), y( y ), w( w ), h( h ) {}
+    Box( const Utils::Math::Vector2 & tl, const Utils::Math::Vector2 & br )
+        : x( tl.x ), y( tl.y ), w( br.x - tl.x ), h( tl.y - br.y ) {}
 
-	rect(rect &&) = default;
-	rect &operator=(rect &&) = default;
+    Box( const Box & ) = default;
+    Box & operator=( const Box & ) = default;
 
-	int right() const
-	{
-		return x + w;
-	}
+    Box( Box && ) = default;
+    Box & operator=( Box && ) = default;
 
-	int bottom() const
-	{
-		return y + h;
-	}
+    int Right( ) const { return x + w; }
 
-	bool is_in_bounds(const utilities::math::vec2_t &pt) const
-	{
-		if (this->x > pt.x)
-			return false;
-		if (this->y > pt.y)
-			return false;
-		if (this->right() < pt.x)
-			return false;
-		if (this->bottom() < pt.y)
-			return false;
+    int Bottom( ) const { return y + h; }
 
-		return true;
-	}
-};
-} // namespace csgo::valve::classes
+    bool bIsInBounds( const Utils::Math::Vector2 & pt ) const {
+      if ( this->x > pt.x )
+        return false;
+      if ( this->y > pt.y )
+        return false;
+      if ( this->Right( ) < pt.x )
+        return false;
+      if ( this->Bottom( ) < pt.y )
+        return false;
+
+      return true;
+    }
+  };
+} // namespace CS::Classes
