@@ -73,7 +73,7 @@ namespace CS::Classes {
     netvar( Utils::Math::Vector, Velocity, "DT_LocalPlayerExclusive->m_vecVelocity[0]" );
     netvar_additive( EMovetypes, Movetype, "DT_BaseEntity->m_nRenderMode", 1 );
     netvar( Utils::Math::Vector, Origin, "DT_BaseEntity->m_vecOrigin" );
-
+    offset( bool, bDormant, 0xED );
     bool bIsAlive( ) {
       if ( !this )
         return false;
