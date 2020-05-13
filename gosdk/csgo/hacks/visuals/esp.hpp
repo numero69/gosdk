@@ -71,8 +71,8 @@ namespace CS::Features::ESP {
     Utils::Render::RenderLine( width / 2, height / 2, PostWTSVec.x, PostWTSVec.y, Color );
   }
 
-  inline void DrawHealth( int x, int y, Utils::Color ColorMain, CS::Classes::CCSPlayer Player ) noexcept {
-    Utils::Render::RenderText( x + 1, y + 1, Utils::Render::ESP, ColorMain, std::wstring_view{ Player->Health( ) } );
+  inline void DrawHealth( int x, int y, Utils::Color ColorMain, CS::Classes::CCSPlayer * Player ) noexcept {
+    Utils::Render::RenderText( x + 1, y + 1, Utils::Render::ESP, ColorMain, std::to_wstring( Player->Health( ) ) );
   }
 
   inline void RunEsp( ) noexcept {
@@ -91,9 +91,6 @@ namespace CS::Features::ESP {
       DrawBox( Box, EspColor, Utils::Color( 0, 0, 0, EspColor.uAlpha ) );
       DrawLine( Player->Origin( ), EspColor );
 
-      DrawHealth( Box.x, Box.y, EspColor, Player } );
+      DrawHealth( Box.x, Box.y, EspColor, Player  );
     }
-
-
-  }
 } // namespace CS::Features::ESP
