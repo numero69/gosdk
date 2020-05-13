@@ -60,9 +60,8 @@ namespace CS::Features::ESP {
     Utils::Render::RenderBoxOutline( Box.x + 1, Box.y + 1, Box.Right( ) - 1, Box.Bottom( ) - 1, ColorOutline, false );
   }
   
-  inline void HealthESP(int X, int Y, Utils::Color ColorMain, std::wstring Health) noexcept {
-    // health ESP
-    Utils::Render::RenderText( X + 1, Y + 1, Utils::Render::ESP, ColorMain, Health );
+  inline void DrawHealth( int x, int y, Utils::Color ColorMain, std::wstring_view{ int Health; } ) noexcept {
+     Utils::Render::RenderText( X + 1, Y + 1, Utils::Render::ESP, ColorMain, Health );
   }
 
   inline void DrawLine( Utils::Math::Vector & EntityOrigin, Utils::Color Color ) noexcept {
