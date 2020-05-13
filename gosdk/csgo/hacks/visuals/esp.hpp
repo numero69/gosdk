@@ -59,8 +59,6 @@ namespace CS::Features::ESP {
     Utils::Render::RenderBoxOutline( Box.x - 1, Box.y - 1, Box.Right( ) + 1, Box.Bottom( ) + 1, ColorOutline, false );
     Utils::Render::RenderBoxOutline( Box.x + 1, Box.y + 1, Box.Right( ) - 1, Box.Bottom( ) - 1, ColorOutline, false );
   }
-  
-
 
   inline void DrawLine( Utils::Math::Vector & EntityOrigin, Utils::Color Color ) noexcept {
     Utils::Math::Vector PostWTSVec{};
@@ -76,7 +74,7 @@ namespace CS::Features::ESP {
   }
 
   inline void RunEsp( ) noexcept {
-    
+
     for ( int i = 1; i <= CS::Interfaces::g_pGlobalVars->MaxClients; i++ ) {
       auto Player = CS::Interfaces::g_pEntityList->GetEntity( i );
 
@@ -91,6 +89,6 @@ namespace CS::Features::ESP {
       DrawBox( Box, EspColor, Utils::Color( 0, 0, 0, EspColor.uAlpha ) );
       DrawLine( Player->Origin( ), EspColor );
 
-      DrawHealth( Box.x, Box.y, EspColor, Player  );
+      DrawHealth( Box.x, Box.y, EspColor, Player );
     }
-} // namespace CS::Features::ESP
+  } // namespace CS::Features::ESP
