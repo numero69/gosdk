@@ -59,6 +59,11 @@ namespace CS::Features::ESP {
     Utils::Render::RenderBoxOutline( Box.x - 1, Box.y - 1, Box.Right( ) + 1, Box.Bottom( ) + 1, ColorOutline, false );
     Utils::Render::RenderBoxOutline( Box.x + 1, Box.y + 1, Box.Right( ) - 1, Box.Bottom( ) - 1, ColorOutline, false );
   }
+  
+  inline void HealthESP(int X, int Y, Utils::Color ColorMain, std::wstring Health) noexcept {
+    // health ESP
+    Utils::Render::RenderText( X + 1, Y + 1, Utils::Render::ESP, ColorMain, Health );
+  }
 
   inline void DrawLine( Utils::Math::Vector & EntityOrigin, Utils::Color Color ) noexcept {
     Utils::Math::Vector PostWTSVec{};
@@ -86,9 +91,7 @@ namespace CS::Features::ESP {
       DrawBox( Box, EspColor, Utils::Color( 0, 0, 0, EspColor.uAlpha ) );
       DrawLine( Player->Origin( ), EspColor );
 
-      //health ESP
-      Utils::Render::RenderText(
-          Box.x + 1, Box.y + 1, Utils::Render::ESP, EspColor, std::wstring_view{ player->Health() });
+      HealthESP( Box.x, Box.y, EspColor, std::wstring_view{ Player->Health( ) } );
       
       
 
