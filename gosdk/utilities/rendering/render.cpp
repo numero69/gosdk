@@ -37,6 +37,7 @@ namespace Utils::Render {
   void RunRender( ) noexcept {
     /* Namings with ExA are due to WINAPI overriding names */
     Verdana = CS::Interfaces::g_pSurface->CreateFontExA( );
+    ESP = CS::Interfaces::g_pSurface->CreateFontExA( );
 
     /* Lambda used to only initialize fonts once */
     /* If you plan to reinitialize them, get rid of the lambda */
