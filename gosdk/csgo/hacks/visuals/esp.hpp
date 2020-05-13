@@ -69,26 +69,28 @@ namespace CS::Features::ESP {
     Utils::Render::RenderLine( width / 2, height / 2, PostWTSVec.x, PostWTSVec.y, Color );
   }
 
-  inline void DrawHealth( int x, int y, Utils::Color ColorMain, CS::Classes::CCSPlayer * Player ) noexcept {
-    Utils::Render::RenderText( x + 1, y + 1, Utils::Render::ESP, ColorMain, std::to_wstring( Player->Health( ) ) );
+  inline void DrawHealth( CS::Classes::Box & Box, CS::Classes::CCSPlayer * Player, Utils::Color Color ) noexcept {
+    Utils::Render::RenderText( Box.x + 1, Box.y + 1, Utils::Render::ESP, Color, std::to_wstring( Player->Health( ) ) );
   }
 
   inline void RunEsp( ) noexcept {
-
     for ( int i = 1; i <= CS::Interfaces::g_pGlobalVars->MaxClients; i++ ) {
       auto Player = CS::Interfaces::g_pEntityList->GetEntity( i );
 
       if ( !Player || !Player->bIsAlive( ) || Player == Utils::Context::g_pLocal )
         continue;
+
       Utils::Color EspColor = Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255 );
+      Utils::Color EspColorOutline = Utils::Color( 0, 0, 0, Player->bDormant( ) ? 100 : 255 );
+
       CS::Classes::Box Box;
 
       if ( !BoundingBox( Player, Box ) )
         continue;
 
-      DrawBox( Box, EspColor, Utils::Color( 0, 0, 0, EspColor.uAlpha ) );
+      DrawBox( Box, EspColor, EspColorOutline );
       DrawLine( Player->Origin( ), EspColor );
-
-      DrawHealth( Box.x, Box.y, EspColor, Player );
+      DrawHealth( Box, Player, EspColor );
     }
-  } // namespace CS::Features::ESP
+  }
+} // namespace CS::Features::ESP

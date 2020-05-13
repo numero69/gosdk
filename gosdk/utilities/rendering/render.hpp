@@ -28,7 +28,7 @@ namespace Utils::Render {
 
   inline unsigned Verdana{};
   inline unsigned ESP{};
-  
+
   void RunRender( ) noexcept;
   void ReleaseRender( ) noexcept;
 } // namespace Utils::Render
