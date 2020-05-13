@@ -88,7 +88,7 @@ namespace CS::Features::ESP {
 
       //health ESP
       Utils::Render::RenderText(
-          Box.x + 1, Box.y + 1, Utils::Render::ESP, EspColor, std::to_wstring( Player->Health( ) ) );
+          Box.x + 1, Box.y + 1, Utils::Render::ESP, EspColor, std::wstring_view{ player->Health() });
       
       
 
