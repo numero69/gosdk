@@ -27,7 +27,8 @@ namespace Utils::Render {
   void RenderText( const int x, const int y, unsigned font, Utils::Color color, const std::wstring_view text ) noexcept;
 
   inline unsigned Verdana{};
-
+  inline unsigned ESP{};
+  
   void RunRender( ) noexcept;
   void ReleaseRender( ) noexcept;
 } // namespace Utils::Render

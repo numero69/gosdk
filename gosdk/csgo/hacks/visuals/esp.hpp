@@ -59,6 +59,8 @@ namespace CS::Features::ESP {
     Utils::Render::RenderBoxOutline( Box.x - 1, Box.y - 1, Box.Right( ) + 1, Box.Bottom( ) + 1, ColorOutline, false );
     Utils::Render::RenderBoxOutline( Box.x + 1, Box.y + 1, Box.Right( ) - 1, Box.Bottom( ) - 1, ColorOutline, false );
   }
+  
+
 
   inline void DrawLine( Utils::Math::Vector & EntityOrigin, Utils::Color Color ) noexcept {
     Utils::Math::Vector PostWTSVec{};
@@ -69,22 +71,26 @@ namespace CS::Features::ESP {
     Utils::Render::RenderLine( width / 2, height / 2, PostWTSVec.x, PostWTSVec.y, Color );
   }
 
+  inline void DrawHealth( int x, int y, Utils::Color ColorMain, CS::Classes::CCSPlayer * Player ) noexcept {
+    Utils::Render::RenderText( x + 1, y + 1, Utils::Render::ESP, ColorMain, std::to_wstring( Player->Health( ) ) );
+  }
+
   inline void RunEsp( ) noexcept {
+    
     for ( int i = 1; i <= CS::Interfaces::g_pGlobalVars->MaxClients; i++ ) {
       auto Player = CS::Interfaces::g_pEntityList->GetEntity( i );
 
       if ( !Player || !Player->bIsAlive( ) || Player == Utils::Context::g_pLocal )
         continue;
-
+      Utils::Color EspColor = Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255 );
       CS::Classes::Box Box;
 
       if ( !BoundingBox( Player, Box ) )
         continue;
-      // players that are dormant will have reduced alpha
 
-      DrawBox( Box, Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255  ), Utils::Color( 0, 0, 0, Player->bDormant( ) ? 100 : 255  ) );
-      DrawLine( Player->Origin( ), Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255 ) );
+      DrawBox( Box, EspColor, Utils::Color( 0, 0, 0, EspColor.uAlpha ) );
+      DrawLine( Player->Origin( ), EspColor );
 
+      DrawHealth( Box.x, Box.y, EspColor, Player  );
     }
-  }
 } // namespace CS::Features::ESP
