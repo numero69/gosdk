@@ -1,70 +1,56 @@
 #include "render.hpp"
 #include "../../csgo/valve/global.hpp"
 
-namespace utilities::render
-{
-void render_box(const int x, const int y, const int w, const int h,
-		utilities::color color, bool is_additive) noexcept
-{
-	csgo::valve::interfaces::p_surface->set_draw_color(color);
-	csgo::valve::interfaces::p_surface->draw_filled_rect(
-		x, y, is_additive ? x + w : w, is_additive ? y + h : h);
-}
+namespace Utils::Render {
+  void RenderBox( const int x, const int y, const int w, const int h, Utils::Color color, bool is_additive ) noexcept {
+    CS::Interfaces::g_pSurface->SetDrawColor( color );
+    CS::Interfaces::g_pSurface->DrawFilledRect( x, y, is_additive ? x + w : w, is_additive ? y + h : h );
+  }
 
-void render_box_outline(const int x, const int y, const int w, const int h,
-			utilities::color color, bool is_additive) noexcept
-{
-	csgo::valve::interfaces::p_surface->set_draw_color(color);
-	csgo::valve::interfaces::p_surface->draw_outlined_rect(
-		x, y, is_additive ? x + w : w, is_additive ? y + h : h);
-}
+  void RenderBoxOutline( const int x, const int y, const int w, const int h, Utils::Color color, bool is_additive ) noexcept {
+    CS::Interfaces::g_pSurface->SetDrawColor( color );
+    CS::Interfaces::g_pSurface->DrawOutlinedRect( x, y, is_additive ? x + w : w, is_additive ? y + h : h );
+  }
 
-void render_circle(const int x, const int y, const int radius,
-		   utilities::color color) noexcept
-{
-	csgo::valve::interfaces::p_surface->set_draw_color(color);
-	csgo::valve::interfaces::p_surface->draw_filled_circle(x, y, radius);
-}
+  void RenderCircle( const int x, const int y, const int radius, Utils::Color color ) noexcept {
+    CS::Interfaces::g_pSurface->SetDrawColor( color );
+    CS::Interfaces::g_pSurface->DrawFilledCircle( x, y, radius );
+  }
 
-void render_circle_outline(const int x, const int y, const int radius,
-			   const int segments, utilities::color color) noexcept
-{
-	csgo::valve::interfaces::p_surface->set_draw_color(color);
-	csgo::valve::interfaces::p_surface->draw_outlined_circle(x, y, radius,
-								 segments);
-}
+  void RenderCircleOutline( const int x, const int y, const int radius, const int segments, Utils::Color color ) noexcept {
+    CS::Interfaces::g_pSurface->SetDrawColor( color );
+    CS::Interfaces::g_pSurface->DrawOutlinedCircle( x, y, radius, segments );
+  }
 
-void render_line(const int x, const int y, const int x1, const int y1,
-		 utilities::color color) noexcept
-{
-	csgo::valve::interfaces::p_surface->set_draw_color(color);
-	csgo::valve::interfaces::p_surface->draw_line(x, y, x1, y1);
-}
+  void RenderLine( const int x, const int y, const int x1, const int y1, Utils::Color color ) noexcept {
+    CS::Interfaces::g_pSurface->SetDrawColor( color );
+    CS::Interfaces::g_pSurface->DrawLine( x, y, x1, y1 );
+  }
 
-void render_text(const int x, const int y, unsigned font,
-		 utilities::color color, const std::wstring_view text) noexcept
-{
-	csgo::valve::interfaces::p_surface->set_text_position(x, y);
-	csgo::valve::interfaces::p_surface->set_text_font(font);
-	csgo::valve::interfaces::p_surface->set_text_color(color);
-	csgo::valve::interfaces::p_surface->print_text(text);
-}
+  void RenderText( const int x, const int y, unsigned font, Utils::Color color, const std::wstring_view text ) noexcept {
+    CS::Interfaces::g_pSurface->SetTextPosition( x, y );
+    CS::Interfaces::g_pSurface->SetTextFont( font );
+    CS::Interfaces::g_pSurface->SetTextColor( color );
+    CS::Interfaces::g_pSurface->PrintText( text );
+  }
 
-void run_render() noexcept
-{
-	verdana = csgo::valve::interfaces::p_surface->create_font();
-	([]() {
+  void RunRender( ) noexcept {
+    /* Namings with ExA are due to WINAPI overriding names */
+    Verdana = CS::Interfaces::g_pSurface->CreateFontExA( );
+    ESP = CS::Interfaces::g_pSurface->CreateFontExA( );
 
-		csgo::valve::interfaces::p_surface->set_font_glyph_set(
-			verdana, "Verdana", 13, 600, 0, 0,
-			font_flags::fontflag_antialias |
-				font_flags::fontflag_outline);
+    /* Lambda used to only initialize fonts once */
+    /* If you plan to reinitialize them, get rid of the lambda */
+    /* Or, make it an actual function to be called on a specific event */
+    /* Currently, as I didn't do stuff like, hook OnScreenSizeChanged */
+    /* To reinitialize the Render manager, I have no reason to do so. */
+    ( []( ) {
+      CS::Interfaces::g_pSurface->SetFontGlyphSet(
+          Verdana, "Verdana", 13, 600, 0, 0, EFontFlags::FONTFLAG_ANTIALIAS | EFontFlags::FONTFLAG_OUTLINE );
+      CS::Interfaces::g_pSurface->SetFontGlyphSet(
+          ESP, "Tahoma", 10, 600, 0, 0, EFontFlags::FONTFLAG_ANTIALIAS | EFontFlags::FONTFLAG_OUTLINE );
+    } )( );
+  }
 
-	})();
-}
-
-void release_render() noexcept
-{
-	verdana = NULL;
-}
-} // namespace utilities::render
+  void ReleaseRender( ) noexcept { Verdana = NULL; }
+} // namespace Utils::Render

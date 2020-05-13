@@ -17,39 +17,34 @@
 // clang-format off
 #define CONFIG_GET(type, name) \
 ([]() { \
-return config::configs->get<type>(STR(name)); \
+return Config::SSettings->get<type>(STR(name)); \
 })()
 #define CONFIG_SET(type, name, value) \
-config::configs->get<type>(STR(name)) = value; 
+Config::SSettings->get<type>(STR(name)) = value;
 // clang-format on
 
-namespace config
-{
+namespace Config {
+
 // clang-format off
 #define add_setting(setting, default_value) \
-m_settings[STR(setting)] = default_value;
-// clang-format on
-struct settings {
-	using setting_t =
-		std::variant<int, bool, float, std::string, utilities::color>;
-	std::unordered_map<std::string, setting_t> m_settings;
+mSettings[STR(setting)] = default_value;
+  // clang-format on
 
-    public:
-	settings()
-	{
-		add_setting("test_boolean", false);
-	}
+  struct SSettings {
+    using Setting_t = std::variant<int, bool, float, std::string, Utils::Color>;
+    std::unordered_map<std::string, Setting_t> mSettings;
 
-	template <typename type> type &get(const std::string &setting)
-	{
-		return std::get<type>(m_settings[setting]);
-	}
+  public:
+    SSettings( ) { /* Add your settings there */
+      add_setting( "test_boolean", false );
+    }
 
-	bool save(const std::string &config_file_name);
+    template <typename Type> Type & get( const std::string & setting ) { return std::get<Type>( mSettings[ setting ] ); }
 
-	bool load(const std::string &config_file_name);
-	bool load_clipboard(const std::string &data);
-};
+    bool bSave( const std::string & config_file_name );
+    bool bLoad( const std::string & config_file_name );
+    bool bLoadClip( const std::string & data );
+  };
 
-inline std::unique_ptr<config::settings> configs{ nullptr };
-} // namespace config
+  inline std::unique_ptr<Config::SSettings> g_pConfig{ nullptr };
+} // namespace Config

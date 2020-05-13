@@ -1,98 +1,76 @@
 #include "interfaces.hpp"
 
-namespace csgo::valve::interfaces
-{
-void run_interfaces() noexcept
-{
-	p_client = reinterpret_cast<i_base_client_dll *>(
-		utilities::memory::scan_interface(STR("client_panorama.dll"),
-						  STR("VClient018")));
+namespace CS::Interfaces {
+  void RunInterfaces( ) noexcept {
+    g_pClient =
+        reinterpret_cast<IBaseClientDLL *>( Utils::Memory::ScanInterface( STR( "client_panorama.dll" ), STR( "VClient018" ) ) );
 
-	if (!p_client)
-		utilities::console::log<std::string>(STR(
-			"failed @ p_client | client_panorama.dll | VClient018"));
+    if ( !g_pClient )
+      Utils::Console::Log<std::string>( STR( "failed @ g_pClient | client_panorama.dll | VClient018" ) );
 
-	p_client_mode = **reinterpret_cast<i_client_mode ***>(
-		(*reinterpret_cast<uintptr_t **>(p_client))[10] + 5);
+    g_pClientMode = **reinterpret_cast<IClientMode ***>( ( *reinterpret_cast<uintptr_t **>( g_pClient ) )[ 10 ] + 5 );
 
-	if (!p_client_mode)
-		utilities::console::log<std::string>(STR(
-			"failed @ p_client_mode | check source for more information...")); // ohh yeahh ohh yeahh ohh yeaaaaahhh
+    if ( !g_pClientMode )
+      Utils::Console::Log<std::string>(
+          STR( "failed @ g_pClientMode | check source for more information..." ) ); // ohh yeahh ohh yeahh ohh yeaaaaahhh
 
-	p_global_vars = **reinterpret_cast<i_global_vars ***>(
-		(*reinterpret_cast<uintptr_t **>(p_client))[11] + 10);
+    g_pGlobalVars = **reinterpret_cast<IGlobalVars ***>( ( *reinterpret_cast<uintptr_t **>( g_pClient ) )[ 11 ] + 10 );
 
-	if (!p_global_vars)
-		utilities::console::log<std::string>(STR(
-			"failed @ p_global_vars | check source for more information...")); // ohh yeahh ohh yeahh ohh yeaaaaahhh x2
+    if ( !g_pGlobalVars )
+      Utils::Console::Log<std::string>(
+          STR( "failed @ g_pGlobalVars | check source for more information..." ) ); // ohh yeahh ohh yeahh ohh yeaaaaahhh x2
 
-	p_entity_list = reinterpret_cast<i_entity_list *>(
-		utilities::memory::scan_interface(STR("client_panorama.dll"),
-						  STR("VClientEntityList003")));
+    g_pEntityList = reinterpret_cast<IEntityList *>(
+        Utils::Memory::ScanInterface( STR( "client_panorama.dll" ), STR( "VClientEntityList003" ) ) );
 
-	if (!p_entity_list)
-		utilities::console::log<std::string>(STR(
-			"failed @ p_entity_list | client_panorama.dll | VClientEntityList003"));
+    if ( !g_pEntityList )
+      Utils::Console::Log<std::string>( STR( "failed @ g_pEntityList | client_panorama.dll | VClientEntityList003" ) );
 
-	p_engine_client = reinterpret_cast<i_engine_client *>(
-		utilities::memory::scan_interface(STR("engine.dll"),
-						  STR("VEngineClient014")));
+    g_pEngineClient =
+        reinterpret_cast<IEngineClient *>( Utils::Memory::ScanInterface( STR( "engine.dll" ), STR( "VEngineClient014" ) ) );
 
-	if (!p_engine_client)
-		utilities::console::log<std::string>(STR(
-			"failed @ p_engine_client | engine.dll | VEngineClient014"));
+    if ( !g_pEngineClient )
+      Utils::Console::Log<std::string>( STR( "failed @ g_pEngineClient | engine.dll | VEngineClient014" ) );
 
-	p_debug_overlay = reinterpret_cast<i_debug_overlay *>(
-		utilities::memory::scan_interface(STR("engine.dll"),
-						  STR("VDebugOverlay004")));
+    g_pDebugOverlay =
+        reinterpret_cast<IDebugOverlay *>( Utils::Memory::ScanInterface( STR( "engine.dll" ), STR( "VDebugOverlay004" ) ) );
 
-	if (!p_debug_overlay)
-		utilities::console::log<std::string>(STR(
-			"failed @ p_debug_overlay | engine.dll | VDebugOverlay004"));
+    if ( !g_pDebugOverlay )
+      Utils::Console::Log<std::string>( STR( "failed @ g_pDebugOverlay | engine.dll | VDebugOverlay004" ) );
 
-	p_console =
-		reinterpret_cast<i_console *>(utilities::memory::scan_interface(
-			STR("vstdlib.dll"), STR("VEngineCvar007")));
+    g_pConsole = reinterpret_cast<IConsole *>( Utils::Memory::ScanInterface( STR( "vstdlib.dll" ), STR( "VEngineCvar007" ) ) );
 
-	if (!p_console)
-		utilities::console::log<std::string>(STR(
-			"failed @ p_console | vstdlib.dll | VEngineCvar007"));
+    if ( !g_pConsole )
+      Utils::Console::Log<std::string>( STR( "failed @ g_pConsole | vstdlib.dll | VEngineCvar007" ) );
 
-	p_surface =
-		reinterpret_cast<i_surface *>(utilities::memory::scan_interface(
-			STR("vguimatsurface.dll"), STR("VGUI_Surface031")));
+    g_pSurface =
+        reinterpret_cast<ISurface *>( Utils::Memory::ScanInterface( STR( "vguimatsurface.dll" ), STR( "VGUI_Surface031" ) ) );
 
-	if (!p_surface)
-		utilities::console::log<std::string>(STR(
-			"failed @ p_surface | vguimatsurface.dll | VGUI_Surface031"));
+    if ( !g_pSurface )
+      Utils::Console::Log<std::string>( STR( "failed @ g_pSurface | vguimatsurface.dll | VGUI_Surface031" ) );
 
-	p_input_system = reinterpret_cast<i_input_system *>(
-		utilities::memory::scan_interface(
-			STR("inputsystem.dll"), STR("InputSystemVersion001")));
+    g_pInputSystem = reinterpret_cast<IInputSystem *>(
+        Utils::Memory::ScanInterface( STR( "inputsystem.dll" ), STR( "InputSystemVersion001" ) ) );
 
-	if (!p_input_system)
-		utilities::console::log<std::string>(STR(
-			"failed @ p_input_system | inputsystem.dll | InputSystemVersion001"));
+    if ( !g_pInputSystem )
+      Utils::Console::Log<std::string>( STR( "failed @ g_pInputSystem | inputsystem.dll | InputSystemVersion001" ) );
 
-	p_panel = reinterpret_cast<i_panel *>(utilities::memory::scan_interface(
-		STR("vgui2.dll"), STR("VGUI_Panel009")));
+    g_pPanel = reinterpret_cast<IPanel *>( Utils::Memory::ScanInterface( STR( "vgui2.dll" ), STR( "VGUI_Panel009" ) ) );
 
-	if (!p_panel)
-		utilities::console::log<std::string>(
-			STR("failed @ p_panel | vgui2.dll | VGUI_Panel009"));
-}
+    if ( !g_pPanel )
+      Utils::Console::Log<std::string>( STR( "failed @ g_pPanel | vgui2.dll | VGUI_Panel009" ) );
+  }
 
-void release_interfaces() noexcept
-{
-	p_console = nullptr;
-	p_surface = nullptr;
-	p_input_system = nullptr;
-	p_panel = nullptr;
-	p_client = nullptr;
-	p_client_mode = nullptr;
-	p_entity_list = nullptr;
-	p_engine_client = nullptr;
-	p_global_vars = nullptr;
-	p_debug_overlay = nullptr;
-}
-} // namespace csgo::valve::interfaces
+  void ReleaseInterfaces( ) noexcept {
+    g_pConsole = nullptr;
+    g_pSurface = nullptr;
+    g_pInputSystem = nullptr;
+    g_pPanel = nullptr;
+    g_pClient = nullptr;
+    g_pClientMode = nullptr;
+    g_pEntityList = nullptr;
+    g_pEngineClient = nullptr;
+    g_pGlobalVars = nullptr;
+    g_pDebugOverlay = nullptr;
+  }
+} // namespace CS::Interfaces

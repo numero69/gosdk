@@ -1,21 +1,20 @@
 #pragma once
 
-namespace csgo::valve::classes
+namespace CS::Classes
 {
-class d_variant;
-class recv_table;
-class recv_prop;
-class c_recv_proxy_data;
+class CDVariant;
+class CRecvTable;
+class CRecvProp;
+class CRecvProxyData;
 
-using recv_var_proxy_fn = void (*)(const c_recv_proxy_data *data,
-				   void *struct_ptr, void *out_ptr);
-using array_length_recv_proxy_fn = void (*)(void *struct_ptr, int object_id,
-					    int current_array_length);
-using data_table_recv_var_proxy_fn = void (*)(const recv_prop *prop,
-					      void **out_ptr, void *data_ptr,
-					      int object_id);
+using RecvVarProxy_t = void (*)(const CRecvProxyData *data, void *struct_ptr,
+				void *out_ptr);
+using ArrayLengthRecvProxy_t = void (*)(void *struct_ptr, int object_id,
+					int current_array_length);
+using DataTableRecvVarProxy_t = void (*)(const CRecvProp *prop, void **out_ptr,
+					 void *data_ptr, int object_id);
 
-enum send_prop_type {
+enum ESendPropType {
 	_int = 0,
 	_float,
 	_vec,
@@ -25,50 +24,52 @@ enum send_prop_type {
 	_data_table,
 	_int_64,
 };
-class d_variant {
+class CDVariant {
     public:
 	union {
-		float m_float;
-		long m_int;
-		char *m_string;
-		void *m_data;
-		float m_vector[3];
-		__int64 m_int64;
+		float Float;
+		long Int;
+		char *String;
+		void *Data;
+		float Vector[3];
+		__int64 Int64;
 	};
-	send_prop_type type;
+	ESendPropType type;
 };
-class c_recv_proxy_data {
+class CRecvProxyData {
     public:
-	const recv_prop *recv_prop;
-	d_variant value;
-	int element_index;
-	int object_id;
+	const CRecvProp *RecvProp;
+	CDVariant Value;
+	int ElementIndex;
+	int ObjectID;
 };
-class recv_prop {
+
+class CRecvProp {
     public:
-	char *prop_name;
-	send_prop_type prop_type;
-	int prop_flags;
-	int buffer_size;
-	int is_inside_of_array;
-	const void *extra_data_ptr;
-	recv_prop *array_prop;
-	array_length_recv_proxy_fn array_length_proxy;
-	recv_var_proxy_fn proxy_fn;
-	data_table_recv_var_proxy_fn data_table_proxy_fn;
-	recv_table *data_table;
-	int offset;
-	int element_stride;
-	int elements_count;
-	const char *parent_array_prop_name;
+	char *PropName;
+	ESendPropType PropType;
+	int PropFlags;
+	int BufferSize;
+	int IsInsideOfArray;
+	const void *ExtraDataPtr;
+	CRecvProp *ArrayProp;
+	ArrayLengthRecvProxy_t ArrLengthProxy;
+	RecvVarProxy_t Proxy_t;
+	DataTableRecvVarProxy_t DataTableProxy_t;
+	CRecvTable *DataTable;
+	int Offset;
+	int ElementsStride;
+	int ElementsCount;
+	const char *ParrentArrayPropName;
 };
-class recv_table {
+
+class CRecvTable {
     public:
-	recv_prop *props;
-	int props_count;
-	void *decoder_ptr;
-	char *table_name;
-	bool is_initialized;
-	bool is_in_main_list;
+	CRecvProp *Props;
+	int PropsCount;
+	void *DecoderPtr;
+	char *TableName;
+	bool IsInitialized;
+	bool IsInMainList;
 };
-} // namespace csgo::valve::classes
+} // namespace CS::Classes
