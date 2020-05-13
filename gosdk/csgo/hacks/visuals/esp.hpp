@@ -90,7 +90,7 @@ namespace CS::Features::ESP {
       DrawBox( Box, EspColor, Utils::Color( 0, 0, 0, EspColor.uAlpha ) );
       DrawLine( Player->Origin( ), EspColor );
 
-      HealthESP( Box.x, Box.y, EspColor, std::wstring_view{ Player->Health( ) } );
+      DrawHealth( Box.x, Box.y, EspColor, std::wstring_view{ Player->Health( ) } );
       
       
 
