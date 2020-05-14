@@ -5,7 +5,7 @@
 
 LPVOID Init( const HMODULE instance ) {
 
-  ( []( const HMODULE PassedInstance ) { Utils::Context::g_pModule = PassedInstance; } )( instance );
+  Utils::Context::g_pModule = instance;
 
   try {
     Utils::Console::Initialize( STR( "gosdk" ), STR( "welcome, initialized" ) );

@@ -10,7 +10,7 @@ namespace Utils::Hooking {
   static bool __stdcall bGrenadePreview( ) noexcept { return true; }
 
   static void __fastcall LockCursor( ) noexcept {
-    static auto Original = g_pSurfaceHook->GetOriginalFunction<LockCursor_t>( EFuncIndexes::LockCursorIndex );
+    static auto Original = g_SurfaceHook.GetOriginalFunction<LockCursor_t>( EFuncIndexes::LockCursorIndex );
 
     if ( GetAsyncKeyState( VK_INSERT ) ) {
       CS::Interfaces::g_pSurface->UnlockCursor( );
@@ -25,10 +25,9 @@ namespace Utils::Hooking {
   }
 
   static void __stdcall PaintTraverse( unsigned int Panel, bool ForceRepaint, bool AllowForce ) noexcept {
-    static auto Original = g_pPanelHook->GetOriginalFunction<PaintTraverse_t>( EFuncIndexes::PaintTraverseIndex );
+    static auto Original = g_PanelHook.GetOriginalFunction<PaintTraverse_t>( EFuncIndexes::PaintTraverseIndex );
 
     if ( CS::Interfaces::g_pPanel->GetName( Panel ) == STR( "MatSystemTopPanel" ) ) {
-      //		if (CONFIG_GET(bool, "test_boolean"))
       Utils::Render::RenderText( 15, 15, Utils::Render::Verdana, Utils::Color( 255, 255, 255, 255 ), L"Test" );
       if ( CS::Interfaces::g_pEngineClient->IsInGame( ) && CS::Interfaces::g_pEngineClient->IsConnected( ) ) {
         CS::Features::ESP::RunEsp( );
@@ -61,32 +60,27 @@ namespace Utils::Hooking {
   }
 
   void RunHooks( ) noexcept {
-    g_pCheatsHook = std::make_unique<Utils::Hooking::CVMT>( );
-    g_pCheatsHook->bInit( CS::Interfaces::g_pConsole->FindVar( STR( "sv_cheats" ) ) );
-    g_pCheatsHook->bHookFunction( EFuncIndexes::GetIntIndex, Utils::Hooking::bSvCheats );
+    g_CheatsHook.bInit( CS::Interfaces::g_pConsole->FindVar( STR( "sv_cheats" ) ) );
+    g_CheatsHook.bHookFunction( EFuncIndexes::GetIntIndex, Utils::Hooking::bSvCheats );
 
-    g_pGrenadePreviewHook = std::make_unique<Utils::Hooking::CVMT>( );
-    g_pGrenadePreviewHook->bInit( CS::Interfaces::g_pConsole->FindVar( STR( "cl_grenade_preview" ) ) );
-    g_pGrenadePreviewHook->bHookFunction( EFuncIndexes::GetIntIndex, Utils::Hooking::bGrenadePreview );
+    g_GrenadePreviewHook.bInit( CS::Interfaces::g_pConsole->FindVar( STR( "cl_grenade_preview" ) ) );
+    g_GrenadePreviewHook.bHookFunction( EFuncIndexes::GetIntIndex, Utils::Hooking::bGrenadePreview );
 
-    g_pClientModeHook = std::make_unique<Utils::Hooking::CVMT>( );
-    g_pClientModeHook->bInit( CS::Interfaces::g_pClientMode );
-    g_pClientModeHook->bHookFunction( EFuncIndexes::CreateMoveIndex, Utils::Hooking::bCreateMove );
+    g_ClientModeHook.bInit( CS::Interfaces::g_pClientMode );
+    g_ClientModeHook.bHookFunction( EFuncIndexes::CreateMoveIndex, Utils::Hooking::bCreateMove );
 
-    g_pSurfaceHook = std::make_unique<Utils::Hooking::CVMT>( );
-    g_pSurfaceHook->bInit( CS::Interfaces::g_pSurface );
-    g_pSurfaceHook->bHookFunction( EFuncIndexes::LockCursorIndex, Utils::Hooking::LockCursor );
+    g_SurfaceHook.bInit( CS::Interfaces::g_pSurface );
+    g_SurfaceHook.bHookFunction( EFuncIndexes::LockCursorIndex, Utils::Hooking::LockCursor );
 
-    g_pPanelHook = std::make_unique<Utils::Hooking::CVMT>( );
-    g_pPanelHook->bInit( CS::Interfaces::g_pPanel );
-    g_pPanelHook->bHookFunction( EFuncIndexes::PaintTraverseIndex, Utils::Hooking::PaintTraverse );
+    g_PanelHook.bInit( CS::Interfaces::g_pPanel );
+    g_PanelHook.bHookFunction( EFuncIndexes::PaintTraverseIndex, Utils::Hooking::PaintTraverse );
   }
 
   void ReleaseHooks( ) noexcept {
-    g_pCheatsHook->bUnhook( );
-    g_pGrenadePreviewHook->bUnhook( );
-    g_pClientModeHook->bUnhook( );
-    g_pSurfaceHook->bUnhook( );
-    g_pPanelHook->bUnhook( );
+    g_CheatsHook.bUnhook( );
+    g_GrenadePreviewHook.bUnhook( );
+    g_ClientModeHook.bUnhook( );
+    g_SurfaceHook.bUnhook( );
+    g_PanelHook.bUnhook( );
   }
 } // namespace Utils::Hooking

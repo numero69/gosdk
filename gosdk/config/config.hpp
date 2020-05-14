@@ -14,15 +14,6 @@
 #include "../dependencies/global.hpp"
 #include "../utilities/global.hpp"
 
-// clang-format off
-#define CONFIG_GET(type, name) \
-([]() { \
-return Config::SSettings->get<type>(STR(name)); \
-})()
-#define CONFIG_SET(type, name, value) \
-Config::SSettings->get<type>(STR(name)) = value;
-// clang-format on
-
 namespace Config {
 
 // clang-format off

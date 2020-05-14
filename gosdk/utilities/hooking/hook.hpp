@@ -39,16 +39,23 @@ namespace Utils::Hooking {
   /* Indexes */
   enum EFuncIndexes { GetIntIndex = 13, CreateMoveIndex = 24, PaintTraverseIndex = 41, LockCursorIndex = 67 };
 
-  /* Pointers */
-  inline std::unique_ptr<Utils::Hooking::CVMT> g_pCheatsHook;
-  inline std::unique_ptr<Utils::Hooking::CVMT> g_pGrenadePreviewHook;
-  inline std::unique_ptr<Utils::Hooking::CVMT> g_pClientModeHook;
-  inline std::unique_ptr<Utils::Hooking::CVMT> g_pSurfaceHook;
-  inline std::unique_ptr<Utils::Hooking::CVMT> g_pPanelHook;
-
   /* Declarations */
+  inline Utils::Hooking::CVMT g_CheatsHook;
+  inline Utils::Hooking::CVMT g_GrenadePreviewHook;
+  inline Utils::Hooking::CVMT g_ClientModeHook;
+  inline Utils::Hooking::CVMT g_SurfaceHook;
+  inline Utils::Hooking::CVMT g_PanelHook;
+
+  /* These don't require originals because we want them to stay true at all times */
+
   static bool __stdcall bSvCheats( ) noexcept;
   static bool __stdcall bGrenadePreview( ) noexcept;
+
+  /* Note - You could instead use decltype within the */
+  /* GetOriginal function, but, after my testing */
+  /* Results from that were inaccurate and caused */
+  /* Rather weird issues. I advice you pass typedefinitions */
+  /* To not runinto issues in the future. */
 
   static void __fastcall LockCursor( ) noexcept;
   using LockCursor_t = void( __thiscall * )( void * );
