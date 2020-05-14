@@ -10,7 +10,7 @@ namespace Utils::Hooking {
   static bool __stdcall bGrenadePreview( ) noexcept { return true; }
 
   static void __fastcall LockCursor( ) noexcept {
-    static auto Original = g_SurfaceHook.GetOriginalFunction<LockCursor_t>( EFuncIndexes::LockCursorIndex );
+    static auto Original = g_SurfaceHook.GetOriginalFunction<LockCursor_t>( EFuncIndexes::LockCursor_index );
 
     if ( GetAsyncKeyState( VK_INSERT ) ) {
       CS::Interfaces::g_pSurface->UnlockCursor( );
@@ -25,7 +25,7 @@ namespace Utils::Hooking {
   }
 
   static void __stdcall PaintTraverse( unsigned int Panel, bool ForceRepaint, bool AllowForce ) noexcept {
-    static auto Original = g_PanelHook.GetOriginalFunction<PaintTraverse_t>( EFuncIndexes::PaintTraverseIndex );
+    static auto Original = g_PanelHook.GetOriginalFunction<PaintTraverse_t>( EFuncIndexes::PaintTraverse_index );
 
     if ( CS::Interfaces::g_pPanel->GetName( Panel ) == STR( "MatSystemTopPanel" ) ) {
       Utils::Render::RenderText( 15, 15, Utils::Render::Verdana, Utils::Color( 255, 255, 255, 255 ), L"Test" );
@@ -61,19 +61,19 @@ namespace Utils::Hooking {
 
   void RunHooks( ) noexcept {
     g_CheatsHook.bInit( CS::Interfaces::g_pConsole->FindVar( STR( "sv_cheats" ) ) );
-    g_CheatsHook.bHookFunction( EFuncIndexes::GetIntIndex, Utils::Hooking::bSvCheats );
+    g_CheatsHook.bHookFunction( EFuncIndexes::GetInt_index, Utils::Hooking::bSvCheats );
 
     g_GrenadePreviewHook.bInit( CS::Interfaces::g_pConsole->FindVar( STR( "cl_grenade_preview" ) ) );
-    g_GrenadePreviewHook.bHookFunction( EFuncIndexes::GetIntIndex, Utils::Hooking::bGrenadePreview );
+    g_GrenadePreviewHook.bHookFunction( EFuncIndexes::GetInt_index, Utils::Hooking::bGrenadePreview );
 
     g_ClientModeHook.bInit( CS::Interfaces::g_pClientMode );
-    g_ClientModeHook.bHookFunction( EFuncIndexes::CreateMoveIndex, Utils::Hooking::bCreateMove );
+    g_ClientModeHook.bHookFunction( EFuncIndexes::CreateMove_index, Utils::Hooking::bCreateMove );
 
     g_SurfaceHook.bInit( CS::Interfaces::g_pSurface );
-    g_SurfaceHook.bHookFunction( EFuncIndexes::LockCursorIndex, Utils::Hooking::LockCursor );
+    g_SurfaceHook.bHookFunction( EFuncIndexes::LockCursor_index, Utils::Hooking::LockCursor );
 
     g_PanelHook.bInit( CS::Interfaces::g_pPanel );
-    g_PanelHook.bHookFunction( EFuncIndexes::PaintTraverseIndex, Utils::Hooking::PaintTraverse );
+    g_PanelHook.bHookFunction( EFuncIndexes::PaintTraverse_index, Utils::Hooking::PaintTraverse );
   }
 
   void ReleaseHooks( ) noexcept {

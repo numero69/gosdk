@@ -3,17 +3,23 @@
 #include "../../../utilities/memory/global.hpp"
 #include "../classes/players.hpp"
 
+/* Indexes */
+enum EEntityListIndexes : short { GetEntity_index = 3, GetEntityFromHandle_index = 4, GetHighestEntity_index = 6 };
+
 namespace CS::Interfaces {
   class IEntityList {
   public:
     constexpr auto GetEntity( int index ) noexcept {
-      return Utils::Memory::CallVirtualMethod<CS::Classes::CCSPlayer *, int>( this, 3, index );
+      return Utils::Memory::CallVirtualMethod<CS::Classes::CCSPlayer *, int>( this, EEntityListIndexes::GetEntity_index, index );
     }
 
     constexpr auto GetEntityFromHandle( int handle ) noexcept {
-      return Utils::Memory::CallVirtualMethod<CS::Classes::CCSPlayer *, int>( this, 4, handle );
+      return Utils::Memory::CallVirtualMethod<CS::Classes::CCSPlayer *, int>(
+          this, EEntityListIndexes::GetEntityFromHandle_index, handle );
     }
 
-    constexpr auto GetHighestEntityIndex( ) noexcept { return Utils::Memory::CallVirtualMethod<int>( this, 6 ); }
+    constexpr auto GetHighestEntityIndex( ) noexcept {
+      return Utils::Memory::CallVirtualMethod<int>( this, EEntityListIndexes::GetHighestEntity_index );
+    }
   };
 } // namespace CS::Interfaces

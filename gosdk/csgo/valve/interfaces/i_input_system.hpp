@@ -1,6 +1,10 @@
 #pragma once
 
 #include "../../../utilities/global.hpp"
+
+/* Indexes */
+enum EInputSystemIndexes : short { EnableInput_index = 11, IsButtonDown_index = 15 };
+
 namespace CS::Interfaces {
   enum class ButtonCodes {
     BUTTON_CODE_INVALID = -1,
@@ -136,10 +140,12 @@ namespace CS::Interfaces {
 
   class IInputSystem {
   public:
-    constexpr auto EnableInput( bool enable ) noexcept { Utils::Memory::CallVirtualMethod<void, bool>( this, 11, enable ); }
+    constexpr auto EnableInput( bool enable ) noexcept {
+      Utils::Memory::CallVirtualMethod<void, bool>( this, EInputSystemIndexes::EnableInput_index, enable );
+    }
 
     constexpr auto IsButtonDown( int buttonCode ) noexcept {
-      return Utils::Memory::CallVirtualMethod<bool, int>( this, 15, buttonCode );
+      return Utils::Memory::CallVirtualMethod<bool, int>( this, EInputSystemIndexes::IsButtonDown_index, buttonCode );
     }
   };
 } // namespace CS::Interfaces

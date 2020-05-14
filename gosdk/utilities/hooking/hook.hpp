@@ -37,7 +37,7 @@ namespace Utils::Hooking {
   };
 
   /* Indexes */
-  enum EFuncIndexes { GetIntIndex = 13, CreateMoveIndex = 24, PaintTraverseIndex = 41, LockCursorIndex = 67 };
+  enum EFuncIndexes : short { GetInt_index = 13, CreateMove_index = 24, PaintTraverse_index = 41, LockCursor_index = 67 };
 
   /* Declarations */
   inline Utils::Hooking::CVMT g_CheatsHook;

@@ -6,6 +6,7 @@
 
 #include "../../csgo/valve/classes/players.hpp"
 #include "../../csgo/valve/classes/user_cmd.hpp"
+
 namespace Utils::Context {
   inline CS::Classes::CUserCmd * g_pCmd{};
   inline CS::Classes::CCSPlayer * g_pLocal{};
