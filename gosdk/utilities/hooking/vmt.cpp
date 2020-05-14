@@ -68,7 +68,7 @@ namespace Utils::Hooking {
     return true;
   }
 
-  std::uint32_t CVMT::GetVTLength( std::uintptr_t * table ) {
+  std::uintptr_t CVMT::GetVTLength( std::uintptr_t * table ) {
     std::uintptr_t length = std::uintptr_t{};
 
     // walk through every function until it is no longer valid

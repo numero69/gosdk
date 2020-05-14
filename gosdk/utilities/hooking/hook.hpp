@@ -28,9 +28,9 @@ namespace Utils::Hooking {
     }
 
   private:
-    std::uint32_t GetVTLength( std::uintptr_t * table );
+    std::uintptr_t GetVTLength( std::uintptr_t * table );
     std::uintptr_t ** VMTBase = nullptr;
-    std::uint16_t TableLength = 0;
+    std::uintptr_t TableLength = 0;
     std::uintptr_t * OriginalVMT = nullptr;
     std::unique_ptr<uintptr_t[]> ReplaceVMT = nullptr;
     DWORD OldProtection{};
