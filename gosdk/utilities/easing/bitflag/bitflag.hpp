@@ -6,18 +6,18 @@ namespace Utils::Easing {
   struct BitFlag {
     BitFlag( ) = default;
 
-    BitFlag( uintptr_t flags ) : upFlags( flags ) {}
+    BitFlag( uintptr_t flags ) : u_pFlags( flags ) {}
 
     ~BitFlag( ) = default;
 
-    uintptr_t upFlags{};
+    uintptr_t u_pFlags{};
 
-    inline bool bCheckFlag( uintptr_t flag ) { return upFlags & flag; }
+    inline bool bCheckFlag( uintptr_t flag ) { return u_pFlags & flag; }
 
-    inline void AddFlag( uintptr_t flag ) { upFlags |= flag; }
+    inline void AddFlag( uintptr_t flag ) { u_pFlags |= flag; }
 
-    inline void RemoveFlag( uintptr_t flag ) { upFlags &= ~flag; }
+    inline void RemoveFlag( uintptr_t flag ) { u_pFlags &= ~flag; }
 
-    inline bool bIsEmpty( ) { return !upFlags; }
+    inline bool bIsEmpty( ) { return !u_pFlags; }
   };
 } // namespace Utils::Easing
