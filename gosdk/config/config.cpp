@@ -65,30 +65,4 @@ namespace Config {
     ifConfig.close( );
     return true;
   }
-
-  bool SSettings::bLoadClip( const std::string & data ) {
-    nlohmann::json config = nlohmann::json::parse( data );
-    for ( const auto & [ setting, value ] : config.items( ) ) {
-      switch ( value[ STR( "identifier" ) ].get<int>( ) ) {
-        case 0:
-          mSettings[ setting ] = value[ STR( "value" ) ].get<int>( );
-          break;
-        case 1:
-          mSettings[ setting ] = value[ STR( "value" ) ].get<bool>( );
-          break;
-        case 2:
-          mSettings[ setting ] = value[ STR( "value" ) ].get<float>( );
-          break;
-        case 3:
-          mSettings[ setting ] = value[ STR( "value" ) ].get<std::string>( );
-          break;
-        case 4:
-          this->get<Utils::Color>( setting ).uRed = value[ STR( "value_r" ) ].get<float>( );
-          this->get<Utils::Color>( setting ).uGreen = value[ STR( "value_g" ) ].get<float>( );
-          this->get<Utils::Color>( setting ).uBlue = value[ STR( "value_b" ) ].get<float>( );
-          break;
-      }
-    }
-    return true;
-  }
 } // namespace Config
