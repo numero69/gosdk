@@ -19,32 +19,32 @@ enum EEngineClientIndexes : short {
 };
 
 namespace CS::Interfaces {
-  struct PlayerInfo {
-    std::uint64_t version;
+  using PlayerInfo_t = struct SPlayerInfo {
+    std::uint64_t Version;
     union {
-      std::uint64_t xuid;
+      std::uint64_t XUid;
       struct {
-        std::uint32_t xuid_low;
-        std::uint32_t xuid_high;
+        std::uint32_t XUidLow;
+        std::uint32_t XUidHigh;
       };
     };
-    char name[ 128 ];
-    int user_id;
-    char guid[ 33 ];
-    std::uint32_t friends_id;
-    char friends_name[ 128 ];
-    bool fake_player;
-    bool hltv;
-    int custom_files[ 4 ];
-    unsigned char files_downloaded;
-    int entity_index;
+    char Name[ 128 ];
+    int UserId;
+    char GUid[ 33 ];
+    std::uint32_t FriendsId;
+    char FriendsName[ 128 ];
+    bool FakePlayer;
+    bool HLTV;
+    int CustomFiles[ 4 ];
+    unsigned char FilesDownloaded;
+    int EntityIndex;
   };
 
   class CNetChannel;
   class IEngineClient {
   public:
-    constexpr auto GetPlayerInfo( int entity_index, const PlayerInfo & p_info ) noexcept {
-      return Utils::Memory::CallVirtualMethod<bool, int, const PlayerInfo &>(
+    constexpr auto GetPlayerInfo( int entity_index, const PlayerInfo_t * p_info ) noexcept {
+      return Utils::Memory::CallVirtualMethod<bool, int, const PlayerInfo_t *>(
           this, EEngineClientIndexes::GetPlayerInfo_index, entity_index, p_info );
     }
 

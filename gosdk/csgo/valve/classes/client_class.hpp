@@ -3,8 +3,30 @@
 #include "recv_prop.hpp"
 
 namespace CS::Classes {
+
+  /* lol */
+  class bf_read;
+  class bf_write;
+
   class ClientClass;
-  class CClientNetworkable;
+  class CClientNetworkable {
+  public:
+    /* "If it works, it works." - God */
+    virtual void * GetClientUnknown( ) = 0;
+    virtual void Release( ) = 0;
+    virtual ClientClass * GetClientClass( ) = 0;
+    virtual void NotifyShouldTransmit( int state ) = 0;
+    virtual void OnPreDataChanged( int update_type ) = 0;
+    virtual void OnDataChanged( int update_type ) = 0;
+    virtual void PreDataUpdate( int update_type ) = 0;
+    virtual void PostDataUpdate( int update_type ) = 0;
+    virtual void __unkn( ) = 0;
+    virtual bool IsDormant( ) = 0;
+    virtual int EntIndex( ) const = 0;
+    virtual void ReceiveMessage( int classID, bf_read & msg ) = 0;
+    virtual void * GetDataTableBasePtr( ) = 0;
+    virtual void SetDestroyedOnRecreateEntities( ) = 0;
+  };
 
   typedef CClientNetworkable * ( *CreateClientClass_t )( int ent_number, int serial_number );
   typedef CClientNetworkable * ( *CreateEvent_t )( );

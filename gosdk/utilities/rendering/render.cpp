@@ -45,10 +45,8 @@ namespace Utils::Render {
     /* Currently, as I didn't do stuff like, hook OnScreenSizeChanged */
     /* To reinitialize the Render manager, I have no reason to do so. */
     ( []( ) {
-      CS::Interfaces::g_pSurface->SetFontGlyphSet(
-          Verdana, "Verdana", 13, 600, 0, 0, EFontFlags::FONTFLAG_ANTIALIAS | EFontFlags::FONTFLAG_OUTLINE );
-      CS::Interfaces::g_pSurface->SetFontGlyphSet(
-          ESP, "Tahoma", 10, 600, 0, 0, EFontFlags::FONTFLAG_ANTIALIAS | EFontFlags::FONTFLAG_OUTLINE );
+      CS::Interfaces::g_pSurface->SetFontGlyphSet( Verdana, "Verdana", 13, 600, 0, 0, EFontFlags::FONTFLAG_OUTLINE );
+      CS::Interfaces::g_pSurface->SetFontGlyphSet( ESP, "Tahoma", 13, 200, 0, 0, EFontFlags::FONTFLAG_OUTLINE );
     } )( );
   }
 

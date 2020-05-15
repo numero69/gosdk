@@ -15,10 +15,9 @@
 #include "../utilities/global.hpp"
 
 namespace Config {
-
 // clang-format off
-#define add_setting(setting, default_value) \
-mSettings[STR(setting)] = default_value;
+  #define add_setting(setting, default_value) \
+  mSettings[STR(setting)] = default_value;
   // clang-format on
 
   struct SSettings {

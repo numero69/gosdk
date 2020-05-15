@@ -4,6 +4,17 @@
 #include "../../valve/global.hpp"
 
 namespace CS::Features::ESP {
+  namespace Colors {
+    /* Code requires a target to check for it's dormancy. */
+    inline const Utils::Color EspColor( CS::Classes::CCSPlayer * Player ) {
+      return Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255 );
+    }
+
+    inline const Utils::Color EspColorOutline( CS::Classes::CCSPlayer * Player ) {
+      return Utils::Color( 0, 0, 0, Player->bDormant( ) ? 100 : 255 );
+    }
+  } // namespace Colors
+
   // thanks to poliacs for the calculations from UnknownCheats, was a time saver.
   inline bool BoundingBox( CS::Classes::CCSPlayer * Player, CS::Classes::Box & Box ) noexcept {
     const Utils::Math::Vector2 flb{}, brt{}, blb{}, frt{}, frb{}, brb{}, blt{}, flt{}, out{};
@@ -60,6 +71,14 @@ namespace CS::Features::ESP {
     Utils::Render::RenderBoxOutline( Box.x + 1, Box.y + 1, Box.Right( ) - 1, Box.Bottom( ) - 1, ColorOutline, false );
   }
 
+  inline void DrawName( CS::Classes::Box & Box, CS::Interfaces::PlayerInfo_t Info, Utils::Color Color ) {
+    /* Cool way to get around this from Osiris */
+    if ( wchar_t Name[ 128 ] /* According to the struct */; MultiByteToWideChar( CP_UTF8, 0, Info.Name, -1, Name, 128 ) ) {
+      const auto [ width, height ] = CS::Interfaces::g_pSurface->GetTextSize( Utils::Render::ESP, Name );
+      Utils::Render::RenderText( Box.x + ( Box.w / 2 ) - ( width / 2 ), Box.y - 14, Utils::Render::ESP, Color, Name );
+    }
+  }
+
   inline void DrawLine( Utils::Math::Vector & EntityOrigin, Utils::Color Color ) noexcept {
     Utils::Math::Vector PostWTSVec{};
     CS::Interfaces::g_pDebugOverlay->WorldToScreen( EntityOrigin, PostWTSVec );
@@ -69,10 +88,6 @@ namespace CS::Features::ESP {
     Utils::Render::RenderLine( width / 2, height / 2, PostWTSVec.x, PostWTSVec.y, Color );
   }
 
-  inline void DrawHealth( CS::Classes::Box & Box, CS::Classes::CCSPlayer * Player, Utils::Color Color ) noexcept {
-    Utils::Render::RenderText( Box.x + 1, Box.y + 1, Utils::Render::ESP, Color, std::to_wstring( Player->Health( ) ) );
-  }
-
   inline void RunEsp( ) noexcept {
     for ( int i = 1; i <= CS::Interfaces::g_pGlobalVars->MaxClients; i++ ) {
       auto Player = CS::Interfaces::g_pEntityList->GetEntity( i );
@@ -80,17 +95,18 @@ namespace CS::Features::ESP {
       if ( !Player || !Player->bIsAlive( ) || Player == Utils::Context::g_pLocal )
         continue;
 
-      Utils::Color EspColor = Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255 );
-      Utils::Color EspColorOutline = Utils::Color( 0, 0, 0, Player->bDormant( ) ? 100 : 255 );
-
       CS::Classes::Box Box;
+      CS::Interfaces::PlayerInfo_t Info;
 
       if ( !BoundingBox( Player, Box ) )
         continue;
 
-      DrawBox( Box, EspColor, EspColorOutline );
-      DrawLine( Player->Origin( ), EspColor );
-      DrawHealth( Box, Player, EspColor );
+      CS::Interfaces::g_pEngineClient->GetPlayerInfo( Player->ClientRenderable( )->EntIndex( ), &Info );
+
+      /* To see why the argument Player is required check the namespace */
+      DrawBox( Box, Colors::EspColor( Player ), Colors::EspColorOutline( Player ) );
+      DrawLine( Player->Origin( ), Colors::EspColor( Player ) );
+      DrawName( Box, Info, Colors::EspColor( Player ) );
     }
   }
 } // namespace CS::Features::ESP
