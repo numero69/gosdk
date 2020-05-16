@@ -9,6 +9,8 @@ The formatting method for gosdk is a custom clang-format config that is often ei
 # contribution guidelines
 To contribute to gosdk, you must respect these (http://web.mst.edu/~cpp/common/hungarian.html) Hungarian notation guidelines, and your code must be written in Pascal Case, if you implement code that isn't yours, it's recommended and asked that you source and credit the creator.
 
+Member Hungarian notation is to be ignored on classes/structures that explicitly hold VFunctions/generally game structures (this excludes stuff like ClientClass as an example, but also as an example includes structures like ISurface).
+
 # features
 gosdk currently comes with the IConsole interface, ISurface interface, IInputSystem interface, IPanel interface, IBaseClientDLL for Client interface, ClientMode interface, IEngineClient interface, IEntityList interface, IGlobalVars interface, IDebugOverlay interface, a basic Surface wrapper, a Netvar scanner, a VMT hooking class, sv_cheats bypass (hooked), grenade trajectory (convar, hooked), lock cursor [currently while Insert is hold] (hooked), paint traverse [hooked], create move [hooked], ability to do basic rendering, a console with logging, basic error handling, math utilities, various easing functions and utilities which include a color handler and a config system, memory functions, bunny hop and no duck delay through bitflag easing, Box ESP, Snaplines ESP and Name ESP. These are not final and are to be updated.
 
