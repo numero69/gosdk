@@ -11,6 +11,8 @@ To contribute to gosdk, you must respect these (http://web.mst.edu/~cpp/common/h
 
 Member and Hungarian notation is to be ignored on classes/structures that explicitly hold VFunctions/generally game structures (this excludes stuff like ClientClass as an example, but also as an example includes structures like ISurface). This is because, first, it improves readability for those very functions, and second, datatype is inherited from auto. This rule excludes the Entity/Player header file.
 
+Besides all what's mentioned above, we recommend you make enums that you add inherit a type.
+
 # features
 gosdk currently comes with the IConsole interface, ISurface interface, IInputSystem interface, IPanel interface, IBaseClientDLL for Client interface, ClientMode interface, IEngineClient interface, IEntityList interface, IGlobalVars interface, IDebugOverlay interface, a basic Surface wrapper, a Netvar scanner, a VMT hooking class, sv_cheats bypass (hooked), grenade trajectory (convar, hooked), lock cursor [currently while Insert is hold] (hooked), paint traverse [hooked], create move [hooked], ability to do basic rendering, a console with logging, basic error handling, math utilities, various easing functions and utilities which include a color handler and a config system, memory functions, bunny hop and no duck delay through bitflag easing, Box ESP, Snaplines ESP and Name ESP. These are not final and are to be updated.
 
