@@ -5,7 +5,7 @@
 
 namespace CS::Classes {
   class CConvar;
-  using ChangeCallback_t = void ( * )( CConvar * var, const char * pOldValue, float flOldValue );
+  using ChangeCallback_t = void ( * )( CConvar * var, const char * cOldValue, float fOldValue );
   class CConvar {
   public:
     constexpr auto GetFloat( ) noexcept { return Utils::Memory::CallVirtualMethod<float>( this, 12 ); }
@@ -18,26 +18,26 @@ namespace CS::Classes {
     char Pad[ 0x4 ];
 
   public:
-    CConvar * Next;
-    __int32 IsRegistered;
-    char * Name;
-    char * HelpString;
-    __int32 Flags;
+    CConvar * m_Next;
+    __int32 m_iIsRegistered;
+    char * m_cName;
+    char * m_cHelpString;
+    __int32 m_iFlags;
 
   private:
     char Pad2[ 0x4 ];
 
   public:
-    CConvar * Parent;
-    char * DefaultValue;
-    char * String;
-    __int32 StringLength;
-    float FloatValue;
-    __int32 NumericalValue;
-    __int32 HasMin;
-    float Min;
-    __int32 HasMax;
-    float Max;
-    CUtlVector<ChangeCallback_t> Callbacks;
+    CConvar * m_Parent;
+    char * m_cDefaultValue;
+    char * m_cString;
+    __int32 m_iStringLength;
+    float m_fFloatValue;
+    __int32 m_iNumericalValue;
+    __int32 m_iHasMin;
+    float m_fMin;
+    __int32 m_iHasMax;
+    float m_fMax;
+    CUtlVector<ChangeCallback_t> m_Callbacks;
   };
 } // namespace CS::Classes

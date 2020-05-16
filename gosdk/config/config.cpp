@@ -5,7 +5,7 @@
 #pragma warning( disable : 4244 )
 
 namespace Config {
-  bool SSettings::bSave( const std::string & config_file_name ) {
+  bool SSettings::m_bSave( const std::string & config_file_name ) {
     nlohmann::json config;
     for ( const auto & [ setting, value ] : mSettings ) {
       if ( std::holds_alternative<int>( value ) )
@@ -18,9 +18,9 @@ namespace Config {
         config[ setting ] = { { STR( "identifier" ), value.index( ) }, { STR( "value" ), this->get<std::string>( setting ) } };
       else if ( std::holds_alternative<Utils::Color>( value ) )
         config[ setting ] = { { STR( "identifier" ), value.index( ) },
-                              { STR( "value_r" ), this->get<Utils::Color>( setting ).uRed },
-                              { STR( "value_g" ), this->get<Utils::Color>( setting ).uGreen },
-                              { STR( "value_b" ), this->get<Utils::Color>( setting ).uBlue }
+                              { STR( "value_r" ), this->get<Utils::Color>( setting ).m_uRed },
+                              { STR( "value_g" ), this->get<Utils::Color>( setting ).m_uGreen },
+                              { STR( "value_b" ), this->get<Utils::Color>( setting ).m_uBlue }
 
         };
     }
@@ -35,7 +35,7 @@ namespace Config {
     return true;
   }
 
-  bool SSettings::bLoad( const std::string & config_file_name ) {
+  bool SSettings::m_bLoad( const std::string & config_file_name ) {
     if ( !std::filesystem::exists( std::filesystem::current_path( ) / config_file_name ) )
       return false;
 
@@ -56,9 +56,9 @@ namespace Config {
           mSettings[ setting ] = value[ STR( "value" ) ].get<std::string>( );
           break;
         case 4:
-          this->get<Utils::Color>( setting ).uRed = value[ STR( "value_r" ) ].get<float>( );
-          this->get<Utils::Color>( setting ).uGreen = value[ STR( "value_g" ) ].get<float>( );
-          this->get<Utils::Color>( setting ).uBlue = value[ STR( "value_b" ) ].get<float>( );
+          this->get<Utils::Color>( setting ).m_uRed = value[ STR( "value_r" ) ].get<float>( );
+          this->get<Utils::Color>( setting ).m_uGreen = value[ STR( "value_g" ) ].get<float>( );
+          this->get<Utils::Color>( setting ).m_uBlue = value[ STR( "value_b" ) ].get<float>( );
           break;
       }
     }

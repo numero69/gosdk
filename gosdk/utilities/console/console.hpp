@@ -6,6 +6,7 @@
 namespace Utils::Console {
   static HWND console{};
 
+  /* Handlers */
   inline void Initialize( const LPCSTR & name, const std::string & init_message ) {
     console = GetConsoleWindow( );
 

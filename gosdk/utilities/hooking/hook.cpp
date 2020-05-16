@@ -39,7 +39,7 @@ namespace Utils::Hooking {
   }
 
   static bool __fastcall bCreateMove( void * ecx, void * edx, int InputSampleFrameTime, CS::Classes::CUserCmd * Cmd ) noexcept {
-    if ( !InputSampleFrameTime || !Cmd || !Cmd->CommandNumber )
+    if ( !InputSampleFrameTime || !Cmd || !Cmd->m_iCommandNumber )
       return false;
 
     Utils::Context::g_pCmd = Cmd;
@@ -48,13 +48,13 @@ namespace Utils::Hooking {
     CS::Features::Movement::BunnyHop( );
     CS::Features::Movement::NoDuckDelay( );
 
-    Cmd->ForwardMove = std::clamp( Cmd->ForwardMove, -450.0f, 450.0f );
-    Cmd->SideMove = std::clamp( Cmd->SideMove, -450.0f, 450.0f );
-    Cmd->UpMove = std::clamp( Cmd->UpMove, -320.0f, 320.0f );
+    Cmd->m_fForwardMove = std::clamp( Cmd->m_fForwardMove, -450.0f, 450.0f );
+    Cmd->m_fSideMove = std::clamp( Cmd->m_fSideMove, -450.0f, 450.0f );
+    Cmd->m_fUpMove = std::clamp( Cmd->m_fUpMove, -320.0f, 320.0f );
 
-    Cmd->ViewAngles.x = std::clamp( Cmd->ViewAngles.x, -89.0f, 89.0f );
-    Cmd->ViewAngles.y = std::clamp( Cmd->ViewAngles.y, -180.0f, 180.0f );
-    Cmd->ViewAngles.z = 0.0f;
+    Cmd->m_ViewAngles.x = std::clamp( Cmd->m_ViewAngles.x, -89.0f, 89.0f );
+    Cmd->m_ViewAngles.y = std::clamp( Cmd->m_ViewAngles.y, -180.0f, 180.0f );
+    Cmd->m_ViewAngles.z = 0.0f;
 
     return false;
   }

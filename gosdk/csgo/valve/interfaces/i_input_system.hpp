@@ -6,7 +6,7 @@
 enum EInputSystemIndexes : short { EnableInput_index = 11, IsButtonDown_index = 15 };
 
 namespace CS::Interfaces {
-  enum class ButtonCodes {
+  enum EButtonCodes : short {
     BUTTON_CODE_INVALID = -1,
     BUTTON_CODE_NONE = 0,
 

@@ -8,9 +8,11 @@
 namespace CS::Utilities::Netvar {
   inline std::unordered_map<std::string, std::uintptr_t> Offsets;
 
+  /* Handler */
   void Init( );
 }; // namespace CS::Utilities::Netvar
 
+/* Handlers */
 // clang-format off
 #define netvar_additive(t, func, name, off)\
 	t &func()\

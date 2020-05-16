@@ -5,28 +5,28 @@
 std::ofstream ofStream( STR( "netvar_dump.dmp" ) );
 
 void DumpRecursive( CS::Classes::CRecvTable * table ) {
-  for ( auto i = 0; i < table->PropsCount; ++i ) {
-    const auto prop = &table->Props[ i ];
+  for ( auto i = 0; i < table->m_iPropsCount; ++i ) {
+    const auto Prop = &table->m_Props[ i ];
 
-    if ( !prop || std::isdigit( prop->PropName[ 0 ] ) || !std::strcmp( prop->PropName, STR( STR( "baseclass" ) ) ) )
+    if ( !Prop || std::isdigit( Prop->m_cPropName[ 0 ] ) || !std::strcmp( Prop->m_cPropName, STR( STR( "baseclass" ) ) ) )
       continue;
 
-    if ( prop->PropType == 6 && prop->DataTable && prop->DataTable->TableName[ 0 ] == 'D' )
-      DumpRecursive( prop->DataTable );
+    if ( Prop->m_PropType == 6 && Prop->m_DataTable && Prop->m_DataTable->m_cTableName[ 0 ] == 'D' )
+      DumpRecursive( Prop->m_DataTable );
 
-    ofStream << table->TableName + std::string( STR( "->" ) ) + prop->PropName << "=" << prop->Offset << '\n';
+    ofStream << table->m_cTableName + std::string( STR( "->" ) ) + Prop->m_cPropName << "=" << Prop->m_iOffset << '\n';
 
-    CS::Utilities::Netvar::Offsets[ table->TableName + std::string( STR( "->" ) ) + prop->PropName ] = prop->Offset;
+    CS::Utilities::Netvar::Offsets[ table->m_cTableName + std::string( STR( "->" ) ) + Prop->m_cPropName ] = Prop->m_iOffset;
   }
 }
 
 void CS::Utilities::Netvar::Init( ) {
-  for ( auto pclass = CS::Interfaces::g_pClient->GetAllClasses( ); pclass; pclass = pclass->NextPtr ) {
-    const auto table = pclass->RecvTablePtr;
+  for ( auto pClass = CS::Interfaces::g_pClient->GetAllClasses( ); pClass; pClass = pClass->m_NextPtr ) {
+    const auto Table = pClass->m_RecvTablePtr;
 
-    if ( !table )
+    if ( !Table )
       continue;
 
-    DumpRecursive( table );
+    DumpRecursive( Table );
   }
 }

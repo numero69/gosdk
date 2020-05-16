@@ -18,7 +18,8 @@ namespace CS::Interfaces {
   inline IEngineClient * g_pEngineClient{};
   inline IGlobalVars * g_pGlobalVars{};
   inline IDebugOverlay * g_pDebugOverlay{};
-
+  
+  /* Handlers */
   void RunInterfaces( ) noexcept;
   void ReleaseInterfaces( ) noexcept;
 } // namespace CS::Interfaces

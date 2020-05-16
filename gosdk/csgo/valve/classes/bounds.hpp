@@ -23,18 +23,18 @@ namespace CS::Classes {
     Box( Box && ) = default;
     Box & operator=( Box && ) = default;
 
-    int Right( ) const { return x + w; }
+    int m_iRight( ) const { return x + w; }
 
-    int Bottom( ) const { return y + h; }
+    int m_iBottom( ) const { return y + h; }
 
-    bool bIsInBounds( const Utils::Math::Vector2 & pt ) const {
+    bool m_bIsInBounds( const Utils::Math::Vector2 & pt ) const {
       if ( this->x > pt.x )
         return false;
       if ( this->y > pt.y )
         return false;
-      if ( this->Right( ) < pt.x )
+      if ( this->m_iRight( ) < pt.x )
         return false;
-      if ( this->Bottom( ) < pt.y )
+      if ( this->m_iBottom( ) < pt.y )
         return false;
 
       return true;

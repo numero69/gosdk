@@ -13,9 +13,9 @@ namespace Utils::Math {
     Vector2D( T x, T y ) : x( x ), y( y ){};
     Vector2D( T x, T y, T z ) : x( x ), y( y ){};
 
-    inline constexpr T Length( ) { return std::sqrt( x * x + y * y ); }
+    inline constexpr T m_Length( ) { return std::sqrt( x * x + y * y ); }
 
-    inline constexpr bool IsZero( ) { return x == 0 && y == 0; }
+    inline constexpr bool m_bIsZero( ) { return x == 0 && y == 0; }
 
     inline Vector2D & operator=( const Vector2D & in ) {
       x = in.x;

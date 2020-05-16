@@ -31,34 +31,19 @@ namespace CS::Interfaces {
 
     const auto SetDrawColor( Utils::Color color ) noexcept {
       Utils::Memory::CallVirtualMethod<void, int, int, int, int>(
-          this, ESurfaceIndexes::SetDrawColor_index, color.uRed, color.uGreen, color.uBlue, color.uAlpha );
+          this, ESurfaceIndexes::SetDrawColor_index, color.m_uRed, color.m_uGreen, color.m_uBlue, color.m_uAlpha );
     }
 
     template <typename T> constexpr auto DrawFilledRect( T x0, T y0, T x1, T y1 ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this,
-                                                                  ESurfaceIndexes::DrawFilledRect_index,
-                                                                  static_cast<int>( x0 ),
-                                                                  static_cast<int>( y0 ),
-                                                                  static_cast<int>( x1 ),
-                                                                  static_cast<int>( y1 ) );
+      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawFilledRect_index, x0, y0, x1, y1 );
     }
 
     template <typename T> constexpr auto DrawOutlinedRect( T x0, T y0, T x1, T y1 ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this,
-                                                                  ESurfaceIndexes::DrawOutlinedRect_index,
-                                                                  static_cast<int>( x0 ),
-                                                                  static_cast<int>( y0 ),
-                                                                  static_cast<int>( x1 ),
-                                                                  static_cast<int>( y1 ) );
+      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawOutlinedRect_index, x0, y0, x1, y1 );
     }
 
     template <typename T> constexpr auto DrawLine( T x0, T y0, T x1, T y1 ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this,
-                                                                  ESurfaceIndexes::DrawLine_index,
-                                                                  static_cast<int>( x0 ),
-                                                                  static_cast<int>( y0 ),
-                                                                  static_cast<int>( x1 ),
-                                                                  static_cast<int>( y1 ) );
+      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawLine_index, x0, y0, x1, y1 );
     }
 
     constexpr auto SetTextFont( unsigned font ) noexcept {
@@ -71,12 +56,11 @@ namespace CS::Interfaces {
 
     const auto SetTextColor( Utils::Color color ) noexcept {
       Utils::Memory::CallVirtualMethod<void, int, int, int, int>(
-          this, ESurfaceIndexes::SetTextColor_index, color.uRed, color.uGreen, color.uBlue, color.uAlpha );
+          this, ESurfaceIndexes::SetTextColor_index, color.m_uRed, color.m_uGreen, color.m_uBlue, color.m_uAlpha );
     }
 
     template <typename T> constexpr auto SetTextPosition( T x, T y ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int>(
-          this, ESurfaceIndexes::SetTextPosition_index, static_cast<int>( x ), static_cast<int>( y ) );
+      Utils::Memory::CallVirtualMethod<void, int, int>( this, ESurfaceIndexes::SetTextPosition_index, x, y );
     }
 
     constexpr auto PrintText( const std::wstring_view text, int drawType = 0 ) noexcept {
@@ -129,8 +113,7 @@ namespace CS::Interfaces {
     }
 
     template <typename T> constexpr auto DrawOutlinedCircle( T x, T y, int r, int seg ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>(
-          this, ESurfaceIndexes::DrawOutlinedCircle_index, static_cast<int>( x ), static_cast<int>( y ), r, seg );
+      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawOutlinedCircle_index, x, y, r, seg );
     }
 
     template <typename T> constexpr auto DrawFilledCircle( T x, T y, int r ) noexcept {

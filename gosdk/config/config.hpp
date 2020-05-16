@@ -15,7 +15,7 @@
 #include "../utilities/global.hpp"
 
 namespace Config {
-  // clang-format off
+// clang-format off
   #define add_setting(setting, default_value) \
   mSettings[STR(setting)] = default_value;
   // clang-format on
@@ -31,8 +31,8 @@ namespace Config {
 
     template <typename Type> Type & get( const std::string & setting ) { return std::get<Type>( mSettings[ setting ] ); }
 
-    bool bSave( const std::string & config_file_name );
-    bool bLoad( const std::string & config_file_name );
+    bool m_bSave( const std::string & config_file_name );
+    bool m_bLoad( const std::string & config_file_name );
   };
 
   inline std::unique_ptr<Config::SSettings> g_pConfig{ nullptr };

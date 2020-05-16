@@ -20,24 +20,24 @@ enum EEngineClientIndexes : short {
 
 namespace CS::Interfaces {
   using PlayerInfo_t = struct SPlayerInfo {
-    std::uint64_t Version;
+    std::uint64_t m_Version;
     union {
-      std::uint64_t XUid;
+      std::uint64_t m_XUid;
       struct {
-        std::uint32_t XUidLow;
-        std::uint32_t XUidHigh;
+        std::uint32_t m_XUidLow;
+        std::uint32_t m_XUidHigh;
       };
     };
-    char Name[ 128 ];
-    int UserId;
-    char GUid[ 33 ];
-    std::uint32_t FriendsId;
-    char FriendsName[ 128 ];
-    bool FakePlayer;
-    bool HLTV;
-    int CustomFiles[ 4 ];
-    unsigned char FilesDownloaded;
-    int EntityIndex;
+    char m_Name[ 128 ];
+    int m_UserId;
+    char m_GUid[ 33 ];
+    std::uint32_t m_FriendsId;
+    char m_FriendsName[ 128 ];
+    bool m_FakePlayer;
+    bool m_HLTV;
+    int m_CustomFiles[ 4 ];
+    unsigned char m_FilesDownloaded;
+    int m_EntityIndex;
   };
 
   class CNetChannel;

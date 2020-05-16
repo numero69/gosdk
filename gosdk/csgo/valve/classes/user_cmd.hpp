@@ -19,21 +19,21 @@ namespace CS::Classes {
       IN_SCORE = 1 << 16,
       IN_BULLRUSH = 1 << 22
     };
-    int Pad;
-    int CommandNumber;
-    int TickCount;
-    Utils::Math::Vector ViewAngles;
-    Utils::Math::Vector AimDirection;
-    float ForwardMove;
-    float SideMove;
-    float UpMove;
-    Utils::Easing::BitFlag Buttons;
-    char Impulse;
-    int WeaponSelect;
-    int WeaponSubtype;
-    int RandomSeed;
-    short MouseDX;
-    short MouseDY;
-    bool HasBeenPredicted;
+    int m_iPad;
+    int m_iCommandNumber;
+    int m_iTickCount;
+    Utils::Math::Vector m_ViewAngles;
+    Utils::Math::Vector m_AimDirection;
+    float m_fForwardMove;
+    float m_fSideMove;
+    float m_fUpMove;
+    Utils::Easing::BitFlag m_Buttons;
+    char m_cImpulse;
+    int m_iWeaponSelect;
+    int m_iWeaponSubtype;
+    int m_iRandomSeed;
+    short m_siMouseDX;
+    short m_siMouseDY;
+    bool m_bHasBeenPredicted;
   }; // namespace CS::Classes
 } // namespace CS::Classes

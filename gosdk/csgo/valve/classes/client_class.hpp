@@ -28,10 +28,10 @@ namespace CS::Classes {
     virtual void SetDestroyedOnRecreateEntities( ) = 0;
   };
 
-  typedef CClientNetworkable * ( *CreateClientClass_t )( int ent_number, int serial_number );
+  typedef CClientNetworkable * ( *CreateClientClass_t )( int EntNumber, int SerialNumber );
   typedef CClientNetworkable * ( *CreateEvent_t )( );
 
-  enum ClassIDs {
+  enum EClassIDs : short {
     CAI_BASENPC = 0,
     CAK47,
     CBASEANIMATING,
@@ -318,11 +318,11 @@ namespace CS::Classes {
 
   class CClientClass {
   public:
-    CreateClientClass_t CreateFn;
-    CreateEvent_t CreateEventExA;
-    char * NetworkName;
-    CRecvTable * RecvTablePtr;
-    CClientClass * NextPtr;
-    ClassIDs ClassId;
+    CreateClientClass_t m_CreateFn;
+    CreateEvent_t m_CreateEventExA;
+    char * m_NetworkName;
+    CRecvTable * m_RecvTablePtr;
+    CClientClass * m_NextPtr;
+    EClassIDs m_ClassId;
   };
 } // namespace CS::Classes

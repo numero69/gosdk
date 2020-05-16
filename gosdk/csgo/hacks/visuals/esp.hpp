@@ -7,11 +7,11 @@ namespace CS::Features::ESP {
   namespace Colors {
     /* Code requires a target to check for it's dormancy. */
     inline const Utils::Color EspColor( CS::Classes::CCSPlayer * Player ) {
-      return Utils::Color( 255, 255, 255, Player->bDormant( ) ? 100 : 255 );
+      return Utils::Color( 255, 255, 255, Player->m_bDormant( ) ? 100 : 255 );
     }
 
     inline const Utils::Color EspColorOutline( CS::Classes::CCSPlayer * Player ) {
-      return Utils::Color( 0, 0, 0, Player->bDormant( ) ? 100 : 255 );
+      return Utils::Color( 0, 0, 0, Player->m_bDormant( ) ? 100 : 255 );
     }
   } // namespace Colors
 
@@ -19,7 +19,7 @@ namespace CS::Features::ESP {
   inline bool BoundingBox( CS::Classes::CCSPlayer * Player, CS::Classes::Box & Box ) noexcept {
     const Utils::Math::Vector2 flb{}, brt{}, blb{}, frt{}, frb{}, brb{}, blt{}, flt{}, out{};
 
-    const Utils::Math::Vector Origin = Player->Origin( );
+    const Utils::Math::Vector Origin = Player->m_Origin( );
     const Utils::Math::Vector Mins = Player->GetCollideable( )->OBBMins( ) + Origin;
     const Utils::Math::Vector Maxs = Player->GetCollideable( )->OBBMaxs( ) + Origin;
 
@@ -65,15 +65,15 @@ namespace CS::Features::ESP {
   }
 
   inline void DrawBox( CS::Classes::Box & Box, Utils::Color ColorMain, Utils::Color ColorOutline ) noexcept {
-    Utils::Render::RenderBoxOutline( Box.x, Box.y, Box.Right( ), Box.Bottom( ), ColorMain, false );
+    Utils::Render::RenderBoxOutline( Box.x, Box.y, Box.m_iRight( ), Box.m_iBottom( ), ColorMain, false );
 
-    Utils::Render::RenderBoxOutline( Box.x - 1, Box.y - 1, Box.Right( ) + 1, Box.Bottom( ) + 1, ColorOutline, false );
-    Utils::Render::RenderBoxOutline( Box.x + 1, Box.y + 1, Box.Right( ) - 1, Box.Bottom( ) - 1, ColorOutline, false );
+    Utils::Render::RenderBoxOutline( Box.x - 1, Box.y - 1, Box.m_iRight( ) + 1, Box.m_iBottom( ) + 1, ColorOutline, false );
+    Utils::Render::RenderBoxOutline( Box.x + 1, Box.y + 1, Box.m_iRight( ) - 1, Box.m_iBottom( ) - 1, ColorOutline, false );
   }
 
   inline void DrawName( CS::Classes::Box & Box, CS::Interfaces::PlayerInfo_t Info, Utils::Color Color ) {
     /* Cool way to get around this from Osiris */
-    if ( wchar_t Name[ 128 ] /* According to the struct */; MultiByteToWideChar( CP_UTF8, 0, Info.Name, -1, Name, 128 ) ) {
+    if ( wchar_t Name[ 128 ] /* According to the struct */; MultiByteToWideChar( CP_UTF8, 0, Info.m_Name, -1, Name, 128 ) ) {
       const auto [ width, height ] = CS::Interfaces::g_pSurface->GetTextSize( Utils::Render::ESP, Name );
       Utils::Render::RenderText( Box.x + ( Box.w / 2 ) - ( width / 2 ), Box.y - 14, Utils::Render::ESP, Color, Name );
     }
@@ -92,7 +92,7 @@ namespace CS::Features::ESP {
     for ( int i = 1; i <= CS::Interfaces::g_pGlobalVars->MaxClients; i++ ) {
       auto Player = CS::Interfaces::g_pEntityList->GetEntity( i );
 
-      if ( !Player || !Player->bIsAlive( ) || Player == Utils::Context::g_pLocal )
+      if ( !Player || !Player->m_bIsAlive( ) || Player == Utils::Context::g_pLocal )
         continue;
 
       CS::Classes::Box Box;
@@ -101,11 +101,11 @@ namespace CS::Features::ESP {
       if ( !BoundingBox( Player, Box ) )
         continue;
 
-      CS::Interfaces::g_pEngineClient->GetPlayerInfo( Player->ClientRenderable( )->EntIndex( ), &Info );
+      CS::Interfaces::g_pEngineClient->GetPlayerInfo( Player->m_ClientRenderable( )->EntIndex( ), &Info );
 
       /* To see why the argument Player is required check the namespace */
       DrawBox( Box, Colors::EspColor( Player ), Colors::EspColorOutline( Player ) );
-      DrawLine( Player->Origin( ), Colors::EspColor( Player ) );
+      DrawLine( Player->m_Origin( ), Colors::EspColor( Player ) );
       DrawName( Box, Info, Colors::EspColor( Player ) );
     }
   }
