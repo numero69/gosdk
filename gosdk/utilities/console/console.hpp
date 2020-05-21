@@ -20,7 +20,7 @@ namespace Utils::Console {
     static LONG_PTR style = GetWindowLongPtr( console, GWL_STYLE );
     SetWindowLong( console, GWL_STYLE, style & ~WS_SIZEBOX & ~WS_SYSMENU );
 
-    SetConsoleTitle( STR( name ) );
+    SetConsoleTitle( name );
     std::cout << init_message << std::endl;
   }
 
