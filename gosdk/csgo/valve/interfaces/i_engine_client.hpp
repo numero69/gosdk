@@ -43,26 +43,26 @@ namespace CS::Interfaces {
   class CNetChannel;
   class IEngineClient {
   public:
-    constexpr auto GetPlayerInfo( int entity_index, const PlayerInfo_t * p_info ) noexcept {
+    constexpr auto GetPlayerInfo( int EntityIndex, const PlayerInfo_t * PInfo ) noexcept {
       return Utils::Memory::CallVirtualMethod<bool, int, const PlayerInfo_t *>(
-          this, EEngineClientIndexes::GetPlayerInfo_index, entity_index, p_info );
+          this, EEngineClientIndexes::GetPlayerInfo_index, EntityIndex, PInfo );
     }
 
-    constexpr auto GetPlayerForUID( int user_id ) noexcept {
-      return Utils::Memory::CallVirtualMethod<int, int>( this, EEngineClientIndexes::GetPlayerForUID_index, user_id );
+    constexpr auto GetPlayerForUID( int UserID ) noexcept {
+      return Utils::Memory::CallVirtualMethod<int, int>( this, EEngineClientIndexes::GetPlayerForUID_index, UserID );
     }
 
     constexpr auto GetLocalPlayer( ) noexcept {
       return Utils::Memory::CallVirtualMethod<int>( this, EEngineClientIndexes::GetLocalPlayer_index );
     }
 
-    constexpr auto GetViewAngles( Utils::Math::Vector & angles ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, Utils::Math::Vector &>( this, EEngineClientIndexes::GetViewAngles_index, angles );
+    constexpr auto GetViewAngles( Utils::Math::Vector & Angles ) noexcept {
+      Utils::Memory::CallVirtualMethod<void, Utils::Math::Vector &>( this, EEngineClientIndexes::GetViewAngles_index, Angles );
     }
 
-    constexpr auto SetViewAngles( const Utils::Math::Vector & angles ) noexcept {
+    constexpr auto SetViewAngles( const Utils::Math::Vector & Angles ) noexcept {
       Utils::Memory::CallVirtualMethod<void, const Utils::Math::Vector &>(
-          this, EEngineClientIndexes::SetViewAngles_index, angles );
+          this, EEngineClientIndexes::SetViewAngles_index, Angles );
     }
 
     constexpr auto GetMaxClients( ) noexcept {
@@ -91,9 +91,9 @@ namespace CS::Interfaces {
       return Utils::Memory::CallVirtualMethod<CNetChannel *>( this, EEngineClientIndexes::GetNetChannel_index );
     }
 
-    constexpr auto ClientCmdUnrestricted( const char * cmd ) noexcept {
+    constexpr auto ClientCmdUnrestricted( const char * Command ) noexcept {
       Utils::Memory::CallVirtualMethod<void, const char *, bool>(
-          this, EEngineClientIndexes::ClientCmdUnrestricted_index, cmd, false );
+          this, EEngineClientIndexes::ClientCmdUnrestricted_index, Command, false );
     }
   };
 } // namespace CS::Interfaces

@@ -6,6 +6,7 @@ namespace CS::Classes {
   class CRecvProp;
   class CRecvProxyData;
 
+  
   using RecvVarProxy_t = void ( * )( const CRecvProxyData * pData, void * pStruct, void * pOut );
   using ArrayLengthRecvProxy_t = void ( * )( void * pStruct, int iObjectId, int iCurrentArrayLength );
   using DataTableRecvVarProxy_t = void ( * )( const CRecvProp * pProp, void ** pOut, void * pData, int iObjectId );
@@ -20,6 +21,7 @@ namespace CS::Classes {
     _data_table,
     _int_64,
   };
+
   class CDVariant {
   public:
     union {

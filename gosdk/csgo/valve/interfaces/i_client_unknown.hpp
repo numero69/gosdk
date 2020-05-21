@@ -7,14 +7,12 @@
 namespace CS::Interfaces {
   class CCSPlayer;
 
-  using CBaseHandle = unsigned long;
-
   class IHandleEntity {
   public:
     virtual ~IHandleEntity( ) = default;
 
-    virtual void SetRefHandle( const CBaseHandle & handle ) = 0;
-    virtual const CBaseHandle & GetRefHandle( ) const = 0;
+    virtual void SetRefHandle( const std::uint32_t & handle ) = 0;
+    virtual const std::uint32_t & GetRefHandle( ) const = 0;
   };
 
   class ICollidable {

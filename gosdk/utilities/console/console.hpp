@@ -14,14 +14,13 @@ namespace Utils::Console {
     freopen_s( reinterpret_cast<FILE **>( stdin ), STR( "CONIN$" ), STR( "r" ), stdin );
     freopen_s( reinterpret_cast<FILE **>( stdout ), STR( "CONOUT$" ), STR( "w" ), stdout );
 
-    RECT rect = { 100, 100, 600, 600 };
+    constexpr static RECT rect = { 100, 100, 600, 600 };
     MoveWindow( console, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, TRUE );
 
-    LONG_PTR style = GetWindowLongPtr( console, GWL_STYLE );
+    static LONG_PTR style = GetWindowLongPtr( console, GWL_STYLE );
     SetWindowLong( console, GWL_STYLE, style & ~WS_SIZEBOX & ~WS_SYSMENU );
 
     SetConsoleTitle( STR( name ) );
-    Beep( 10, 1000 );
     std::cout << init_message << std::endl;
   }
 

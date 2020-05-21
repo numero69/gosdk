@@ -8,7 +8,7 @@ LPVOID Init( const HMODULE instance ) {
   Utils::Context::g_pModule = instance;
 
   try {
-    Utils::Console::Initialize( STR( "gosdk" ), STR( "welcome, initialized" ) );
+    Utils::Console::Initialize( "gosdk", STR( "welcome, initialized" ) );
 
     // run config before everything
     Config::RunConfig( );

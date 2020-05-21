@@ -112,6 +112,8 @@ namespace CS::Interfaces {
       return std::make_pair( width, height );
     }
 
+
+    /* Template typenames are deduced like the auto type, but you also can, on your own, pass a datatype */
     template <typename T> constexpr auto DrawOutlinedCircle( T x, T y, int r, int seg ) noexcept {
       Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawOutlinedCircle_index, x, y, r, seg );
     }

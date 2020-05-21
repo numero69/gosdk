@@ -6,7 +6,7 @@
 enum EInputSystemIndexes : short { EnableInput_index = 11, IsButtonDown_index = 15 };
 
 namespace CS::Interfaces {
-  enum EButtonCodes : short {
+  enum class EButtonCodes : short {
     BUTTON_CODE_INVALID = -1,
     BUTTON_CODE_NONE = 0,
 
@@ -140,12 +140,12 @@ namespace CS::Interfaces {
 
   class IInputSystem {
   public:
-    constexpr auto EnableInput( bool enable ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, bool>( this, EInputSystemIndexes::EnableInput_index, enable );
+    constexpr auto EnableInput( bool Enable ) noexcept {
+      Utils::Memory::CallVirtualMethod<void, bool>( this, EInputSystemIndexes::EnableInput_index, Enable );
     }
 
-    constexpr auto IsButtonDown( int buttonCode ) noexcept {
-      return Utils::Memory::CallVirtualMethod<bool, int>( this, EInputSystemIndexes::IsButtonDown_index, buttonCode );
+    constexpr auto IsButtonDown( EButtonCodes ButtonCode ) noexcept {
+      return Utils::Memory::CallVirtualMethod<bool, EButtonCodes>( this, EInputSystemIndexes::IsButtonDown_index, ButtonCode );
     }
   };
 } // namespace CS::Interfaces
