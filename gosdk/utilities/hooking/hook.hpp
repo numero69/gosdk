@@ -66,6 +66,31 @@ namespace Utils::Hooking {
   static bool __fastcall bCreateMove( void * ecx, void * edx, int InputSampleFrameTime, CS::Classes::CUserCmd * Cmd ) noexcept;
   using CreateMove_t = bool( __stdcall * )( float, void * );
 
+  /* Rendering Devices */
+
+  /* Since these very methods obtain their original
+     from memory addresses, I have declared the original
+     function initializations in there. Don't scream, pls. */
+
+  static long WINAPI liPresent( IDirect3DDevice9 * Device,
+                                RECT * SourceRect,
+                                RECT * DestinationRect,
+                                HWND DestinationWindowOverride,
+                                RGNDATA * DirtyRegion ) noexcept;
+  using Present_t = long( WINAPI * )( IDirect3DDevice9 *, RECT *, RECT *, HWND, RGNDATA * );
+  inline Present_t g_OriginalPresent{};
+  inline std::uint8_t * g_upPresentAddress{};
+
+  static long WINAPI liReset( IDirect3DDevice9 * Device, D3DPRESENT_PARAMETERS * PresentParams ) noexcept;
+  using Reset_t = long( WINAPI * )( IDirect3DDevice9 *, D3DPRESENT_PARAMETERS * );
+  inline Reset_t g_OriginalReset{};
+  inline uint8_t * g_upResetAddress{};
+
+  /* Events */
+  static LRESULT WINAPI lipWinProc( HWND WindowHandle, UINT Message, WPARAM WindowParams, LPARAM lpParams ) noexcept;
+  inline HWND g_pWindow;
+  inline WNDPROC g_pWindowOriginal;
+
   /* Handlers */
   void RunHooks( ) noexcept;
   void ReleaseHooks( ) noexcept;

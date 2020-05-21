@@ -10,6 +10,7 @@ namespace CS::Interfaces {
 
   inline IConsole * g_pConsole{};
   inline ISurface * g_pSurface{};
+  inline IDirect3DDevice9 * g_pDevice{};
   inline IInputSystem * g_pInputSystem{};
   inline IPanel * g_pPanel{};
   inline IBaseClientDLL * g_pClient{};

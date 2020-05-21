@@ -14,10 +14,7 @@ namespace Utils::Hooking {
 
     if ( GetAsyncKeyState( VK_INSERT ) ) {
       CS::Interfaces::g_pSurface->UnlockCursor( );
-      CS::Interfaces::g_pInputSystem->EnableInput( false );
       return;
-    } else {
-      CS::Interfaces::g_pInputSystem->EnableInput( true );
     }
 
     if ( Original )
@@ -59,6 +56,38 @@ namespace Utils::Hooking {
     return false;
   }
 
+  static LRESULT WINAPI lipWinProc( HWND WindowHandle, UINT Message, WPARAM WindowParams, LPARAM lpParams ) noexcept {
+    if ( Message == WM_KEYUP ) {
+      switch ( WindowParams ) {
+        case VK_INSERT:
+          Utils::Console::Log<std::string_view>( "Hit" );
+          /* There you can handle stuff such as input disabling / enabling, although that can
+             also be done in places like LockCursor. This is to help with stuff like menu frameworks
+             such as ImGui. This also only handles events if they're done within the window the DLL is injected in. */
+          break;
+      }
+    }
+
+    if ( GetAsyncKeyState( VK_INSERT ) ) {
+      return true;
+    }
+
+    return CallWindowProcW( g_pWindowOriginal, WindowHandle, Message, WindowParams, lpParams );
+  }
+
+  static long WINAPI liPresent( IDirect3DDevice9 * Device,
+                                RECT * SourceRect,
+                                RECT * DestinationRect,
+                                HWND DestinationWindowOverride,
+                                RGNDATA * DirtyRegion ) noexcept {
+    return g_OriginalPresent( Device, SourceRect, DestinationRect, DestinationWindowOverride, DirtyRegion );
+  }
+
+  static long WINAPI liReset( IDirect3DDevice9 * Device, D3DPRESENT_PARAMETERS * PresentParams ) noexcept {
+    long hr = g_OriginalReset( Device, PresentParams );
+    return hr;
+  }
+
   void RunHooks( ) noexcept {
     g_CheatsHook.bInit( CS::Interfaces::g_pConsole->FindVar( STR( "sv_cheats" ) ) );
     g_CheatsHook.bHookFunction( EFuncIndexes::GetInt_index, Utils::Hooking::bSvCheats );
@@ -74,6 +103,25 @@ namespace Utils::Hooking {
 
     g_PanelHook.bInit( CS::Interfaces::g_pPanel );
     g_PanelHook.bHookFunction( EFuncIndexes::PaintTraverse_index, Utils::Hooking::PaintTraverse );
+
+    /* May not be visually appleasing to have all of those
+       things laying around here, but it is done so to not
+       have to worry about the order of how things are called.
+       I tried other methods, more visually pleasing, and that didn't work.
+       Well, I guess that sucks. */
+    g_upPresentAddress = Utils::Memory::FindPattern( STR( "gameoverlayrenderer.dll" ), STR( "FF 15 ? ? ? ? 8B F8 85 DB" ) ) + 0x2;
+    g_upResetAddress =
+        Utils::Memory::FindPattern( STR( "gameoverlayrenderer.dll" ), STR( "FF 15 ? ? ? ? 8B F8 85 FF 78 18" ) ) + 0x2;
+
+    g_OriginalPresent = **reinterpret_cast<Present_t **>( g_upPresentAddress );
+    g_OriginalReset = **reinterpret_cast<Reset_t **>( g_upResetAddress );
+
+    **reinterpret_cast<void ***>( g_upPresentAddress ) = reinterpret_cast<void *>( &liPresent );
+    **reinterpret_cast<void ***>( g_upResetAddress ) = reinterpret_cast<void *>( &liReset );
+
+    g_pWindow = FindWindowW( L"Valve001", nullptr );
+    g_pWindowOriginal =
+        reinterpret_cast<WNDPROC>( SetWindowLongW( g_pWindow, GWL_WNDPROC, reinterpret_cast<LONG>( lipWinProc ) ) );
   }
 
   void ReleaseHooks( ) noexcept {

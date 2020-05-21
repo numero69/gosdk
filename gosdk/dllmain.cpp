@@ -18,7 +18,7 @@ LPVOID Init( const HMODULE instance ) {
     Utils::Render::RunRender( );
     Utils::Hooking::RunHooks( );
   } catch ( const std::exception & e ) {
-    Utils::Console::Log<std::string>( e.what( ) );
+    Utils::Console::Log<std::string_view>( e.what( ) );
   }
 
   while ( !Utils::Context::bShouldUnload ) {
