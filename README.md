@@ -6,12 +6,13 @@ gosdk is licensed under the GNU v3 license, and according to that, I, Cristei Ga
 
 # information
 The formatting method for gosdk is a custom clang-format config that is often either recognized by Visual Studio versions (tested only on VS19) or usable throughout the CLI by installing a specific binary for it and running the command "clang-format -i (place).(format)"
+
 # contribution guidelines
 To contribute to gosdk, you must respect these (http://web.mst.edu/~cpp/common/hungarian.html) Hungarian notation guidelines, and your code must be written in Pascal Case, if you implement code that isn't yours, it's recommended and asked that you source and credit the creator.
 
 Member and Hungarian notation is to be ignored on classes/structures that explicitly hold VFunctions/generally game structures (this excludes stuff like ClientClass as an example, but also as an example includes structures like ISurface). This is because, first, it improves readability for those very functions, and second, datatype is inherited from auto. This rule excludes the Entity/Player header file.
 
-Besides all what's mentioned above, we recommend you make enums that you add inherit a type.
+Besides all what's mentioned above, we recommend you make enums that you add inherit a type (i.e. are scoped).
 
 # features
 gosdk currently comes with the IConsole interface, ISurface interface, IInputSystem interface, IPanel interface, IBaseClientDLL for Client interface, ClientMode interface, IEngineClient interface, IEntityList interface, IGlobalVars interface, IDebugOverlay interface, a basic Surface wrapper, a Netvar scanner, a VMT hooking class, sv_cheats bypass (hooked), grenade trajectory (convar, hooked), lock cursor [currently while Insert is hold] (hooked), paint traverse [hooked], create move [hooked], ability to do basic rendering, a console with logging, basic error handling, math utilities, various easing functions and utilities which include a color handler and a config system, memory functions, bunny hop and no duck delay through bitflag easing, Box ESP, Snaplines ESP and Name ESP. These are not final and are to be updated.
