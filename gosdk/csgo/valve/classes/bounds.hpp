@@ -18,7 +18,7 @@ namespace CS::Classes {
         : m_iX( tl.m_X ), m_iY( tl.m_Y ), m_iW( br.m_X - tl.m_X ), m_iH( tl.m_Y - br.m_Y ) {}
 
     Box( const Box & ) = default;
-    Box & operator=( Box & ) = default;
+    Box & operator=( const Box & ) = default;
 
     /* Don't make RValues const! [The compiler won't let you anyway] */
     Box( Box && ) = default;
