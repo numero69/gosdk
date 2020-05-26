@@ -24,58 +24,60 @@ namespace CS::Features::ESP {
     const Utils::Math::Vector Maxs = Player->GetCollideable( )->OBBMaxs( ) + Origin;
 
     Utils::Math::Vector points[] = {
-      Utils::Math::Vector( Mins.x, Mins.y, Mins.z ), Utils::Math::Vector( Mins.x, Maxs.y, Mins.z ),
-      Utils::Math::Vector( Maxs.x, Maxs.y, Mins.z ), Utils::Math::Vector( Maxs.x, Mins.y, Mins.z ),
-      Utils::Math::Vector( Maxs.x, Maxs.y, Maxs.z ), Utils::Math::Vector( Mins.x, Maxs.y, Maxs.z ),
-      Utils::Math::Vector( Mins.x, Mins.y, Maxs.z ), Utils::Math::Vector( Maxs.x, Mins.y, Maxs.z )
+      Utils::Math::Vector( Mins.m_X, Mins.m_Y, Mins.m_Z ), Utils::Math::Vector( Mins.m_X, Maxs.m_Y, Mins.m_Z ),
+      Utils::Math::Vector( Maxs.m_X, Maxs.m_Y, Mins.m_Z ), Utils::Math::Vector( Maxs.m_X, Mins.m_Y, Mins.m_Z ),
+      Utils::Math::Vector( Maxs.m_X, Maxs.m_Y, Maxs.m_Z ), Utils::Math::Vector( Mins.m_X, Maxs.m_Y, Maxs.m_Z ),
+      Utils::Math::Vector( Mins.m_X, Mins.m_Y, Maxs.m_Z ), Utils::Math::Vector( Maxs.m_X, Mins.m_Y, Maxs.m_Z )
     };
 
     // vector constructors wouldn't work so I had to do this, will be fixed later
-    Utils::Math::Vector rgPostWTSVec[] = { Utils::Math::Vector( blb.x, blb.y, 0.f ), Utils::Math::Vector( brb.x, brb.y, 0.f ),
-                                           Utils::Math::Vector( frb.x, frb.y, 0.f ), Utils::Math::Vector( flb.x, flb.y, 0.f ),
-                                           Utils::Math::Vector( frt.x, frt.y, 0.f ), Utils::Math::Vector( brt.x, brt.y, 0.f ),
-                                           Utils::Math::Vector( blt.x, blt.y, 0.f ), Utils::Math::Vector( flt.x, flt.y, 0.f ) };
+    Utils::Math::Vector rgPostWTSVec[] = {
+      Utils::Math::Vector( blb.m_X, blb.m_Y, 0.f ), Utils::Math::Vector( brb.m_X, brb.m_Y, 0.f ),
+      Utils::Math::Vector( frb.m_X, frb.m_Y, 0.f ), Utils::Math::Vector( flb.m_X, flb.m_Y, 0.f ),
+      Utils::Math::Vector( frt.m_X, frt.m_Y, 0.f ), Utils::Math::Vector( brt.m_X, brt.m_Y, 0.f ),
+      Utils::Math::Vector( blt.m_X, blt.m_Y, 0.f ), Utils::Math::Vector( flt.m_X, flt.m_Y, 0.f )
+    };
 
     for ( auto i = 0; i <= 7; ++i )
       if ( CS::Interfaces::g_pDebugOverlay->WorldToScreen( points[ i ], rgPostWTSVec[ i ] ) )
         return false;
 
-    auto left = rgPostWTSVec[ 3 ].x, right = rgPostWTSVec[ 3 ].x, top = rgPostWTSVec[ 3 ].y, bottom = rgPostWTSVec[ 3 ].y;
+    auto left = rgPostWTSVec[ 3 ].m_X, right = rgPostWTSVec[ 3 ].m_X, top = rgPostWTSVec[ 3 ].m_Y, bottom = rgPostWTSVec[ 3 ].m_Y;
 
     for ( auto i = 0; i <= 7; i++ ) {
-      if ( top > rgPostWTSVec[ i ].y )
-        top = rgPostWTSVec[ i ].y;
+      if ( top > rgPostWTSVec[ i ].m_Y )
+        top = rgPostWTSVec[ i ].m_Y;
 
-      if ( bottom < rgPostWTSVec[ i ].y )
-        bottom = rgPostWTSVec[ i ].y;
+      if ( bottom < rgPostWTSVec[ i ].m_Y )
+        bottom = rgPostWTSVec[ i ].m_Y;
 
-      if ( left > rgPostWTSVec[ i ].x )
-        left = rgPostWTSVec[ i ].x;
+      if ( left > rgPostWTSVec[ i ].m_X )
+        left = rgPostWTSVec[ i ].m_X;
 
-      if ( right < rgPostWTSVec[ i ].x )
-        right = rgPostWTSVec[ i ].x;
+      if ( right < rgPostWTSVec[ i ].m_X )
+        right = rgPostWTSVec[ i ].m_X;
     }
 
-    Box.x = left;
-    Box.y = top;
-    Box.w = right - left;
-    Box.h = bottom - top;
+    Box.m_iX = left;
+    Box.m_iY = top;
+    Box.m_iW = right - left;
+    Box.m_iH = bottom - top;
 
     return true;
   }
 
   inline void DrawBox( CS::Classes::Box & Box, Utils::Color ColorMain, Utils::Color ColorOutline ) noexcept {
-    Utils::Render::RenderBoxOutline( Box.x, Box.y, Box.m_iRight( ), Box.m_iBottom( ), ColorMain, false );
+    Utils::Render::RenderBoxOutline( Box.m_iX, Box.m_iY, Box.m_iRight( ), Box.m_iBottom( ), ColorMain, false );
 
-    Utils::Render::RenderBoxOutline( Box.x - 1, Box.y - 1, Box.m_iRight( ) + 1, Box.m_iBottom( ) + 1, ColorOutline, false );
-    Utils::Render::RenderBoxOutline( Box.x + 1, Box.y + 1, Box.m_iRight( ) - 1, Box.m_iBottom( ) - 1, ColorOutline, false );
+    Utils::Render::RenderBoxOutline( Box.m_iX - 1, Box.m_iY - 1, Box.m_iRight( ) + 1, Box.m_iBottom( ) + 1, ColorOutline, false );
+    Utils::Render::RenderBoxOutline( Box.m_iX + 1, Box.m_iY + 1, Box.m_iRight( ) - 1, Box.m_iBottom( ) - 1, ColorOutline, false );
   }
 
   inline void DrawName( CS::Classes::Box & Box, CS::Interfaces::PlayerInfo_t Info, Utils::Color Color ) {
     /* Cool way to get around this from Osiris */
     if ( wchar_t Name[ 128 ] /* According to the struct */; MultiByteToWideChar( CP_UTF8, 0, Info.m_Name, -1, Name, 128 ) ) {
       const auto [ width, height ] = CS::Interfaces::g_pSurface->GetTextSize( Utils::Render::ESP, Name );
-      Utils::Render::RenderText( Box.x + ( Box.w / 2 ) - ( width / 2 ), Box.y - 14, Utils::Render::ESP, Color, Name );
+      Utils::Render::RenderText( Box.m_iX + ( Box.m_iW / 2 ) - ( width / 2 ), Box.m_iY - 14, Utils::Render::ESP, Color, Name );
     }
   }
 
@@ -85,7 +87,7 @@ namespace CS::Features::ESP {
 
     auto [ width, height ] = CS::Interfaces::g_pSurface->GetScreenSize( );
 
-    Utils::Render::RenderLine( width / 2, height / 2, PostWTSVec.x, PostWTSVec.y, Color );
+    Utils::Render::RenderLine( width / 2, height / 2, PostWTSVec.m_X, PostWTSVec.m_Y, Color );
   }
 
   inline void RunEsp( ) noexcept {

@@ -6,20 +6,20 @@
 // credits: csgo_modest
 namespace Utils::Math {
   template <typename T> struct Vector3 {
-    T x, y, z;
+    T m_X, m_Y, m_Z;
 
     Vector3( ) = default;
 
-    Vector3( T xyz ) : x( xyz ), y( xyz ), z( xyz ){};
-    Vector3( T x, T y ) : x( x ), y( y ), z( 0 ){};
-    Vector3( T x, T y, T z ) : x( x ), y( y ), z( z ){};
+    Vector3( T xyz ) : m_X( xyz ), m_Y( xyz ), m_Z( xyz ){};
+    Vector3( T x, T y ) : m_X( x ), m_Y( y ), m_Z( 0 ){};
+    Vector3( T x, T y, T z ) : m_X( x ), m_Y( y ), m_Z( z ){};
 
-    inline constexpr T m_Length( ) { return std::sqrt( x * x + y * y + z * z ); }
+    inline constexpr T m_Length( ) { return std::sqrt( m_X * m_X + m_Y * m_Y + m_Z * m_Z ); }
 
     inline constexpr T m_Length2D( ) {
       T root = 0.0f;
 
-      T sqst = x * x + y * y;
+      T sqst = m_X * m_X + m_Y * m_Y;
 
       __asm
       {
@@ -35,108 +35,108 @@ namespace Utils::Math {
       T l = m_Length( );
 
       if ( l != 0 ) {
-        out.x = x / l;
-        out.y = y / l;
-        out.z = z / l;
+        out.m_X = m_X / l;
+        out.m_Y = m_Y / l;
+        out.m_Z = m_Z / l;
       } else
-        out.x = out.y = 0.0f;
-      out.z = 1.0f;
+        out.m_X = out.m_Y = 0.0f;
+      out.m_Z = 1.0f;
 
       return out;
     }
 
-    inline constexpr T m_SelfDot( ) { return ( x * x + y * y + z * z ); }
+    inline constexpr T m_SelfDot( ) { return ( m_X * m_X + m_Y * m_Y + m_Z * m_Z ); }
 
-    inline constexpr T m_Dot( const Vector3 & in ) { return ( x * in.x + y * in.y + z * in.z ); }
+    inline constexpr T m_Dot( const Vector3 & in ) { return ( m_X * in.m_X + m_Y * in.m_Y + m_Z * in.m_Z ); }
 
     inline Vector3 & operator=( const Vector3 & in ) {
-      x = in.x;
-      y = in.y;
-      z = in.z;
+      m_X = in.m_X;
+      m_Y = in.m_Y;
+      m_Z = in.m_Z;
 
       return *this;
     }
 
-    inline bool operator!=( const Vector3 & in ) { return ( x != in.x || y != in.y || z != in.z ); }
+    inline bool operator!=( const Vector3 & in ) { return ( m_X != in.m_X || m_Y != in.m_Y || m_Z != in.m_Z ); }
 
-    inline bool operator==( const Vector3 & in ) { return ( x == in.x && y == in.y && z == in.z ); }
+    inline bool operator==( const Vector3 & in ) { return ( m_X == in.m_X && m_Y == in.m_Y && m_Z == in.m_Z ); }
 
-    inline constexpr Vector3 operator+( Vector3 in ) { return Vector3( x + in.x, y + in.y, z + in.z ); }
+    inline constexpr Vector3 operator+( Vector3 in ) { return Vector3( m_X + in.m_X, m_Y + in.m_Y, m_Z + in.m_Z ); }
 
-    inline constexpr Vector3 operator+( T in ) { return Vector3( x + in, y + in, z + in ); }
+    inline constexpr Vector3 operator+( T in ) { return Vector3( m_X + in, m_Y + in, m_Z + in ); }
 
     inline Vector3 & operator+=( Vector3 in ) {
-      x += in.x;
-      y += in.y;
-      z += in.z;
+      m_X += in.m_X;
+      m_Y += in.m_Y;
+      m_Z += in.m_Z;
 
       return *this;
     }
 
     inline Vector3 & operator+=( T in ) {
-      x += in;
-      y += in;
-      z += in;
+      m_X += in;
+      m_Y += in;
+      m_Z += in;
 
       return *this;
     }
 
-    inline constexpr Vector3 operator-( Vector3 in ) { return Vector3( x - in.x, y - in.y, z - in.z ); }
+    inline constexpr Vector3 operator-( Vector3 in ) { return Vector3( m_X - in.m_X, m_Y - in.m_Y, m_Z - in.m_Z ); }
 
-    inline constexpr Vector3 operator-( T in ) { return Vector3( x - in, y - in, z - in ); }
+    inline constexpr Vector3 operator-( T in ) { return Vector3( m_X - in, m_Y - in, m_Z - in ); }
 
     inline Vector3 & operator-=( Vector3 in ) {
-      x -= in.x;
-      y -= in.y;
-      z -= in.z;
+      m_X -= in.m_X;
+      m_Y -= in.m_Y;
+      m_Z -= in.m_Z;
 
       return *this;
     }
 
     inline Vector3 & operator-=( T in ) {
-      x -= in;
-      y -= in;
-      z -= in;
+      m_X -= in;
+      m_Y -= in;
+      m_Z -= in;
 
       return *this;
     }
 
-    inline constexpr Vector3 operator*( Vector3 in ) { return Vector3( x * in.x, y * in.y, z * in.z ); }
+    inline constexpr Vector3 operator*( Vector3 in ) { return Vector3( m_X * in.m_X, m_Y * in.m_Y, m_Z * in.m_Z ); }
 
-    inline constexpr Vector3 operator*( T in ) { return Vector3( x * in, y * in, z * in ); }
+    inline constexpr Vector3 operator*( T in ) { return Vector3( m_X * in, m_Y * in, m_Z * in ); }
 
     inline Vector3 & operator*=( Vector3 in ) {
-      x *= in.x;
-      y *= in.y;
-      z *= in.z;
+      m_X *= in.m_X;
+      m_Y *= in.m_Y;
+      m_Z *= in.m_Z;
 
       return *this;
     }
 
     inline Vector3 & operator*=( T in ) {
-      x *= in;
-      y *= in;
-      z *= in;
+      m_X *= in;
+      m_Y *= in;
+      m_Z *= in;
 
       return *this;
     }
 
-    inline constexpr Vector3 operator/( Vector3 in ) { return Vector3( x / in.x, y / in.y, z / in.z ); }
+    inline constexpr Vector3 operator/( Vector3 in ) { return Vector3( m_X / in.m_X, m_Y / in.m_Y, m_Z / in.m_Z ); }
 
-    inline constexpr Vector3 operator/( T in ) { return Vector3( x / in, y / in, z / in ); }
+    inline constexpr Vector3 operator/( T in ) { return Vector3( m_X / in, m_Y / in, m_Z / in ); }
 
     inline Vector3 & operator/=( Vector3 in ) {
-      x /= in.x;
-      y /= in.y;
-      z /= in.z;
+      m_X /= in.m_X;
+      m_Y /= in.m_Y;
+      m_Z /= in.m_Z;
 
       return *this;
     }
 
     inline Vector3 & operator/=( T in ) {
-      x /= in;
-      y /= in;
-      z /= in;
+      m_X /= in;
+      m_Y /= in;
+      m_Z /= in;
 
       return *this;
     }

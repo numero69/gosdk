@@ -75,13 +75,13 @@ namespace CS::Classes {
     netvar( Utils::Math::Vector, m_Origin, "DT_BaseEntity->m_vecOrigin" );
     offset( bool, m_bDormant, 0xED );
 
-    CS::Classes::CClientNetworkable * m_ClientRenderable( ) {
+    constexpr CS::Classes::CClientNetworkable * m_ClientRenderable( ) {
       if ( this ) {
         return reinterpret_cast<CS::Classes::CClientNetworkable *>( reinterpret_cast<std::uintptr_t>( this ) + 0x8 );
       }
     }
 
-    bool m_bIsAlive( ) {
+    constexpr bool m_bIsAlive( ) {
       if ( !this )
         return false;
 

@@ -10,9 +10,11 @@ namespace CS::Classes {
   public:
     constexpr auto GetFloat( ) noexcept { return Utils::Memory::CallVirtualMethod<float>( this, 12 ); }
     constexpr auto GetInt( ) noexcept { return Utils::Memory::CallVirtualMethod<int>( this, 13 ); }
-    constexpr auto SetValue( const char * value ) { Utils::Memory::CallVirtualMethod<void, const char *>( this, 14, value ); }
-    constexpr auto SetValue( float value ) { Utils::Memory::CallVirtualMethod<void, float>( this, 15, value ); }
-    constexpr auto SetValue( int value ) { Utils::Memory::CallVirtualMethod<void, int>( this, 16, value ); }
+    constexpr auto SetValue( const char * value ) noexcept {
+      Utils::Memory::CallVirtualMethod<void, const char *>( this, 14, value );
+    }
+    constexpr auto SetValue( float value ) noexcept { Utils::Memory::CallVirtualMethod<void, float>( this, 15, value ); }
+    constexpr auto SetValue( int value ) noexcept { Utils::Memory::CallVirtualMethod<void, int>( this, 16, value ); }
 
   private:
     char Pad[ 0x4 ];

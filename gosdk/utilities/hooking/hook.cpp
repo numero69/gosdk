@@ -49,9 +49,9 @@ namespace Utils::Hooking {
     Cmd->m_fSideMove = std::clamp( Cmd->m_fSideMove, -450.0f, 450.0f );
     Cmd->m_fUpMove = std::clamp( Cmd->m_fUpMove, -320.0f, 320.0f );
 
-    Cmd->m_ViewAngles.x = std::clamp( Cmd->m_ViewAngles.x, -89.0f, 89.0f );
-    Cmd->m_ViewAngles.y = std::clamp( Cmd->m_ViewAngles.y, -180.0f, 180.0f );
-    Cmd->m_ViewAngles.z = 0.0f;
+    Cmd->m_ViewAngles.m_X = std::clamp( Cmd->m_ViewAngles.m_X, -89.0f, 89.0f );
+    Cmd->m_ViewAngles.m_Y = std::clamp( Cmd->m_ViewAngles.m_Y, -180.0f, 180.0f );
+    Cmd->m_ViewAngles.m_Z = 0.0f;
 
     return false;
   }
