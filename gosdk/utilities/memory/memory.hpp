@@ -9,7 +9,14 @@
 #include "../../dependencies/global.hpp"
 
 namespace Utils::Memory {
-  /* Credits go to the people who made these functions and various edits by @cristeigabriel [minimal] */
+  /* Credits go to the people who made these functions */
+
+  /// <summary>
+  /// Get scope for an interface from memory by the name with usage of the CreateInterface function
+  /// </summary>
+  /// <param name="ModuleName">Binary from where the function is being scanned</param>
+  /// <param name="InterfaceName">Self explainatory</param>
+  /// <returns></returns>
   inline static void * ScanInterface( const char * ModuleName, const char * InterfaceName ) noexcept {
     const auto ModuleHandle = GetModuleHandleA( ModuleName );
 
@@ -30,6 +37,12 @@ namespace Utils::Memory {
     return InterfaceAddress;
   }
 
+  /// <summary>
+  /// Get scope for a function from memory by scanning for a pattern
+  /// </summary>
+  /// <param name="ModuleName">Binary from where the function is being scanned</param>
+  /// <param name="Signature">Self explainatory</param>
+  /// <returns></returns>
   inline static std::uint8_t * FindPattern( const char * ModuleName, const char * Signature ) noexcept {
     const auto ModuleHandle = GetModuleHandleA( ModuleName );
 
@@ -83,6 +96,9 @@ namespace Utils::Memory {
     return nullptr;
   }
 
+  /// <summary>
+  /// Template to handle virtual functions
+  /// </summary>
   template <typename T, typename... Args>
   inline constexpr auto CallVirtualMethod( void * class_base, int index, Args... args ) noexcept {
     return ( ( *reinterpret_cast<T( __thiscall *** )( void *, Args... )>( class_base ) )[ index ] )( class_base, args... );

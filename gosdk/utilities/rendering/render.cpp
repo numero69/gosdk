@@ -39,11 +39,13 @@ namespace Utils::Render {
     Verdana = CS::Interfaces::g_pSurface->CreateFontExA( );
     ESP = CS::Interfaces::g_pSurface->CreateFontExA( );
 
-    /* Lambda used to only initialize fonts once */
-    /* If you plan to reinitialize them, get rid of the lambda */
-    /* Or, make it an actual function to be called on a specific event */
-    /* Currently, as I didn't do stuff like, hook OnScreenSizeChanged */
-    /* To reinitialize the Render manager, I have no reason to do so. */
+    /// <summary>
+    /// Lambda used to only initialize fonts once
+    /// If you plan to reinitialize them, you will probably have to get rid of the lambda
+    /// Or, make it an actual function to be called on a specific event
+    /// Currently, as I didn't do stuff like, hook OnScreenSizeChanged
+    /// To reinitialize the Render manager, I have no reason to do so
+    /// </summary>
     ( []( ) {
       CS::Interfaces::g_pSurface->SetFontGlyphSet( Verdana, "Verdana", 13, 600, 0, 0, EFontFlags::FONTFLAG_OUTLINE );
       CS::Interfaces::g_pSurface->SetFontGlyphSet( ESP, "Tahoma", 13, 200, 0, 0, EFontFlags::FONTFLAG_OUTLINE );

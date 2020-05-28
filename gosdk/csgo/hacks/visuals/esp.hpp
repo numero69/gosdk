@@ -16,6 +16,13 @@ namespace CS::Features::ESP {
   } // namespace Colors
 
   // thanks to poliacs for the calculations from UnknownCheats, was a time saver.
+
+  /// <summary>
+  /// Function used to calculate bounds for entities
+  /// </summary>
+  /// <param name="Player">Entity that will be used in the origin/sizes calculation</param>
+  /// <param name="Box">Rectangle class used to ease calculations</param>
+  /// <returns></returns>
   inline bool BoundingBox( CS::Classes::CCSPlayer * Player, CS::Classes::Box & Box ) noexcept {
     const Utils::Math::Vector2 flb{}, brt{}, blb{}, frt{}, frb{}, brb{}, blt{}, flt{}, out{};
 
@@ -66,6 +73,13 @@ namespace CS::Features::ESP {
     return true;
   }
 
+  /// <summary>
+  /// Function that draws bounds made by BoundingBox
+  /// </summary>
+  /// <param name="Box">Rectangle class used to ease calculations</param>
+  /// <param name="ColorMain">Color used for the middle rectangle</param>
+  /// <param name="ColorOutline">Color used for the outer and inner rectangle</param>
+  /// <returns></returns>
   inline void DrawBox( CS::Classes::Box & Box, Utils::Color ColorMain, Utils::Color ColorOutline ) noexcept {
     Utils::Render::RenderBoxOutline( Box.m_iX, Box.m_iY, Box.m_iRight( ), Box.m_iBottom( ), ColorMain, false );
 
@@ -73,6 +87,12 @@ namespace CS::Features::ESP {
     Utils::Render::RenderBoxOutline( Box.m_iX + 1, Box.m_iY + 1, Box.m_iRight( ) - 1, Box.m_iBottom( ) - 1, ColorOutline, false );
   }
 
+  /// <summary>
+  /// Function that draws entity names
+  /// </summary>
+  /// <param name="Box">Rectangle class used to ease calculations</param>
+  /// <param name="Info">EngineClient structure that handles entity information</param>
+  /// <param name="Color">Text color</param>
   inline void DrawName( CS::Classes::Box & Box, CS::Interfaces::PlayerInfo_t Info, Utils::Color Color ) {
     /* Cool way to get around this from Osiris */
     if ( wchar_t Name[ 128 ] /* According to the struct */; MultiByteToWideChar( CP_UTF8, 0, Info.m_Name, -1, Name, 128 ) ) {
@@ -81,6 +101,12 @@ namespace CS::Features::ESP {
     }
   }
 
+  /// <summary>
+  /// Function that draws snap lines from the center of the screen to the entity's origin
+  /// </summary>
+  /// <param name="EntityOrigin">Vector pointing to an entity's origin</param>
+  /// <param name="Color">Snapline color</param>
+  /// <returns></returns>
   inline void DrawLine( Utils::Math::Vector & EntityOrigin, Utils::Color Color ) noexcept {
     Utils::Math::Vector PostWTSVec{};
     CS::Interfaces::g_pDebugOverlay->WorldToScreen( EntityOrigin, PostWTSVec );
@@ -90,7 +116,13 @@ namespace CS::Features::ESP {
     Utils::Render::RenderLine( width / 2, height / 2, PostWTSVec.m_X, PostWTSVec.m_Y, Color );
   }
 
+  /// <summary>
+  /// Function that handles entities which will be used for rendering
+  /// </summary>
   inline void RunEsp( ) noexcept {
+    /// <summary>
+    /// Loops through all valid entities (Ignores world models)
+    /// </summary>
     for ( int i = 1; i <= CS::Interfaces::g_pGlobalVars->MaxClients; i++ ) {
       auto Player = CS::Interfaces::g_pEntityList->GetEntity( i );
 
