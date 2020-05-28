@@ -12,7 +12,7 @@ To contribute to gosdk, you must respect [these](http://web.mst.edu/~cpp/common/
 
 Member and Hungarian notation is to be ignored on classes/structures that explicitly hold VFunctions/generally game structures (this excludes stuff like ClientClass as an example, but also as an example includes structures like ISurface). This is because, first, it improves readability for those very functions, and second, datatype is inherited from auto. This rule excludes the Entity/Player header file.
 
-We recommend you make enums that you add inherit a type (i.e. are scoped).
+We recommend you make enums that you add inherit a type. 
 
 Use [CppTripleSlash](https://marketplace.visualstudio.com/items?itemName=tcbhat.CppTripleSlash-xmldoccommentsforc) to add documentation to your code [if you use Visual Studio 2019], or else, if you cannot, consider writing it by hand or asking someone to contribute to your commit by documenting it. (I, @cristeigabriel, will personally take that job if required)
 
