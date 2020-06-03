@@ -11,9 +11,10 @@ namespace CS {
     std::unordered_map<std::string, std::uintptr_t> Offsets;
 
     /// <summary>
-    /// Handler
+    /// Handlers
     /// </summary>
-    void Init( );
+    void RunNetvar( );
+    void ReleaseNetvars( );
   };
 
   inline CNetvar g_Netvar{ };

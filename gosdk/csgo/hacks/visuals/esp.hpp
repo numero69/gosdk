@@ -124,6 +124,8 @@ namespace CS::Features {
 
         if ( !Player || !Player->m_bIsAlive( ) || Player == Utils::g_Context.g_pLocal )
           continue;
+        if ( !CS::g_Interfaces.g_pEngineClient->IsInGame( ) || !CS::g_Interfaces.g_pEngineClient->IsConnected( ) )
+          continue;
 
         CS::Classes::Box Box;
         CS::Interfaces::PlayerInfo_t Info;

@@ -9,7 +9,7 @@ namespace Utils {
   class CConsole {
   public:
     /* Handlers */
-    inline void Initialize( const LPCSTR & name, const std::string & init_message ) {
+    inline void RunConsole( const LPCSTR & name, const std::string & init_message ) {
       ConsoleHandle = GetConsoleWindow( );
 
       AllocConsole( );
@@ -26,7 +26,7 @@ namespace Utils {
       std::cout << init_message << std::endl;
     }
 
-    inline void Destroy( ) {
+    inline void ReleaseConsole( ) {
       ConsoleHandle = GetConsoleWindow( );
 
       fclose( stdin );

@@ -26,9 +26,8 @@ namespace Utils {
 
     if ( CS::g_Interfaces.g_pPanel->GetName( Panel ) == STR( "MatSystemTopPanel" ) ) {
       Utils::g_Render.RenderText( 15, 15, Utils::g_Render.Verdana, Utils::Color( 255, 255, 255, 255 ), L"Test" );
-      if ( CS::g_Interfaces.g_pEngineClient->IsInGame( ) && CS::g_Interfaces.g_pEngineClient->IsConnected( ) ) {
         CS::Features::g_Esp.RunEsp( );
-      }
+      
     }
 
     if ( Original )
