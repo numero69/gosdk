@@ -4,23 +4,25 @@
 #include "../../utilities/global.hpp"
 #include "interfaces/global.hpp"
 
-namespace CS::Interfaces {
-  // I'm sorry
-  class IClientMode;
+namespace CS {
+  class CInterfaces {
+  public:
+    Interfaces::IConsole * g_pConsole{ };
+    Interfaces::ISurface * g_pSurface{ };
+    Interfaces::IInputSystem * g_pInputSystem{ };
+    Interfaces::IPanel * g_pPanel{ };
+    Interfaces::IBaseClientDLL * g_pClient{ };
+    Interfaces::IClientMode * g_pClientMode{ };
+    Interfaces::IEntityList * g_pEntityList{ };
+    Interfaces::IEngineClient * g_pEngineClient{ };
+    Interfaces::IGlobalVars * g_pGlobalVars{ };
+    Interfaces::IDebugOverlay * g_pDebugOverlay{ };
+    IDirect3DDevice9 * g_pDevice{ };
 
-  inline IConsole * g_pConsole{};
-  inline ISurface * g_pSurface{};
-  inline IDirect3DDevice9 * g_pDevice{};
-  inline IInputSystem * g_pInputSystem{};
-  inline IPanel * g_pPanel{};
-  inline IBaseClientDLL * g_pClient{};
-  inline IClientMode * g_pClientMode{};
-  inline IEntityList * g_pEntityList{};
-  inline IEngineClient * g_pEngineClient{};
-  inline IGlobalVars * g_pGlobalVars{};
-  inline IDebugOverlay * g_pDebugOverlay{};
-  
-  /* Handlers */
-  void RunInterfaces( ) noexcept;
-  void ReleaseInterfaces( ) noexcept;
+    /* Handlers */
+    void RunInterfaces( ) noexcept;
+    void ReleaseInterfaces( ) noexcept;
+  };
+
+  inline CInterfaces g_Interfaces;
 } // namespace CS::Interfaces

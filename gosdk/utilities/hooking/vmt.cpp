@@ -1,6 +1,6 @@
-#include "hook.hpp"
+#include "vmt.hpp"
 
-namespace Utils::Hooking {
+namespace Utils {
   CVMT::CVMT( ) = default;
 
   bool CVMT::bInit( void * base ) {

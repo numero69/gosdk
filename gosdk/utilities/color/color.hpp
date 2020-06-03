@@ -4,7 +4,8 @@
 #include <inttypes.h>
 
 namespace Utils {
-  struct Color {
+  class Color {
+  public:
     std::uint8_t m_uRed, m_uGreen, m_uBlue, m_uAlpha;
 
     Color( ) { m_uRed = 0, m_uGreen = 0, m_uBlue = 0, m_uAlpha = 255; }

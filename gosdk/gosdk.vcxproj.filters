@@ -28,7 +28,6 @@
     <ClInclude Include="csgo\valve\interfaces\i_input_system.hpp" />
     <ClInclude Include="config\config.hpp" />
     <ClInclude Include="dependencies\json\json.hpp" />
-    <ClInclude Include="config\utilities.hpp" />
     <ClInclude Include="config\global.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_panel.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_base_client_dll.hpp" />
@@ -47,6 +46,8 @@
     <ClInclude Include="csgo\valve\classes\bounds.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_client_unknown.hpp" />
     <ClInclude Include="utilities\rendering\render.hpp" />
+    <ClInclude Include="utilities\hooking\vmt.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_client_mode.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utilities\hooking\hook.cpp" />

@@ -16,12 +16,12 @@ void DumpRecursive( CS::Classes::CRecvTable * table ) {
 
     ofStream << table->m_cTableName + std::string( STR( "->" ) ) + Prop->m_cPropName << "=" << Prop->m_iOffset << '\n';
 
-    CS::Utilities::Netvar::Offsets[ table->m_cTableName + std::string( STR( "->" ) ) + Prop->m_cPropName ] = Prop->m_iOffset;
+    CS::g_Netvar.Offsets[ table->m_cTableName + std::string( STR( "->" ) ) + Prop->m_cPropName ] = Prop->m_iOffset;
   }
 }
 
-void CS::Utilities::Netvar::Init( ) {
-  for ( auto pClass = CS::Interfaces::g_pClient->GetAllClasses( ); pClass; pClass = pClass->m_NextPtr ) {
+void CS::CNetvar::Init( ) {
+  for ( auto pClass = CS::g_Interfaces.g_pClient->GetAllClasses( ); pClass; pClass = pClass->m_NextPtr ) {
     const auto Table = pClass->m_RecvTablePtr;
 
     if ( !Table )

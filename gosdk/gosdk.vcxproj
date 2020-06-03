@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClInclude Include="config\config.hpp" />
     <ClInclude Include="config\global.hpp" />
-    <ClInclude Include="config\utilities.hpp" />
     <ClInclude Include="csgo\global.hpp" />
     <ClInclude Include="csgo\hacks\global.hpp" />
     <ClInclude Include="csgo\hacks\misc\movement.hpp" />
@@ -37,6 +36,7 @@
     <ClInclude Include="csgo\valve\interfaces.hpp" />
     <ClInclude Include="csgo\valve\interfaces\global.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_base_client_dll.hpp" />
+    <ClInclude Include="csgo\valve\interfaces\i_client_mode.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_client_unknown.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_console.hpp" />
     <ClInclude Include="csgo\valve\interfaces\i_debug_overlay.hpp" />
@@ -59,6 +59,7 @@
     <ClInclude Include="utilities\global.hpp" />
     <ClInclude Include="utilities\global\globals.hpp" />
     <ClInclude Include="utilities\hooking\hook.hpp" />
+    <ClInclude Include="utilities\hooking\vmt.hpp" />
     <ClInclude Include="utilities\math\global.hpp" />
     <ClInclude Include="utilities\math\vector2d.hpp" />
     <ClInclude Include="utilities\math\vector3d.hpp" />

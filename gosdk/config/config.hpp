@@ -15,12 +15,13 @@
 #include "../utilities/global.hpp"
 
 namespace Config {
-// clang-format off
+  // clang-format off
   #define add_setting(setting, default_value) \
   mSettings[STR(setting)] = default_value;
   // clang-format on
 
-  struct SSettings {
+  class SSettings {
+  private:
     using Setting_t = std::variant<int, bool, float, std::string, Utils::Color>;
     std::unordered_map<std::string, Setting_t> mSettings;
 
@@ -54,4 +55,11 @@ namespace Config {
   /// Pointer that will handle scope and lifetime of config object
   /// </summary>
   inline std::unique_ptr<Config::SSettings> g_pConfig{ nullptr };
+
+  /// <summary>
+  /// Not very cash money
+  /// </summary>
+  inline void RunConfig( ) { g_pConfig = std::make_unique<Config::SSettings>( ); }
+
+  inline void ReleaseConfig( ) { g_pConfig.reset( ); }
 } // namespace Config

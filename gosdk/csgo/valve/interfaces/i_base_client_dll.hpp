@@ -10,7 +10,7 @@ namespace CS::Interfaces {
   class IBaseClientDLL {
   public:
     constexpr auto GetAllClasses( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<CS::Classes::CClientClass *>( this, EBaseClientIndexes::GetAllClasses_index );
+      return Utils::g_Memory.CallVirtualMethod<CS::Classes::CClientClass *>( this, EBaseClientIndexes::GetAllClasses_index );
     }
   };
 } // namespace CS::Interfaces

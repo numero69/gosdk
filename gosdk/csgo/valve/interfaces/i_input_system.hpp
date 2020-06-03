@@ -141,11 +141,11 @@ namespace CS::Interfaces {
   class IInputSystem {
   public:
     constexpr auto EnableInput( bool Enable ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, bool>( this, EInputSystemIndexes::EnableInput_index, Enable );
+      Utils::g_Memory.CallVirtualMethod<void, bool>( this, EInputSystemIndexes::EnableInput_index, Enable );
     }
 
     constexpr auto IsButtonDown( EButtonCodes ButtonCode ) noexcept {
-      return Utils::Memory::CallVirtualMethod<bool, EButtonCodes>( this, EInputSystemIndexes::IsButtonDown_index, ButtonCode );
+      return Utils::g_Memory.CallVirtualMethod<bool, EButtonCodes>( this, EInputSystemIndexes::IsButtonDown_index, ButtonCode );
     }
   };
 } // namespace CS::Interfaces

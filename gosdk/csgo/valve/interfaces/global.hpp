@@ -10,3 +10,4 @@
 #include "i_global_vars.hpp"
 #include "i_debug_overlay.hpp"
 #include "i_client_unknown.hpp"
+#include "i_client_mode.hpp"

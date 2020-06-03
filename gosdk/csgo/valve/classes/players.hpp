@@ -73,7 +73,6 @@ namespace CS::Classes {
     netvar( Utils::Math::Vector, m_Velocity, "DT_LocalPlayerExclusive->m_vecVelocity[0]" );
     netvar_additive( EMovetypes, m_Movetype, "DT_BaseEntity->m_nRenderMode", 1 );
     netvar( Utils::Math::Vector, m_Origin, "DT_BaseEntity->m_vecOrigin" );
-    offset( bool, m_bDormant, 0xED );
 
     constexpr CS::Classes::CClientNetworkable * m_ClientRenderable( ) {
       if ( this ) {

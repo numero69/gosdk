@@ -10,16 +10,16 @@ namespace CS::Interfaces {
   class IEntityList {
   public:
     constexpr auto GetEntity( int index ) noexcept {
-      return Utils::Memory::CallVirtualMethod<CS::Classes::CCSPlayer *, int>( this, EEntityListIndexes::GetEntity_index, index );
+      return Utils::g_Memory.CallVirtualMethod<CS::Classes::CCSPlayer *, int>( this, EEntityListIndexes::GetEntity_index, index );
     }
 
     constexpr auto GetEntityFromHandle( int handle ) noexcept {
-      return Utils::Memory::CallVirtualMethod<CS::Classes::CCSPlayer *, int>(
+      return Utils::g_Memory.CallVirtualMethod<CS::Classes::CCSPlayer *, int>(
           this, EEntityListIndexes::GetEntityFromHandle_index, handle );
     }
 
     constexpr auto GetHighestEntityIndex( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<int>( this, EEntityListIndexes::GetHighestEntity_index );
+      return Utils::g_Memory.CallVirtualMethod<int>( this, EEntityListIndexes::GetHighestEntity_index );
     }
   };
 } // namespace CS::Interfaces

@@ -9,7 +9,7 @@ namespace CS::Interfaces {
   class IPanel {
   public:
     constexpr auto GetName( unsigned int panel ) noexcept {
-      return std::string_view{ Utils::Memory::CallVirtualMethod<const char *, unsigned int>(
+      return std::string_view{ Utils::g_Memory.CallVirtualMethod<const char *, unsigned int>(
           this, EPanelIndexes::GetName_index, panel ) };
     }
   };

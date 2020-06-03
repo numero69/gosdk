@@ -1,5 +1,9 @@
 #pragma once
 
+/// <summary>
+/// Not my code, but it is used in the game.
+/// </summary>
+
 inline int UtlMemory_CalcNewAllocationCount( int nAllocationCount, int nGrowSize, int nNewSize, int nBytesItem ) {
   if ( nGrowSize )
     nAllocationCount = ( ( 1 + ( ( nNewSize - 1 ) / nGrowSize ) ) * nGrowSize );

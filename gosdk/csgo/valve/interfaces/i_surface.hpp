@@ -26,60 +26,60 @@ namespace CS::Interfaces {
     /* Namings with ExA are due to WINAPI overriding names */
 
     constexpr auto SetDrawColor( int r, int g, int b, int a = 255 ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::SetDrawColor_index, r, g, b, a );
+      Utils::g_Memory.CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::SetDrawColor_index, r, g, b, a );
     }
 
     const auto SetDrawColor( Utils::Color color ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>(
+      Utils::g_Memory.CallVirtualMethod<void, int, int, int, int>(
           this, ESurfaceIndexes::SetDrawColor_index, color.m_uRed, color.m_uGreen, color.m_uBlue, color.m_uAlpha );
     }
 
     template <typename T> constexpr auto DrawFilledRect( T x0, T y0, T x1, T y1 ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawFilledRect_index, x0, y0, x1, y1 );
+      Utils::g_Memory.CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawFilledRect_index, x0, y0, x1, y1 );
     }
 
     template <typename T> constexpr auto DrawOutlinedRect( T x0, T y0, T x1, T y1 ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawOutlinedRect_index, x0, y0, x1, y1 );
+      Utils::g_Memory.CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawOutlinedRect_index, x0, y0, x1, y1 );
     }
 
     template <typename T> constexpr auto DrawLine( T x0, T y0, T x1, T y1 ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawLine_index, x0, y0, x1, y1 );
+      Utils::g_Memory.CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawLine_index, x0, y0, x1, y1 );
     }
 
     constexpr auto SetTextFont( unsigned font ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, unsigned>( this, ESurfaceIndexes::SetTextFont_index, font );
+      Utils::g_Memory.CallVirtualMethod<void, unsigned>( this, ESurfaceIndexes::SetTextFont_index, font );
     }
 
     constexpr auto SetTextColor( int r, int g, int b, int a = 255 ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::SetTextColor_index, r, g, b, a );
+      Utils::g_Memory.CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::SetTextColor_index, r, g, b, a );
     }
 
     const auto SetTextColor( Utils::Color color ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>(
+      Utils::g_Memory.CallVirtualMethod<void, int, int, int, int>(
           this, ESurfaceIndexes::SetTextColor_index, color.m_uRed, color.m_uGreen, color.m_uBlue, color.m_uAlpha );
     }
 
     template <typename T> constexpr auto SetTextPosition( T x, T y ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int>( this, ESurfaceIndexes::SetTextPosition_index, x, y );
+      Utils::g_Memory.CallVirtualMethod<void, int, int>( this, ESurfaceIndexes::SetTextPosition_index, x, y );
     }
 
     constexpr auto PrintText( const std::wstring_view text, int drawType = 0 ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, const wchar_t *, int, int>(
+      Utils::g_Memory.CallVirtualMethod<void, const wchar_t *, int, int>(
           this, ESurfaceIndexes::PrintText_index, text.data( ), text.length( ), drawType );
     }
 
     constexpr auto GetScreenSize( ) noexcept {
       int width{}, height{};
-      Utils::Memory::CallVirtualMethod<void, int &, int &>( this, ESurfaceIndexes::GetScreenSize_index, width, height );
+      Utils::g_Memory.CallVirtualMethod<void, int &, int &>( this, ESurfaceIndexes::GetScreenSize_index, width, height );
       return std::make_pair( width, height );
     }
 
     constexpr auto UnlockCursor( ) noexcept {
-      Utils::Memory::CallVirtualMethod<void>( this, ESurfaceIndexes::UnlockCursor_index );
+      Utils::g_Memory.CallVirtualMethod<void>( this, ESurfaceIndexes::UnlockCursor_index );
     }
 
     constexpr auto CreateFontExA( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<unsigned>( this, ESurfaceIndexes::CreateFontExA_index );
+      return Utils::g_Memory.CallVirtualMethod<unsigned>( this, ESurfaceIndexes::CreateFontExA_index );
     }
 
     constexpr auto SetFontGlyphSet( unsigned font,
@@ -91,7 +91,7 @@ namespace CS::Interfaces {
                                     int flags,
                                     int range_min = 0,
                                     int range_max = 0 ) noexcept {
-      return Utils::Memory::CallVirtualMethod<bool, unsigned, const char *, int, int, int, int, int, int, int>(
+      return Utils::g_Memory.CallVirtualMethod<bool, unsigned, const char *, int, int, int, int, int, int, int>(
           this,
           ESurfaceIndexes::SetFontGlyphSet_index,
           font,
@@ -107,7 +107,7 @@ namespace CS::Interfaces {
 
     constexpr auto GetTextSize( unsigned font, const wchar_t * text ) noexcept {
       int width{}, height{};
-      Utils::Memory::CallVirtualMethod<void, unsigned, const wchar_t *, int &, int &>(
+      Utils::g_Memory.CallVirtualMethod<void, unsigned, const wchar_t *, int &, int &>(
           this, ESurfaceIndexes::GetTextSize_index, font, text, width, height );
       return std::make_pair( width, height );
     }
@@ -115,7 +115,7 @@ namespace CS::Interfaces {
 
     /* Template typenames are deduced like the auto type, but you also can, on your own, pass a datatype */
     template <typename T> constexpr auto DrawOutlinedCircle( T x, T y, int r, int seg ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawOutlinedCircle_index, x, y, r, seg );
+      Utils::g_Memory.CallVirtualMethod<void, int, int, int, int>( this, ESurfaceIndexes::DrawOutlinedCircle_index, x, y, r, seg );
     }
 
     template <typename T> constexpr auto DrawFilledCircle( T x, T y, int r ) noexcept {

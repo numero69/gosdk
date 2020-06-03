@@ -11,7 +11,9 @@ namespace CS::Classes {
   class ClientClass;
   class CClientNetworkable {
   public:
-    /* "If it works, it works." - God */
+    /// <summary>
+    /// "If it works, it works." - God
+    /// </summary>
     virtual void * GetClientUnknown( ) = 0;
     virtual void Release( ) = 0;
     virtual ClientClass * GetClientClass( ) = 0;

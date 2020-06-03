@@ -5,26 +5,33 @@
 #include <string>
 #include <unordered_map>
 
-namespace CS::Utilities::Netvar {
-  inline std::unordered_map<std::string, std::uintptr_t> Offsets;
+namespace CS {
+  class CNetvar {
+  public:
+    std::unordered_map<std::string, std::uintptr_t> Offsets;
 
-  /* Handler */
-  void Init( );
-}; // namespace CS::Utilities::Netvar
+    /// <summary>
+    /// Handler
+    /// </summary>
+    void Init( );
+  };
+
+  inline CNetvar g_Netvar{ };
+}; // namespace CS::Utils
 
 /* Handlers */
 // clang-format off
 #define netvar_additive(t, func, name, off)\
 	t &func()\
 	{\
-		static auto offset = CS::Utilities::Netvar::Offsets[(STR(name))];\
+		static auto offset = CS::g_Netvar.Offsets[(STR(name))];\
 		return *reinterpret_cast<t*>(std::uintptr_t(this) + offset + off);\
 	}
 
 #define netvar(t, func, name)\
 	t &func()\
 	{\
-		static auto offset = CS::Utilities::Netvar::Offsets[(STR(name))];\
+		static auto offset = CS::g_Netvar.Offsets[(STR(name))];\
 		return *reinterpret_cast<t*>(std::uintptr_t(this) + offset);\
 	}
 
@@ -39,6 +46,4 @@ namespace CS::Utilities::Netvar {
 	{\
 		return reinterpret_cast<t>(std::uintptr_t(this) + offset);\
 	}
-
-#define foffset(type, ptr, offset) (*reinterpret_cast<type *>((std::uintptr_t)(ptr) + (offset)))
 // clang-format on

@@ -4,6 +4,8 @@
 
 namespace Utils::Easing {
   struct BitFlag {
+    uintptr_t u_pFlags{ };
+
     BitFlag( ) = default;
 
     BitFlag( const uintptr_t flags ) : u_pFlags( flags ) {}
@@ -15,8 +17,6 @@ namespace Utils::Easing {
     /// </summary>
     /// <returns>Function casted to automatically deducted type or specified type</returns>
     template <typename T> T pThis( ) { return reinterpret_cast<T>( *this ); }
-
-    uintptr_t u_pFlags{};
 
     inline bool bCheckFlag( const uintptr_t flag ) { return u_pFlags & flag; }
 

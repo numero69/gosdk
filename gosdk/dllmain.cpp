@@ -5,31 +5,31 @@
 
 LPVOID Init( const HMODULE instance ) {
 
-  Utils::Context::g_pModule = instance;
+  Utils::g_Context.g_pModule = instance;
 
   try {
-    Utils::Console::Initialize( STR( "gosdk" ), STR( "welcome, initialized" ) );
+    Utils::g_Console.Initialize( STR( "gosdk" ), STR( "welcome, initialized" ) );
 
     // run config before everything
     Config::RunConfig( );
 
-    CS::Interfaces::RunInterfaces( );
-    CS::Utilities::Netvar::Init( );
-    Utils::Render::RunRender( );
-    Utils::Hooking::RunHooks( );
+    CS::g_Interfaces.RunInterfaces( );
+    CS::g_Netvar.Init( );
+    Utils::g_Render.RunRender( );
+    Utils::g_Hooking.RunHooks( );
   } catch ( const std::exception & e ) {
-    Utils::Console::Log<std::string_view>( e.what( ) );
+    Utils::g_Console.Log<std::string_view>( e.what( ) );
   }
 
-  while ( !Utils::Context::bShouldUnload ) {
+  while ( !Utils::g_Context.bShouldUnload ) {
     using namespace std::chrono_literals;
     std::this_thread::sleep_for( 15ms );
   }
 
-  Utils::Console::Destroy( );
-  Utils::Hooking::ReleaseHooks( );
-  Utils::Render::ReleaseRender( );
-  CS::Interfaces::ReleaseInterfaces( );
+  Utils::g_Console.Destroy( );
+  Utils::g_Hooking.ReleaseHooks( );
+  Utils::g_Render.ReleaseRender( );
+  CS::g_Interfaces.ReleaseInterfaces( );
 
   // release config after everything
   Config::ReleaseConfig( );

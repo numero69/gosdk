@@ -44,55 +44,55 @@ namespace CS::Interfaces {
   class IEngineClient {
   public:
     constexpr auto GetPlayerInfo( int EntityIndex, const PlayerInfo_t * PInfo ) noexcept {
-      return Utils::Memory::CallVirtualMethod<bool, int, const PlayerInfo_t *>(
+      return Utils::g_Memory.CallVirtualMethod<bool, int, const PlayerInfo_t *>(
           this, EEngineClientIndexes::GetPlayerInfo_index, EntityIndex, PInfo );
     }
 
     constexpr auto GetPlayerForUID( int UserID ) noexcept {
-      return Utils::Memory::CallVirtualMethod<int, int>( this, EEngineClientIndexes::GetPlayerForUID_index, UserID );
+      return Utils::g_Memory.CallVirtualMethod<int, int>( this, EEngineClientIndexes::GetPlayerForUID_index, UserID );
     }
 
     constexpr auto GetLocalPlayer( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<int>( this, EEngineClientIndexes::GetLocalPlayer_index );
+      return Utils::g_Memory.CallVirtualMethod<int>( this, EEngineClientIndexes::GetLocalPlayer_index );
     }
 
     constexpr auto GetViewAngles( Utils::Math::Vector & Angles ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, Utils::Math::Vector &>( this, EEngineClientIndexes::GetViewAngles_index, Angles );
+      Utils::g_Memory.CallVirtualMethod<void, Utils::Math::Vector &>( this, EEngineClientIndexes::GetViewAngles_index, Angles );
     }
 
     constexpr auto SetViewAngles( const Utils::Math::Vector & Angles ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, const Utils::Math::Vector &>(
+      Utils::g_Memory.CallVirtualMethod<void, const Utils::Math::Vector &>(
           this, EEngineClientIndexes::SetViewAngles_index, Angles );
     }
 
     constexpr auto GetMaxClients( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<int>( this, EEngineClientIndexes::GetMaxClients_index );
+      return Utils::g_Memory.CallVirtualMethod<int>( this, EEngineClientIndexes::GetMaxClients_index );
     }
 
     constexpr auto IsInGame( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<bool>( this, EEngineClientIndexes::IsInGame_index );
+      return Utils::g_Memory.CallVirtualMethod<bool>( this, EEngineClientIndexes::IsInGame_index );
     }
 
     constexpr auto IsConnected( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<bool>( this, EEngineClientIndexes::IsConnected_index );
+      return Utils::g_Memory.CallVirtualMethod<bool>( this, EEngineClientIndexes::IsConnected_index );
     }
 
     using matrix = float[ 4 ][ 4 ];
 
     constexpr auto WorldToScreenMatrix( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<const matrix &>( this, EEngineClientIndexes::WorldToScreenMatrix_index );
+      return Utils::g_Memory.CallVirtualMethod<const matrix &>( this, EEngineClientIndexes::WorldToScreenMatrix_index );
     }
 
     constexpr auto GetLevelName( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<const char *>( this, EEngineClientIndexes::GetLevelName_index );
+      return Utils::g_Memory.CallVirtualMethod<const char *>( this, EEngineClientIndexes::GetLevelName_index );
     }
 
     constexpr auto GetNetChannel( ) noexcept {
-      return Utils::Memory::CallVirtualMethod<CNetChannel *>( this, EEngineClientIndexes::GetNetChannel_index );
+      return Utils::g_Memory.CallVirtualMethod<CNetChannel *>( this, EEngineClientIndexes::GetNetChannel_index );
     }
 
     constexpr auto ClientCmdUnrestricted( const char * Command ) noexcept {
-      Utils::Memory::CallVirtualMethod<void, const char *, bool>(
+      Utils::g_Memory.CallVirtualMethod<void, const char *, bool>(
           this, EEngineClientIndexes::ClientCmdUnrestricted_index, Command, false );
     }
   };

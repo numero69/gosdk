@@ -9,7 +9,7 @@ namespace CS::Interfaces {
   class IDebugOverlay {
   public:
     constexpr auto WorldToScreen( const Utils::Math::Vector & Point, Utils::Math::Vector & ToScreen ) {
-      return Utils::Memory::CallVirtualMethod<int, const Utils::Math::Vector &, Utils::Math::Vector &>(
+      return Utils::g_Memory.CallVirtualMethod<int, const Utils::Math::Vector &, Utils::Math::Vector &>(
           this, EDebugOverlayIndexes::WorldToScreen_index, Point, ToScreen );
     }
   };

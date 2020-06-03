@@ -29,13 +29,13 @@ namespace CS::Classes {
     constexpr int m_iBottom( ) const { return m_iY + m_iH; }
 
     constexpr bool m_bIsInBounds( const Utils::Math::Vector2 & pt ) const {
-      if ( this->m_iX > pt.m_X )
+      if ( m_iX > pt.m_X )
         return false;
-      if ( this->m_iY > pt.m_Y )
+      if ( m_iY > pt.m_Y )
         return false;
-      if ( this->m_iRight( ) < pt.m_X )
+      if ( m_iRight( ) < pt.m_X )
         return false;
-      if ( this->m_iBottom( ) < pt.m_Y )
+      if ( m_iBottom( ) < pt.m_Y )
         return false;
 
       return true;
