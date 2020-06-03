@@ -6,7 +6,7 @@
 namespace Utils {
   static HWND ConsoleHandle{ };
 
-  class Console {
+  class CConsole {
   public:
     /* Handlers */
     inline void Initialize( const LPCSTR & name, const std::string & init_message ) {
@@ -43,5 +43,5 @@ namespace Utils {
     }
   };
 
-  inline Console g_Console;
+  inline CConsole g_Console{ };
 } // namespace Utils
