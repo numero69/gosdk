@@ -5,8 +5,8 @@
 namespace CS::Classes {
 
   /* lol */
-  class bf_read;
-  class bf_write;
+  class BfRead;
+  class BfWrite;
 
   class ClientClass;
   class CClientNetworkable {
@@ -25,13 +25,13 @@ namespace CS::Classes {
     virtual void __unkn( ) = 0;
     virtual bool IsDormant( ) = 0;
     virtual int EntIndex( ) const = 0;
-    virtual void ReceiveMessage( int classID, bf_read & msg ) = 0;
+    virtual void ReceiveMessage( int classID, BfRead & msg ) = 0;
     virtual void * GetDataTableBasePtr( ) = 0;
     virtual void SetDestroyedOnRecreateEntities( ) = 0;
   };
 
-  typedef CClientNetworkable * ( *CreateClientClass_t )( int EntNumber, int SerialNumber );
-  typedef CClientNetworkable * ( *CreateEvent_t )( );
+  using CreateClientClass_t = CClientNetworkable ( * )( int EntNumber, int SerialNumber );
+  using CreateEvent_t = CClientNetworkable( * )( );
 
   enum EClassIDs : short {
     CAI_BASENPC = 0,

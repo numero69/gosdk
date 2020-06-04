@@ -4,8 +4,8 @@
 
 #pragma warning( disable : 4244 )
 
-namespace Config {
-  bool SSettings::m_bSave( const std::string & config_file_name ) {
+namespace Variables {
+  bool CConfig::SSettings::m_bSave( const std::string & config_file_name ) {
     nlohmann::json config;
     for ( const auto & [ setting, value ] : mSettings ) {
       if ( std::holds_alternative<int>( value ) )
@@ -35,7 +35,7 @@ namespace Config {
     return true;
   }
 
-  bool SSettings::m_bLoad( const std::string & config_file_name ) {
+  bool CConfig::SSettings::m_bLoad( const std::string & config_file_name ) {
     if ( !std::filesystem::exists( std::filesystem::current_path( ) / config_file_name ) )
       return false;
 
@@ -65,4 +65,4 @@ namespace Config {
     ifConfig.close( );
     return true;
   }
-} // namespace Config
+} // namespace Name

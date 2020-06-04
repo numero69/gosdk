@@ -4,7 +4,6 @@
 #include "utilities/global.hpp"
 
 std::uint8_t Initialize( const HMODULE Instance ) {
-
   Utils::g_Context.g_pModule = Instance;
 
   try {
@@ -13,7 +12,7 @@ std::uint8_t Initialize( const HMODULE Instance ) {
     /// <summary>
     /// Run config after everything so that there is no calls to the getter before it is initialized
     /// </summary>
-    Config::RunConfig( );
+    Variables::g_Config.RunConfig( );
 
     CS::g_Interfaces.RunInterfaces( );
     CS::g_Netvar.RunNetvar( );
@@ -23,25 +22,26 @@ std::uint8_t Initialize( const HMODULE Instance ) {
     Utils::g_Console.Log<std::string_view>( e.what( ) );
   }
 
-  while ( !GetAsyncKeyState( VK_END ) ) {
+  while ( !Utils::g_Context.bShouldUnload ) {
     using namespace std::chrono_literals;
     std::this_thread::sleep_for( 15ms );
   }
 
-  FreeLibraryAndExitThread( Instance, NULL );
+  DebugActiveProcessStop( GetCurrentProcessId( ) );
+  FreeLibraryAndExitThread( Instance, EXIT_SUCCESS );
 }
 
 std::uint8_t Shutdown( ) {
-  Utils::g_Console.ReleaseConsole( );
   Utils::g_Hooking.ReleaseHooks( );
   Utils::g_Render.ReleaseRender( );
   CS::g_Netvar.ReleaseNetvars( );
   CS::g_Interfaces.ReleaseInterfaces( );
+  Utils::g_Console.ReleaseConsole( );
 
   /// <summary>
   /// Since there were still calls to the getter, we have to release config after everything
   /// </summary>
-  Config::ReleaseConfig( );
+  Variables::g_Config.ReleaseConfig( );
 
   return TRUE;
 }

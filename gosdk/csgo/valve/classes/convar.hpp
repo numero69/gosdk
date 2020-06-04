@@ -6,6 +6,7 @@
 namespace CS::Classes {
   class CConvar;
   using ChangeCallback_t = void ( * )( CConvar * var, const char * cOldValue, float fOldValue );
+
   class CConvar {
   public:
     constexpr auto GetFloat( ) noexcept { return Utils::g_Memory.CallVirtualMethod<float>( this, 12 ); }
