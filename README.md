@@ -1,10 +1,5 @@
 # gosdk
-this is a fork of gosdk mainly used for pull requests.
-
 gosdk is a CS:GO SDK that is currently in development, written in C++17 standard, that empowers users to write CS:GO cheats.
-
-# licensing
-gosdk is licensed under the GNU v3 license, and according to that, I, Cristei Gabriel-Marian, provide you the code as-is, and give you full freedom over the usage of it, but I will not take responsability for your usage of it. Please consider consulting the actual licensing terms by clicking on the "GPL v3.0" button that should be next to the contributors tab.
 
 # information
 The formatting method for gosdk is a custom clang-format config that is often either recognized by Visual Studio versions (tested only on VS19) or usable throughout the CLI by installing a specific binary for it and running the command "clang-format -i (place).(format)"
